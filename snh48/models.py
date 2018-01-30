@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -12,16 +10,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
 class MemberPerformanceHistory(models.Model):
     member = models.ForeignKey('Memberinfo', models.DO_NOTHING, blank=True, null=True)
     performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, blank=True, null=True)
@@ -32,13 +20,23 @@ class MemberPerformanceHistory(models.Model):
         unique_together = (('member', 'performance_history'),)
 
 
+class MemberPerformanceHistoryTmp(models.Model):
+    member = models.ForeignKey('Memberinfo', models.DO_NOTHING, blank=True, null=True)
+    performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'member_performance_history_tmp'
+        unique_together = (('member', 'performance_history'),)
+
+
 class Memberinfo(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20, blank=True, null=True)
     nick_name = models.CharField(max_length=100, blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     blood_type = models.CharField(max_length=10, blank=True, null=True)
-    team = models.SmallIntegerField(blank=True, null=True)
+    team = models.IntegerField(blank=True, null=True)
     batch = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     english_name = models.CharField(max_length=50, blank=True, null=True)
@@ -48,10 +46,11 @@ class Memberinfo(models.Model):
     hobby = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     is_valid = models.IntegerField()
-    constellation = models.CharField(max_length=50, blank=True, null=True)
-    birth_place = models.CharField(max_length=50, blank=True, null=True)
-    agency = models.CharField(max_length=50, blank=True, null=True)
-    speciality = models.CharField(max_length=500, blank=True, null=True)
+    constellation = models.CharField(max_length=50)
+    birth_place = models.CharField(max_length=50)
+    agency = models.CharField(max_length=50)
+    speciality = models.CharField(max_length=50)
+    pid = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -83,7 +82,7 @@ class PerformanceHistory(models.Model):
 
 
 class Team(models.Model):
-    id = models.SmallIntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30, blank=True, null=True)
     found_date = models.DateField(blank=True, null=True)
 
