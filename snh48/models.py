@@ -29,3 +29,42 @@ class MemberInfo(models.Model):
     speciality = models.CharField(max_length=500)  # 特长
 
 
+class MemberPerformanceHistory(models.Model):
+    member_id = models.IntegerField()
+    performance_history_id = models.IntegerField()
+
+
+class Performance(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100)  # 公演名称
+    team = models.IntegerField()
+    debut_date = models.DateField()  # 首演日期
+    end_date = models.DateField()  # 千秋乐日期
+    link = models.CharField(max_length=200)  # 官网链接
+    logo_link = models.CharField(max_length=200)
+    is_active = models.IntegerField()  # 是否正在演出
+
+
+class PerformanceHistory(models.Model):
+    id = models.IntegerField()
+    performance_id = models.IntegerField()
+    date = models.DateField()
+    description = models.CharField(max_length=100)
+
+
+class Weibo(models.Model):
+    id = models.IntegerField(primary_key=True)
+    weibo_id = models.BigIntegerField()
+    followers_count = models.BigIntegerField()  # 粉丝数量
+    friends_count = models.BigIntegerField()  # 关注数
+    statuses_count = models.BigIntegerField()  # 微博数
+    update_time = models.DateTimeField()
+
+
+class WeiboDataHistory(models):
+    id = models.IntegerField(primary_key=True)
+    weibo_id = models.BigIntegerField()
+    followers_count = models.BigIntegerField()  # 粉丝数量
+    friends_count = models.BigIntegerField()  # 关注数
+    statuses_count = models.BigIntegerField()  # 微博数
+    update_time = models.DateTimeField()
