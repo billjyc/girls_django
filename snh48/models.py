@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -8,6 +10,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
+
+
+import sys
+
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 
 class MemberPerformanceHistory(models.Model):
@@ -36,7 +44,7 @@ class Memberinfo(models.Model):
     nick_name = models.CharField(max_length=100, blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     blood_type = models.CharField(max_length=10, blank=True, null=True)
-    team = models.IntegerField(blank=True, null=True)
+    team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
     batch = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     english_name = models.CharField(max_length=50, blank=True, null=True)
@@ -56,6 +64,9 @@ class Memberinfo(models.Model):
         managed = False
         db_table = 'memberinfo'
 
+    def __unicode__(self):
+        return str(self.team) + ' ' + self.name
+
 
 class Performance(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -70,15 +81,24 @@ class Performance(models.Model):
         managed = False
         db_table = 'performance'
 
+    def __unicode__(self):
+        if self.team is None:
+            return self.name
+        return str(self.team) + ' ' + self.name
+
 
 class PerformanceHistory(models.Model):
-    performance_id = models.IntegerField(blank=True, null=True)
+    # performance_id = models.IntegerField(blank=True, null=True)
+    performance = models.ForeignKey('Performance', models.DO_NOTHING, blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
     description = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'performance_history'
+
+    def __unicode__(self):
+        return str(self.date) + ' ' + str(self.performance) + ' ' + self.description
 
 
 class Team(models.Model):
@@ -89,6 +109,9 @@ class Team(models.Model):
     class Meta:
         managed = False
         db_table = 'team'
+
+    def __unicode__(self):
+        return self.name
 
 
 class Weibo(models.Model):
