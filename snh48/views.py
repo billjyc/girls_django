@@ -4,12 +4,16 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from .models import *
+
 
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    member_list = Memberinfo.objects.order_by('id')
+    output = ', '.join([member.name for member in member_list])
+    return HttpResponse(output)
 
 
-def hello(request):
-    return HttpResponse("Hello world")
+def member_detail(request, member_id):
+    return HttpResponse("You are looking at member %s" % member_id)
