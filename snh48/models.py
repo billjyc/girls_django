@@ -1,70 +1,118 @@
 # -*- coding: utf-8 -*-
+
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
 
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
 
-class MemberInfo(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20)
-    nick_name = models.CharField(max_length=100)
-    height = models.IntegerField()
-    blood_type = models.CharField(max_length=10)
-    team = models.IntegerField()
-    batch = models.CharField(max_length=100)
-    batch_no = models.IntegerField()
-    birthday = models.DateField()
-    english_name = models.CharField(max_length=50)
-    join_time = models.DateField()
-    link = models.CharField(max_length=300)  # 官网链接
-    image_link = models.CharField(max_length=300)  # 公式照链接
-    hobby = models.CharField(max_length=200)  # 爱好
-    description = models.TextField()  # 经历
-    is_valid = models.IntegerField()  # 是否为暂休
-    constellation = models.CharField(max_length=50)  # 星座
-    birth_place = models.CharField(max_length=50)
-    agency = models.CharField(max_length=50)
-    speciality = models.CharField(max_length=500)  # 特长
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
 
 
 class MemberPerformanceHistory(models.Model):
-    member_id = models.IntegerField()
-    performance_history_id = models.IntegerField()
+    member = models.ForeignKey('Memberinfo', models.DO_NOTHING, blank=True, null=True)
+    performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'member_performance_history'
+        unique_together = (('member', 'performance_history'),)
+
+
+class Memberinfo(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20, blank=True, null=True)
+    nick_name = models.CharField(max_length=100, blank=True, null=True)
+    height = models.IntegerField(blank=True, null=True)
+    blood_type = models.CharField(max_length=10, blank=True, null=True)
+    team = models.SmallIntegerField(blank=True, null=True)
+    batch = models.CharField(max_length=100, blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
+    english_name = models.CharField(max_length=50, blank=True, null=True)
+    join_time = models.DateField(blank=True, null=True)
+    link = models.CharField(max_length=300, blank=True, null=True)
+    image_link = models.CharField(max_length=300, blank=True, null=True)
+    hobby = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    is_valid = models.IntegerField()
+    constellation = models.CharField(max_length=50, blank=True, null=True)
+    birth_place = models.CharField(max_length=50, blank=True, null=True)
+    agency = models.CharField(max_length=50, blank=True, null=True)
+    speciality = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'memberinfo'
 
 
 class Performance(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)  # 公演名称
-    team = models.IntegerField()
-    debut_date = models.DateField()  # 首演日期
-    end_date = models.DateField()  # 千秋乐日期
-    link = models.CharField(max_length=200)  # 官网链接
-    logo_link = models.CharField(max_length=200)
-    is_active = models.IntegerField()  # 是否正在演出
+    name = models.CharField(max_length=100, blank=True, null=True)
+    team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
+    debut_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    link = models.CharField(max_length=200, blank=True, null=True)
+    logo_link = models.CharField(max_length=100)
+    is_active = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'performance'
 
 
 class PerformanceHistory(models.Model):
-    id = models.IntegerField(primary_key=True)
-    performance_id = models.IntegerField()
-    date = models.DateField()
-    description = models.CharField(max_length=100)
+    performance_id = models.IntegerField(blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True)
+    description = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'performance_history'
+
+
+class Team(models.Model):
+    id = models.SmallIntegerField(primary_key=True)
+    name = models.CharField(max_length=30, blank=True, null=True)
+    found_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'team'
 
 
 class Weibo(models.Model):
-    id = models.IntegerField(primary_key=True)
-    weibo_id = models.BigIntegerField()
-    followers_count = models.BigIntegerField()  # 粉丝数量
-    friends_count = models.BigIntegerField()  # 关注数
-    statuses_count = models.BigIntegerField()  # 微博数
-    update_time = models.DateTimeField()
+    id = models.IntegerField(blank=True, null=True)
+    weibo_id = models.BigIntegerField(blank=True, null=True)
+    followers_count = models.BigIntegerField(blank=True, null=True)
+    friends_count = models.BigIntegerField(blank=True, null=True)
+    statuses_count = models.BigIntegerField(blank=True, null=True)
+    update_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'weibo'
 
 
 class WeiboDataHistory(models.Model):
-    id = models.IntegerField(primary_key=True)
-    weibo_id = models.BigIntegerField()
-    followers_count = models.BigIntegerField()  # 粉丝数量
-    friends_count = models.BigIntegerField()  # 关注数
-    statuses_count = models.BigIntegerField()  # 微博数
-    update_time = models.DateTimeField()
+    id = models.ForeignKey(Memberinfo, models.DO_NOTHING, db_column='id', blank=True, null=True)
+    weibo_id = models.BigIntegerField(blank=True, null=True)
+    followers_count = models.BigIntegerField(blank=True, null=True)
+    friends_count = models.BigIntegerField(blank=True, null=True)
+    statuses_count = models.BigIntegerField(blank=True, null=True)
+    update_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'weibo_data_history'
