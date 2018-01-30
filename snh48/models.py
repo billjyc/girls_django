@@ -46,7 +46,7 @@ class Performance(models.Model):
 
 
 class PerformanceHistory(models.Model):
-    id = models.IntegerField()
+    id = models.IntegerField(primary_key=True)
     performance_id = models.IntegerField()
     date = models.DateField()
     description = models.CharField(max_length=100)
@@ -61,7 +61,7 @@ class Weibo(models.Model):
     update_time = models.DateTimeField()
 
 
-class WeiboDataHistory(models):
+class WeiboDataHistory(models.Model):
     id = models.IntegerField(primary_key=True)
     weibo_id = models.BigIntegerField()
     followers_count = models.BigIntegerField()  # 粉丝数量
