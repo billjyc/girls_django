@@ -36,3 +36,13 @@ def member_detail(request, member_id):
         'mph_list': member_performance_history_list,
     }
     return render(request, 'snh48/member_detail.html', context)
+
+
+def performance_history_detail(request, performance_history_id):
+    ph = PerformanceHistory.objects.get(pk=performance_history_id)
+    member_list = MemberPerformanceHistory.objects.filter(performance_history=ph)
+    context = {
+        'ph': ph,
+        'member_list': member_list,
+    }
+    return render(request, 'snh48/performance_history_detail.html', context)
