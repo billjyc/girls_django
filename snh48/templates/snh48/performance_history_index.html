@@ -1,0 +1,16 @@
+{% extends "snh48/base.html" %}
+
+{% block title %}公演{% endblock %}
+
+{% block content %}
+    {% if ph_list %}
+        <h4>公演列表</h4>
+        <ul>
+            {% for ph in ph_list %}
+
+            <li><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }} {{ ph.performance.team }} {{ ph.performance.name }} {{ ph.description }}</a></li>
+
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

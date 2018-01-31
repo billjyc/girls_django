@@ -22,6 +22,14 @@ def index(request):
     return render(request, 'snh48/index.html', context)
 
 
+def performance_history_index(request):
+    ph_list = PerformanceHistory.objects.order_by('-id')
+    context = {
+        'ph_list': ph_list,
+    }
+    return render(request, 'snh48/performance_history_index.html', context)
+
+
 def member_detail(request, member_id):
     """
     获取成员详情
@@ -30,7 +38,7 @@ def member_detail(request, member_id):
     :return:
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
-    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member)
+    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history_id')
     context = {
         'member': member,
         'mph_list': member_performance_history_list,
