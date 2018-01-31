@@ -6,15 +6,39 @@
 </head>
 
 <body>
-    {% if member_list %}
-        <ul>
-        {% for member in member_list %}
+    <ul>
+        {% for member in team_sii %}
             <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
         {% endfor %}
-        </ul>
-    {% else %}
-        <p>No members are available.</p>
-    {% endif %}
+    </ul>
+    <br />
 
+    <ul>
+        {% for member in team_nii %}
+            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <br />
+
+    <ul>
+        {% for member in team_hii %}
+            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <br />
+
+    <ul>
+        {% for member in team_x %}
+            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <br />
+
+    <ul>
+        {% for member in team_xii %}
+            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <br />
 </body>
 </html>
