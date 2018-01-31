@@ -12,7 +12,9 @@ from .models import *
 # Create your views here.
 
 def index(request):
-    member_list = Memberinfo.objects.order_by('id')
+    member_list = Memberinfo.objects.filter(
+        is_valid=1
+    ).order_by('id').order_by('team')
     # template = loader.get_template('snh48/index.html')
     context = {
         'member_list': member_list,
@@ -23,4 +25,9 @@ def index(request):
 
 def member_detail(request, member_id):
     member = get_object_or_404(Memberinfo, pk=member_id)
-    return render(request, 'snh48/member_detail.html', {'member': member})
+    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member)
+    context = {
+        'member': member,
+        'mph_list': member_performance_history_list
+    }
+    return render(request, 'snh48/member_detail.html', context)

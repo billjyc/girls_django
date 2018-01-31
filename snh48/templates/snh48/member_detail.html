@@ -7,5 +7,27 @@
 <body>
     <li><img src="{{ member.image_link }}"></li>
     <li>{{ member }}</li>
+
+    <br />
+
+    {% if mph_list %}
+        <table border="1">
+            <caption>公演出勤统计</caption>
+            <tr>
+                <th>日期</th>
+                <th>公演</th>
+                <th>备注</th>
+            </tr>
+            {% for ph in mph_list %}
+                <tr>
+                    <td>{{ ph.performance_history.performance.name }}</td>
+                    <td>{{ ph.performance_history.date }}</td>
+                    <td>{{ ph.performance_history.description }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No performance history available.</p>
+    {% endif %}
 </body>
 </html>
