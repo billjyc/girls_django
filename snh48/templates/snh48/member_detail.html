@@ -1,33 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ member.name }}</title>
-</head>
-<body>
-    <li><img src="{{ member.image_link }}"></li>
-    <li>{{ member }}</li>
+{% extends "snh48/base.html" %}
+{% block title %}
+{{ member.name }} {{ member.team.name }}
+{% endblock %}
 
-    <br />
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <div class="row">
+                <img src="{{ member.image_link }}">
+            </div>
+            <div class="row">
+                {{ member }}
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-6">
+                    <li>昵称: {{ member.nick_name }}</li>
+                    <li>身高: {{ member.height }}</li>
+                    <li>血型: {{ member.blood_type }}</li>
+                    <li>生日: {{ member.birthday }}</li>
+                    <li>星座: {{ member.constellation }}</li>
+                    <li>出生地: {{ member.birth_place }}</li>
+                </div>
+                <div class="col-6">
+                    <li>个人特长: {{ member.speciality }}</li>
+                    <li>兴趣爱好: {{ member.hobby }}</li>
+                    <li>加入时间: {{ member.join_time }}</li>
+                    <li>加入所属: {{ member.batch }}</li>
+                    <li>所属公司: {{ member.agency }}</li>
+                </div>
+            </div>
 
-    {% if mph_list %}
-        <table border="1">
-            <caption>公演出勤统计</caption>
-            <tr>
-                <th>日期</th>
-                <th>公演</th>
-                <th>备注</th>
-            </tr>
-            {% for ph in mph_list %}
+            <div class="row">
+                <div class="col">
+                    <li>经历备注: {{ member.description }}</li>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        {% if mph_list %}
+            <table border="1">
+                <caption>公演出勤统计</caption>
                 <tr>
-                    <td>{{ ph.performance_history.performance.name }}</td>
-                    <td>{{ ph.performance_history.date }}</td>
-                    <td>{{ ph.performance_history.description }}</td>
+                    <th>日期</th>
+                    <th>公演</th>
+                    <th>备注</th>
                 </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p>No performance history available.</p>
-    {% endif %}
-</body>
-</html>
+                {% for ph in mph_list %}
+                    <tr>
+                        <td>{{ ph.performance_history.performance.name }}</td>
+                        <td>{{ ph.performance_history.date }}</td>
+                        <td>{{ ph.performance_history.description }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No performance history available.</p>
+        {% endif %}
+    </div>
+{% endblock %}
