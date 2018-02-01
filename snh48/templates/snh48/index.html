@@ -3,43 +3,49 @@
 {% block title %}成员{% endblock %}
 
 {% block content %}
-    <h4>Team SII</h4>
-    <ul>
-        {% for member in team_sii %}
-            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <br />
-
-    <h4>Team NII</h4>
-    <ul>
-        {% for member in team_nii %}
-            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <br />
-
-    <h4>Team HII</h4>
-    <ul>
-        {% for member in team_hii %}
-            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <br />
-
-    <h4>Team X</h4>
-    <ul>
-        {% for member in team_x %}
-            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <br />
-
-    <h4>Team XII</h4>
-    <ul>
-        {% for member in team_xii %}
-            <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <br />
+    <div class="row">
+        <div class="col-4">
+            <h4>Team SII</h4>
+            <ul>
+                {% for member in team_sii %}
+                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-4">
+            <h4>Team NII</h4>
+            <ul>
+                {% for member in team_nii %}
+                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-4">
+            <h4>Team HII</h4>
+            <ul>
+                {% for member in team_hii %}
+                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h4>Team X</h4>
+            <ul>
+                {% for member in team_x %}
+                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-4">
+            <h4>Team XII</h4>
+            <ul>
+                {% for member in team_xii %}
+                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-4"></div>
+    </div>
 {% endblock %}

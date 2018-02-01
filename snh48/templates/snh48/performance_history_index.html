@@ -5,12 +5,26 @@
 {% block content %}
     {% if ph_list %}
         <h4>公演列表</h4>
-        <ul>
+        <table border="1">
+            <tr>
+                <th>日期</th>
+                <th>队伍</th>
+                <th>公演</th>
+                <th>备注</th>
+            </tr>
             {% for ph in ph_list %}
-
-            <li><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }} {{ ph.performance.team }} {{ ph.performance.name }} {{ ph.description }}</a></li>
-
+                <tr>
+                    <td><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }}</a></td>
+                    <td>
+                        {% if ph.performance.team %}
+                            {{ ph.performance.team }}
+                        {% endif %}
+                    </td>
+                    <td>{{ ph.performance.name }}</td>
+                    <td>{{ ph.description }}</td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
+
     {% endif %}
 {% endblock %}
