@@ -13,7 +13,7 @@
                 <th>备注</th>
             </tr>
             {% for ph in ph_list %}
-                <tr>
+                <tr class="text-center">
                     <td><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }}</a></td>
                     <td>
                         {% if ph.performance.team %}
