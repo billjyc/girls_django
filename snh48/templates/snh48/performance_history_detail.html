@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <h4>{{ ph.performance.team }} {{ ph.performance.name }}</h4>
+    {% if ph.performance.team %}
+        <h4>{{ ph.performance.team }} {{ ph.performance.name }}</h4>
+    {% else %}
+        <h4>{{ ph.performance.name }}</h4>
+    {% endif %}
     <h4>{{ ph.date }} </h4>
     <h4>{{ ph.description }}</h4>
     {% if member_list %}
@@ -15,6 +19,7 @@
                 <li><a href="{% url 'member_detail' member.member.id %}">{{ member.member.name }}</a></li>
             {% endfor %}
         </ul>
-
+    {% else %}
+        <h5>本场公演还没有开始！</h5>
     {% endif %}
 {% endblock %}
