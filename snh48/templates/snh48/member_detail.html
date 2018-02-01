@@ -5,17 +5,17 @@
 
 {% block content %}
     <div class="row" style="margin-top:20px">
-        <div class="col-4">
+        <div class="col-md-4">
             <div class="row">
                 <img src="{{ member.image_link }}" class="img-responsive center-block">
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-md-8">
             <div class="row" style="margin-bottom:10px">
                 <h4>{{ member }}</h4>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6">
                     <li>昵称: {{ member.nick_name }}</li>
                     <li>身高: {{ member.height }}</li>
                     <li>血型: {{ member.blood_type }}</li>
@@ -23,7 +23,7 @@
                     <li>星座: {{ member.constellation }}</li>
                     <li>出生地: {{ member.birth_place }}</li>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                     <li>个人特长: {{ member.speciality }}</li>
                     <li>兴趣爱好: {{ member.hobby }}</li>
                     <li>加入时间: {{ member.join_time }}</li>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="row">
-                <div class="col">
+                <div class="col-md-12">
                     <li>经历备注: {{ member.description }}</li>
                 </div>
             </div>
@@ -42,8 +42,9 @@
     </div>
 
     <div class="row" style="margin-top:10px">
+        <div class="col-md-12">
         {% if mph_list %}
-            <table class="table table-hover" data-toggle="table"
+            <table class="display table table-hover" data-toggle="table"
                 data-pagination="true"
                 data-page-list="[10, 20, 50, 100]"
                 data-mobile-responsive="true"
@@ -69,5 +70,6 @@
         {% else %}
             <p>No performance history available.</p>
         {% endif %}
+        </div>
     </div>
 {% endblock %}
