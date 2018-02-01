@@ -43,20 +43,24 @@
 
     <div class="row">
         {% if mph_list %}
-            <table border="1">
+            <table class="table table-bordered">
                 <caption>公演出勤统计</caption>
-                <tr class="text-center">
-                    <th>日期</th>
-                    <th>公演</th>
-                    <th>备注</th>
-                </tr>
-                {% for ph in mph_list %}
+                <thead>
                     <tr class="text-center">
-                        <td>{{ ph.performance_history.performance.name }}</td>
-                        <td>{{ ph.performance_history.date }}</td>
-                        <td>{{ ph.performance_history.description }}</td>
+                        <th>公演</th>
+                        <th>日期</th>
+                        <th>备注</th>
                     </tr>
-                {% endfor %}
+                </thead>
+                <tbody>
+                    {% for ph in mph_list %}
+                        <tr class="text-center">
+                            <td>{{ ph.performance_history.performance.name }}</td>
+                            <td>{{ ph.performance_history.date }}</td>
+                            <td>{{ ph.performance_history.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         {% else %}
             <p>No performance history available.</p>

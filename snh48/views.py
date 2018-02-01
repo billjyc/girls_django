@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 
 from .models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -39,6 +40,7 @@ def member_detail(request, member_id):
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
     member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history_id')
+
     context = {
         'member': member,
         'mph_list': member_performance_history_list,
