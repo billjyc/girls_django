@@ -13,3 +13,6 @@ snh48/migrations/__init__.pyc
 snh48/models.pyc
 snh48/urls.pyc
 snh48/views.pyc
+snh48/modian/__init__.pyc
+snh48/modian/modian_handler.pyc
+snh48/modian/util.pyc

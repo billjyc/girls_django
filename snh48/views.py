@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 
 from .models import *
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from modian.modian_handler import ModianHandler
 
 
 # Create your views here.
@@ -56,3 +56,12 @@ def performance_history_detail(request, performance_history_id):
         'member_list': member_list,
     }
     return render(request, 'snh48/performance_history_detail.html', context)
+
+
+def get_all_orders(request, pro_id):
+    modian_handler = ModianHandler()
+    order_list = modian_handler.get_all_orders(pro_id)
+    context = {
+        'order_list': order_list,
+    }
+    return render(request, 'snh48/orders.html', context)
