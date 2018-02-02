@@ -92,6 +92,7 @@ class PerformanceHistory(models.Model):
     performance = models.ForeignKey('Performance', models.DO_NOTHING, blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
     description = models.CharField(max_length=100, blank=True, null=True)
+    video_url = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
