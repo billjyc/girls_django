@@ -39,13 +39,20 @@
             </ul>
         </div>
         <div class="col-4">
-            <h4>Team XII</h4>
+            <h4>Team Ft</h4>
             <ul>
-                {% for member in team_xii %}
+                {% for member in team_ft %}
                     <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-4"></div>
+        <div class="col-4">
+            <h4>Team 预备生</h4>
+            <ul>
+                {% for member in team_trainee %}
+                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}
