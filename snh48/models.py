@@ -87,6 +87,33 @@ class Performance(models.Model):
         return str(self.team) + ' ' + self.name
 
 
+class Unit(models.Model):
+    performance = models.ForeignKey('Performance', models.DO_NOTHING, db_column='performance_id', blank=True, null=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    num = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'unit'
+
+    def __unicode__(self):
+        return str(self.performance.name) + ' ' + self.name + ' 人数：' + self.num + '人'
+
+
+class UnitHistory(models.Model):
+    unit = models.ForeignKey('Unit', models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
+    performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING,
+                                            db_column='performance_history_id', blank=True, null=True)
+    member = models.ForeignKey('MemberInfo', models.DO_NOTHING, db_column='member_id', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'performance_history'
+
+    def __unicode__(self):
+        return str(self.unit) + ' ' + str(self.member) + ' ' + str(self.member)
+
+
 class PerformanceHistory(models.Model):
     # performance_id = models.IntegerField(blank=True, null=True)
     performance = models.ForeignKey('Performance', models.DO_NOTHING, blank=True, null=True)
