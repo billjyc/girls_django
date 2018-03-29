@@ -44,9 +44,20 @@ def member_detail(request, member_id):
     member = get_object_or_404(Memberinfo, pk=member_id)
     member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history_id')
 
+    # 获取unit表演阵容
+    with connection.cursor() as cursor:
+        cursor.execute("""
+                SELECT uh.performance_history_id, DATE(ph.date) AS p_date, p.name, ph.description, u.id as unit_id, u.name AS unit_name, uh.rank AS unit_rank
+FROM unit u, unit_history uh, performance_history ph, performance p
+WHERE uh.member_id = %s AND uh.`unit_id` = u.id AND ph.id = uh.performance_history_id AND p.id = ph.performance_id
+ORDER BY uh.`performance_history_id`, u.id, uh.rank;
+
+            """, [member_id])
+        unit_list = util.namedtuplefetchall(cursor)
     context = {
         'member': member,
         'mph_list': member_performance_history_list,
+        'unit_list': unit_list
     }
     return render(request, 'snh48/member_detail.html', context)
 
@@ -58,7 +69,7 @@ def performance_history_detail(request, performance_history_id):
     # 获取unit表演阵容
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT mi.id, mi.name AS member_name, uh.performance_history_id, u.name AS unit_name, uh.rank AS unit_rank
+            SELECT mi.id, mi.name AS member_name, uh.performance_history_id, u.id AS unit_id, u.name AS unit_name, uh.rank AS unit_rank
 FROM memberinfo mi, unit u, unit_history uh
 WHERE uh.performance_history_id = %s AND mi.id = uh.`member_id` AND uh.`unit_id` = u.id
 ORDER BY uh.`performance_history_id`, u.id, uh.rank;
