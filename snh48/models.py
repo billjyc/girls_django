@@ -105,13 +105,14 @@ class UnitHistory(models.Model):
     performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING,
                                             db_column='performance_history_id', blank=True, null=True)
     member = models.ForeignKey('MemberInfo', models.DO_NOTHING, db_column='member_id', blank=True, null=True)
+    rank = models.IntegerField()
 
     class Meta:
         managed = False
         db_table = 'performance_history'
 
     def __unicode__(self):
-        return str(self.unit) + ' ' + str(self.member) + ' ' + str(self.member)
+        return str(self.unit) + ' ' + str(self.member) + ' ' + str(self.member) + ' 顺位: ' + str(self.rank)
 
 
 class PerformanceHistory(models.Model):
