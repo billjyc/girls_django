@@ -94,20 +94,20 @@
                             data-striped="true">
                             <thead>
                                 <tr class="text-center">
-                                    <th>公演</th>
                                     <th>日期</th>
                                     <th>Unit</th>
                                     <th>顺位</th>
+                                    <th>公演</th>
                                     <th>备注</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for result in unit_list %}
                                     <tr class="text-center">
-                                        <td>{{ result.name }}</td>
                                         <td>{{ result.p_date }}</td>
                                         <td>{{ result.unit_name }}</td>
                                         <td>{{ result.unit_rank }}</td>
+                                        <td>{{ result.name }}</td>
                                         <td>{{ result.description }}</td>
                                     </tr>
                                 {% endfor %}
