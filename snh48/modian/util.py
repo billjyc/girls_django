@@ -4,6 +4,7 @@ import random
 import urllib
 import hashlib
 import requests
+from collections import namedtuple
 
 
 def convert_timestamp_to_timestr(timestamp):
@@ -55,6 +56,21 @@ def make_signature(post_fields):
 def ksort(d):
     return [(k, d[k]) for k in sorted(d.keys())]
 
+
+def dictfetchall(cursor):
+    """Return all rows from a cursor as a dict"""
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+
+def namedtuplefetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
 
 if __name__ == '__main__':
     # strs = filter_tags("""

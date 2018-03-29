@@ -2,9 +2,11 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
+from django.db import connection
 
 from .models import *
 from modian.modian_handler import ModianHandler
+from modian import util
 
 
 # Create your views here.
@@ -52,9 +54,21 @@ def member_detail(request, member_id):
 def performance_history_detail(request, performance_history_id):
     ph = PerformanceHistory.objects.get(pk=performance_history_id)
     member_list = MemberPerformanceHistory.objects.filter(performance_history=ph)
+
+    # 获取unit表演阵容
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT mi.id, mi.name AS member_name, uh.performance_history_id, u.name AS unit_name, uh.rank AS unit_rank
+FROM memberinfo mi, unit u, unit_history uh
+WHERE uh.performance_history_id = %s AND mi.id = uh.`member_id` AND uh.`unit_id` = u.id
+ORDER BY uh.`performance_history_id`, u.id, uh.rank;
+
+        """, [performance_history_id])
+        unit_list = util.namedtuplefetchall(cursor)
     context = {
         'ph': ph,
         'member_list': member_list,
+        'unit_list': unit_list,
     }
     return render(request, 'snh48/performance_history_detail.html', context)
 
