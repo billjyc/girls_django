@@ -68,6 +68,8 @@ class ModianHandler:
         if int(r['status']) == 0:
             orders = r['data']
             return orders
+        elif int(r['status']) == 2:
+            return []
         else:
             raise RuntimeError('获取项目订单查询失败')
 
@@ -101,4 +103,6 @@ class ModianHandler:
 
 
 if __name__ == '__main__':
+    handler = ModianHandler()
+    order_list = handler.get_all_orders(11744)
     pass
