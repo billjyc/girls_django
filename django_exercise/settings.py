@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'snh48',
         'USER': 'user_00',
         'PASSWORD': 'Jyc@123456',
-        'HOST': '112.74.183.47',
+        'HOST': 'localhost',
         'PORT': '3306'
     },
     'snh48': {
@@ -101,7 +101,7 @@ DATABASES = {
         'NAME': 'snh48',
         'USER': 'user_00',
         'PASSWORD': 'Jyc@123456',
-        'HOST': '112.74.183.47',
+        'HOST': 'localhost',
         'PORT': '3306'
     },
     'logic': {
@@ -109,7 +109,7 @@ DATABASES = {
         'NAME': 'card_draw',
         'USER': 'user_00',
         'PASSWORD': 'Jyc@123456',
-        'HOST': '112.74.183.47',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
