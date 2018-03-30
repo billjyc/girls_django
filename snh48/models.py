@@ -26,6 +26,7 @@ class MemberPerformanceHistory(models.Model):
         managed = False
         db_table = 'member_performance_history'
         unique_together = (('member', 'performance_history'),)
+        app_label = 'snh48'
 
 
 class MemberPerformanceHistoryTmp(models.Model):
@@ -36,6 +37,7 @@ class MemberPerformanceHistoryTmp(models.Model):
         managed = False
         db_table = 'member_performance_history_tmp'
         unique_together = (('member', 'performance_history'),)
+        app_label = 'snh48'
 
 
 class Memberinfo(models.Model):
@@ -63,6 +65,7 @@ class Memberinfo(models.Model):
     class Meta:
         managed = False
         db_table = 'memberinfo'
+        app_label = 'snh48'
 
     def __unicode__(self):
         return str(self.team) + ' ' + self.name
@@ -80,6 +83,7 @@ class Performance(models.Model):
     class Meta:
         managed = False
         db_table = 'performance'
+        app_label = 'snh48'
 
     def __unicode__(self):
         if self.team is None:
@@ -95,6 +99,7 @@ class Unit(models.Model):
     class Meta:
         managed = False
         db_table = 'unit'
+        app_label = 'snh48'
 
     def __unicode__(self):
         return str(self.performance.name) + ' ' + self.name + ' 人数：' + self.num + '人'
@@ -110,6 +115,7 @@ class UnitHistory(models.Model):
     class Meta:
         managed = False
         db_table = 'performance_history'
+        app_label = 'snh48'
 
     def __unicode__(self):
         return str(self.unit) + ' ' + str(self.member) + ' ' + str(self.member) + ' 顺位: ' + str(self.rank)
@@ -125,6 +131,7 @@ class PerformanceHistory(models.Model):
     class Meta:
         managed = False
         db_table = 'performance_history'
+        app_label = 'snh48'
 
     def __unicode__(self):
         return str(self.date) + ' ' + str(self.performance) + ' ' + self.description
@@ -138,6 +145,7 @@ class Team(models.Model):
     class Meta:
         managed = False
         db_table = 'team'
+        app_label = 'snh48'
 
     def __unicode__(self):
         return self.name
@@ -154,6 +162,7 @@ class Weibo(models.Model):
     class Meta:
         managed = False
         db_table = 'weibo'
+        app_label = 'snh48'
 
 
 class WeiboDataHistory(models.Model):
@@ -167,3 +176,4 @@ class WeiboDataHistory(models.Model):
     class Meta:
         managed = False
         db_table = 'weibo_data_history'
+        app_label = 'snh48'

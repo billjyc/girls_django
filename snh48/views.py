@@ -5,8 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db import connection
 
 from .models import *
-from modian.modian_handler import ModianHandler
-from modian import util
+from django_exercise import utils
 
 
 # Create your views here.
@@ -53,7 +52,7 @@ WHERE uh.member_id = %s AND uh.`unit_id` = u.id AND ph.id = uh.performance_histo
 ORDER BY uh.`performance_history_id`, u.id, uh.rank;
 
             """, [member_id])
-        unit_list = util.namedtuplefetchall(cursor)
+        unit_list = utils.namedtuplefetchall(cursor)
     context = {
         'member': member,
         'mph_list': member_performance_history_list,
@@ -75,19 +74,10 @@ WHERE uh.performance_history_id = %s AND mi.id = uh.`member_id` AND uh.`unit_id`
 ORDER BY uh.`performance_history_id`, u.id, uh.rank;
 
         """, [performance_history_id])
-        unit_list = util.namedtuplefetchall(cursor)
+        unit_list = utils.namedtuplefetchall(cursor)
     context = {
         'ph': ph,
         'member_list': member_list,
         'unit_list': unit_list,
     }
     return render(request, 'snh48/performance_history_detail.html', context)
-
-
-def get_all_orders(request, pro_id):
-    modian_handler = ModianHandler()
-    order_list = modian_handler.get_all_orders(pro_id)
-    context = {
-        'order_list': order_list,
-    }
-    return render(request, 'snh48/orders.html', context)

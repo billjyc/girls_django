@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['112.74.183.47', 'localhost', '127.0.0.1']
 INSTALLED_APPS = [
     'corsheaders',
     'snh48.apps.Snh48Config',
+    'modian.apps.ModianConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,23 +80,43 @@ WSGI_APPLICATION = 'django_exercise.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'snh48',
+    #     'USER': 'user_00',
+    #     'PASSWORD': 'Jyc@123456',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306'
+    # },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'snh48',
         'USER': 'user_00',
         'PASSWORD': 'Jyc@123456',
-        'HOST': 'localhost',
+        'HOST': '112.74.183.47',
         'PORT': '3306'
     },
-    # 'prod': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'snh48',
-    #     'USER': 'root',
-    #     'PASSWORD': '***',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306'
-    # }
+    'snh48': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'snh48',
+        'USER': 'user_00',
+        'PASSWORD': 'Jyc@123456',
+        'HOST': '112.74.183.47',
+        'PORT': '3306'
+    },
+    'logic': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'card_draw',
+        'USER': 'user_00',
+        'PASSWORD': 'Jyc@123456',
+        'HOST': '112.74.183.47',
+        'PORT': '3306'
+    }
 }
+
+
+DATABASE_ROUTERS = ['routers.snh48_router.MemberRouter',
+                    'routers.modian_router.ModianRouter']
 
 
 # Password validation

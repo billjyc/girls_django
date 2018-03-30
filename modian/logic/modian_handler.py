@@ -9,7 +9,7 @@ import requests
 import time
 import hashlib
 import urllib
-import util
+from django_exercise import utils
 
 
 class ModianEntity:
@@ -96,7 +96,7 @@ class ModianHandler:
         :param post_fields: post请求的参数
         :return:
         """
-        post_fields_sorted = util.ksort(post_fields)
+        post_fields_sorted = utils.ksort(post_fields)
         md5_string = urllib.urlencode(post_fields_sorted) + '&p=das41aq6'
         sign = hashlib.md5(md5_string.encode('utf-8')).hexdigest()[5:21]
         return sign

@@ -1,0 +1,35 @@
+{% extends "modian/base.html" %}
+
+{% block title %}订单{% endblock %}
+
+{% block content %}
+    {% if order_list %}
+    <h4>订单列表</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=20
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true">
+        <thead>
+            <tr class="text-center">
+                <th>时间</th>
+                <th>ID</th>
+                <th>金额</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+                <tr class="text-center">
+                    <td>{{ order.pay_time }}</td>
+                    <td>{{ order.nickname }}</td>
+                    <td>{{ order.backer_money }}元</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}
