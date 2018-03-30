@@ -114,7 +114,7 @@ class UnitHistory(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'performance_history'
+        db_table = 'unit_history'
         app_label = 'snh48'
 
     def __unicode__(self):
