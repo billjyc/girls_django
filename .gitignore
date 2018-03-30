@@ -1,18 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
 .idea/
-django_exercise/__init__.pyc
-django_exercise/settings.pyc
-django_exercise/urls.pyc
-django_exercise/wsgi.pyc
-snh48/__init__.pyc
-snh48/admin.pyc
-snh48/apps.pyc
-snh48/migrations/0001_initial.pyc
-snh48/migrations/__init__.pyc
-snh48/models.pyc
-snh48/urls.pyc
-snh48/views.pyc
-snh48/modian/__init__.pyc
-snh48/modian/modian_handler.pyc
-snh48/modian/util.pyc
+*.pyc

@@ -20,5 +20,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^snh48/', include('snh48.urls')),
+    url(r'^modian/', include('modian.urls')),
     url(r'^admin/', admin.site.urls),
 ]
