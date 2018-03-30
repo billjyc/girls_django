@@ -11,5 +11,7 @@ admin.site.register(Performance)
 admin.site.register(PerformanceHistory)
 admin.site.register(MemberPerformanceHistory)
 admin.site.register(MemberPerformanceHistoryTmp)
+admin.site.register(Unit)
+admin.site.register(UnitHistory)
 
 
