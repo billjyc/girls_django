@@ -102,7 +102,7 @@ class Unit(models.Model):
         app_label = 'snh48'
 
     def __unicode__(self):
-        return str(self.performance.name) + ' ' + self.name + ' 人数：' + self.num + '人'
+        return str(self.performance.name) + ' ' + self.name + ' 人数：' + str(self.num) + '人'
 
 
 class UnitHistory(models.Model):
