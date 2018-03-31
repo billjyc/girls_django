@@ -70,6 +70,9 @@ class Memberinfo(models.Model):
     def __unicode__(self):
         return str(self.team) + ' ' + self.name
 
+    def __str__(self):
+        return str(self.team) + ' ' + self.name
+
 
 class Performance(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -90,6 +93,11 @@ class Performance(models.Model):
             return self.name
         return str(self.team) + ' ' + self.name
 
+    def __str__(self):
+        if self.team is None:
+            return self.name
+        return str(self.team) + ' ' + self.name
+
 
 class Unit(models.Model):
     performance = models.ForeignKey('Performance', models.DO_NOTHING, db_column='performance_id', blank=True, null=True)
@@ -102,6 +110,9 @@ class Unit(models.Model):
         app_label = 'snh48'
 
     def __unicode__(self):
+        return str(self.performance.name) + ' ' + self.name + ' 人数：' + str(self.num) + '人'
+
+    def __str__(self):
         return str(self.performance.name) + ' ' + self.name + ' 人数：' + str(self.num) + '人'
 
 
@@ -118,7 +129,10 @@ class UnitHistory(models.Model):
         app_label = 'snh48'
 
     def __unicode__(self):
-        return str(self.unit) + ' ' + str(self.member) + ' ' + str(self.member) + ' 顺位: ' + str(self.rank)
+        return str(self.unit) + ' ' + str(self.member) + ' 顺位: ' + str(self.rank)
+
+    def __str__(self):
+        return str(self.unit) + ' ' + str(self.member) + ' 顺位: ' + str(self.rank)
 
 
 class PerformanceHistory(models.Model):
@@ -136,6 +150,9 @@ class PerformanceHistory(models.Model):
     def __unicode__(self):
         return str(self.date) + ' ' + str(self.performance) + ' ' + self.description
 
+    def __str__(self):
+        return str(self.date) + ' ' + str(self.performance) + ' ' + self.description
+
 
 class Team(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -148,6 +165,9 @@ class Team(models.Model):
         app_label = 'snh48'
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 
