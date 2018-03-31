@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from django.shortcuts import render
 
-from logic.modian_handler import ModianHandler
+from .logic.modian_handler import ModianHandler
 from django_exercise import utils
 
 

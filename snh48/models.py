@@ -14,8 +14,8 @@ from django.db import models
 
 import sys
 
-reload(sys)
-sys.setdefaultencoding("utf-8")
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
 
 
 class MemberPerformanceHistory(models.Model):
