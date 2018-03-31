@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import random
-import urllib
+import urllib.parse
 import hashlib
 import requests
 from collections import namedtuple
@@ -46,7 +46,7 @@ def make_signature(post_fields):
     :return:
     """
     post_fields_sorted = ksort(post_fields)
-    md5_string = urllib.urlencode(post_fields_sorted) + '&p=das41aq6'
+    md5_string = urllib.parse.urlencode(post_fields_sorted) + '&p=das41aq6'
     # print md5_string
     sign = hashlib.md5(md5_string).hexdigest()[5:21]
     # print sign

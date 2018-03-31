@@ -8,7 +8,7 @@ import requests
 
 import time
 import hashlib
-import urllib
+import urllib.parse
 from django_exercise import utils
 
 
@@ -97,7 +97,7 @@ class ModianHandler:
         :return:
         """
         post_fields_sorted = utils.ksort(post_fields)
-        md5_string = urllib.urlencode(post_fields_sorted) + '&p=das41aq6'
+        md5_string = urllib.parse.urlencode(post_fields_sorted) + '&p=das41aq6'
         sign = hashlib.md5(md5_string.encode('utf-8')).hexdigest()[5:21]
         return sign
 

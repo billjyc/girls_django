@@ -37,8 +37,8 @@ class Card(models.Model):
 
 
 class DrawRecord(models.Model):
-    supporter_id = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='supporter_id')
-    card_id = models.ForeignKey('Card', models.DO_NOTHING, db_column='card_id')
+    supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='supporter_id')
+    card = models.ForeignKey('Card', models.DO_NOTHING, db_column='card_id')
     draw_time = models.DateTimeField()
 
     class Meta:

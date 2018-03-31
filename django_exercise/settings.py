@@ -89,7 +89,12 @@ DATABASES = {
     #     'PORT': '3306'
     # },
     'default': {
-
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'snh48',
+        'USER': 'user_00',
+        'PASSWORD': 'Jyc@123456',
+        'HOST': 'localhost',
+        'PORT': '3306'
     },
     'snh48': {
         'ENGINE': 'django.db.backends.mysql',
@@ -99,7 +104,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306'
     },
-    'logic': {
+    'modian': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'card_draw',
         'USER': 'user_00',

@@ -5,7 +5,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .logic.modian_handler import ModianHandler
-from django_exercise import utils
+from .logic.card_draw_handler import CardDrawHandler
+from .models import *
 
 
 # Create your views here.
@@ -20,3 +21,15 @@ def get_all_orders(request, pro_id):
         'order_list': order_list,
     }
     return render(request, 'modian/orders.html', context)
+
+
+def get_all_card_draw_record(request):
+    records = DrawRecord.objects.order_by('-draw_time')
+    context = {
+        'records': records,
+    }
+    return render(request, 'modian/draw-records.html', context)
+
+
+def get_card_draw_record(request):
+    pass
