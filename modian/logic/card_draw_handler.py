@@ -2,6 +2,7 @@ from modian.models import *
 
 from django.db import connection, connections
 from django_exercise import utils
+import json
 
 
 class CardDrawLine:
@@ -32,13 +33,9 @@ class CardDrawHandler:
                 tmp[s_id]['cards'] = {}
             c_id = result.card_id
             c_name = result.card_name
-            tmp[s_id]['cards'][c_id] = result.card_id
-            tmp[s_id]['cards'][c_name] = result.c
+            if c_id not in tmp[s_id]['cards']:
+                tmp[s_id]['cards'][c_id] = {}
+                tmp[s_id]['cards'][c_id]['name'] = c_name
+                tmp[s_id]['cards'][c_id]['count'] = result.c
 
-        rst = []
-        for k, v in tmp.items():
-            cards = v['cards']
-            line = CardDrawLine(k, v['supporter_name'], cards)
-
-
-
+        return tmp

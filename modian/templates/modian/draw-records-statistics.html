@@ -1,0 +1,55 @@
+{% extends "modian/base.html" %}
+
+{% block title %}抽卡统计{% endblock %}
+
+{% block content %}
+
+    <h4>抽卡统计</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=20
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true">
+        <thead>
+            {% if cards %}
+            <tr class="text-center">
+                <th>ID</th>
+                {% for card in cards %}
+                    <th>
+                        {{ card.name }}
+                        <br />
+                        <img src="{{ card.url }}" class="img-fluid">
+                    </th>
+                {% endfor %}
+            </tr>
+            {% endif %}
+        </thead>
+        {% if records %}
+        <tbody>
+            {% for s_id, v in records.items %}
+            <tr class="text-center">
+                <td>{{ v.supporter_name }}</td>
+                
+                <td>{{ v.cards.1.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.2.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.3.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.4.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.5.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.6.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.7.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.8.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.9.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.10.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.11.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.12.count | default_if_none:"0" }}</td>
+            </tr>
+            {% endfor  %}
+        </tbody>
+        {% endif %}
+    </table>
+
+{% endblock %}

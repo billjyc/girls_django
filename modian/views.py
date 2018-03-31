@@ -31,5 +31,12 @@ def get_all_card_draw_record(request):
     return render(request, 'modian/draw-records.html', context)
 
 
-def get_card_draw_record(request):
-    pass
+def get_card_draw_record_by_supporter(request):
+    handler = CardDrawHandler()
+    records = handler.get_draw_record_by_supporter()
+    cards = Card.objects.order_by('id')
+    context = {
+        'records': records,
+        'cards': cards,
+    }
+    return render(request, 'modian/draw-records-statistics.html', context)
