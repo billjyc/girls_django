@@ -16,6 +16,9 @@ class Supporter(models.Model):
     def __unicode__(self):
         return 'Supporter[id=%s, name=%s]' % (self.id, self.name)
 
+    def __str__(self):
+        return 'Supporter[id=%s, name=%s]' % (self.id, self.name)
+
 
 class Card(models.Model):
     name = models.CharField(max_length=50)
@@ -27,6 +30,9 @@ class Card(models.Model):
         db_table = 'card'
 
     def __unicode__(self):
+        return 'Card[name=%s, level=%s]' % (self.name, self.level)
+
+    def __str__(self):
         return 'Card[name=%s, level=%s]' % (self.name, self.level)
 
 
