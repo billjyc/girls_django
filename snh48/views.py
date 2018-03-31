@@ -44,7 +44,6 @@ def member_detail(request, member_id):
     :return:
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
-    print(member)
     member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history_id')
 
     # 获取unit表演阵容
