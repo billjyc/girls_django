@@ -2,10 +2,13 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
-from django.db import connection
+from django.db import connection, connections
 
 from .models import *
 from django_exercise import utils
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -41,10 +44,11 @@ def member_detail(request, member_id):
     :return:
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
+    print(member)
     member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history_id')
 
     # 获取unit表演阵容
-    with connection.cursor() as cursor:
+    with connections['snh48'].cursor() as cursor:
         cursor.execute("""
                 SELECT uh.performance_history_id, DATE(ph.date) AS p_date, p.name, ph.description, u.id as unit_id, u.name AS unit_name, uh.rank AS unit_rank
 FROM unit u, unit_history uh, performance_history ph, performance p
@@ -66,7 +70,7 @@ def performance_history_detail(request, performance_history_id):
     member_list = MemberPerformanceHistory.objects.filter(performance_history=ph)
 
     # 获取unit表演阵容
-    with connection.cursor() as cursor:
+    with connections['snh48'].cursor() as cursor:
         cursor.execute("""
             SELECT mi.id, mi.name AS member_name, uh.performance_history_id, u.id AS unit_id, u.name AS unit_name, uh.rank AS unit_rank
 FROM memberinfo mi, unit u, unit_history uh
