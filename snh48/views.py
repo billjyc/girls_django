@@ -29,7 +29,7 @@ def index(request):
 
 
 def performance_history_index(request):
-    ph_list = PerformanceHistory.objects.order_by('-id')
+    ph_list = PerformanceHistory.objects.order_by('-date')
     context = {
         'ph_list': ph_list,
     }
