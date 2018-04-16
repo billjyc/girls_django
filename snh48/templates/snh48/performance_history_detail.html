@@ -20,12 +20,12 @@
     {% if bs %}
     <h5>B站播放数据</h5>
     <ul>
-        <li>播放量: {{ bs.0.view }}</li>
-        <li>弹幕: {{ bs.0.danmaku }}</li>
-        <li>硬币: {{ bs.0.coin }}</li>
-        <li>收藏: {{ bs.0.favorite }}</li>
-        <li>评论: {{ bs.0.reply }}</li>
-        <li>分享: {{ bs.0.share }}</li>
+        <li>播放量: {{ bs.view }}</li>
+        <li>弹幕: {{ bs.danmaku }}</li>
+        <li>硬币: {{ bs.coin }}</li>
+        <li>收藏: {{ bs.favorite }}</li>
+        <li>评论: {{ bs.reply }}</li>
+        <li>分享: {{ bs.share }}</li>
     </ul>
     {% endif %}
     {% if member_list %}
