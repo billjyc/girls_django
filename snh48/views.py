@@ -67,7 +67,7 @@ ORDER BY uh.`performance_history_id` desc, u.id, uh.rank;
 def performance_history_detail(request, performance_history_id):
     ph = PerformanceHistory.objects.get(pk=performance_history_id)
     member_list = MemberPerformanceHistory.objects.filter(performance_history=ph)
-    bs = BiliBiliStat.objects.get(performance_history_id=performance_history_id)
+    bs = BiliBiliStat.objects.filter(performance_history=ph)
 
     # 获取unit表演阵容
     with connections['snh48'].cursor() as cursor:
