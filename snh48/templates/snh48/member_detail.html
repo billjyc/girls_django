@@ -66,6 +66,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>公演</th>
+                                    <th>队伍</th>
                                     <th>日期</th>
                                     <th>备注</th>
                                 </tr>
@@ -74,6 +75,7 @@
                                 {% for ph in mph_list %}
                                     <tr class="text-center">
                                         <td>{{ ph.performance_history.performance.name }}</td>
+                                        <td>{{ ph.performance_history.performance.team }}</td>
                                         <td>{{ ph.performance_history.date }}</td>
                                         <td>{{ ph.performance_history.description }}</td>
                                     </tr>
