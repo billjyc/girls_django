@@ -12,7 +12,9 @@
     {% endif %}
     <h5>{{ ph.date }} </h5>
     <h5>{{ ph.description }}</h5>
+    {% if ph.video_url %}
     <h5><a href="{{ ph.video_url }}" target="_blank">{{ ph.video_url }}</a></h5>
+    {% endif %}
     <br />
     {% if bs %}
     <h5>B站播放数据</h5>
