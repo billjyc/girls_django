@@ -67,8 +67,8 @@ ORDER BY uh.`performance_history_id` desc, u.id, uh.rank;
 def performance_history_detail(request, performance_history_id):
     ph = PerformanceHistory.objects.get(pk=performance_history_id)
     member_list = MemberPerformanceHistory.objects.filter(performance_history=ph)
-    bs = BiliBiliStat.objects.filter(performance_history=ph)
-    logger.info(bs)
+    # bs = BiliBiliStat.objects.filter(performance_history=ph)
+    # logger.info(bs)
 
     # 获取unit表演阵容
     with connections['snh48'].cursor() as cursor:
@@ -80,6 +80,11 @@ ORDER BY uh.`performance_history_id`, u.id, uh.rank;
 
         """, [performance_history_id])
         unit_list = utils.namedtuplefetchall(cursor)
+        cursor.execute("""
+            SELECT id, aid, view, danmaku, reply, favorite, coin, share, update_time FROM bilibili_stat
+                WHERE performance_history_id = %s;
+        """, [performance_history_id])
+        bs = utils.namedtuplefetchall(cursor)
     context = {
         'ph': ph,
         'member_list': member_list,
