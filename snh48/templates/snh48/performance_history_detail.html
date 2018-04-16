@@ -12,6 +12,19 @@
     {% endif %}
     <h5>{{ ph.date }} </h5>
     <h5>{{ ph.description }}</h5>
+    <h5><a href="{{ ph.video_url }}" target="_blank">{{ ph.video_url }}</a></h5>
+    <br />
+    {% if bs %}
+    <h5>B站播放数据</h5>
+    <ul>
+        <li>播放量: {{ bs.view }}</li>
+        <li>弹幕: {{ bs.danmaku }}</li>
+        <li>硬币: {{ bs.coin }}</li>
+        <li>收藏: {{ bs.favorite }}</li>
+        <li>评论: {{ bs.reply }}</li>
+        <li>分享: {{ bs.share }}</li>
+    </ul>
+    {% endif %}
     {% if member_list %}
         <h5>参演成员</h5>
         <ul>

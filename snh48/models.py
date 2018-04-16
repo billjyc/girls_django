@@ -154,6 +154,26 @@ class PerformanceHistory(models.Model):
         return str(self.date) + ' ' + str(self.performance) + ' ' + self.description
 
 
+class BiliBiliStat(models.Model):
+    performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, db_column='performance_history_id')
+    aid = models.IntegerField()
+    view = models.IntegerField()
+    danmaku = models.IntegerField()
+    reply = models.IntegerField()
+    favorite = models.IntegerField()
+    coin = models.IntegerField()
+    share = models.IntegerField()
+    update_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'bilibili_stat'
+        app_label = 'snh48'
+
+    def __str__(self):
+        return str(self.performance_history)
+
+
 class Team(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30, blank=True, null=True)
