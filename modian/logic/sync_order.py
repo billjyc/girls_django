@@ -35,6 +35,7 @@ def sync_order(pro_id):
                 """ % (oid, user_id, backer_money, pay_time, pro_id))
         else:
             print('该订单已经在数据库中')
+    mysql_util.close()
 
 
 if __name__ == '__main__':
