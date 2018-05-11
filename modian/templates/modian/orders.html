@@ -89,7 +89,7 @@
                 {% endif %}
 
                 {% if orders.next_page_number|add:1 < orders.paginator.num_pages %}
-                    <a href="?page={{ orders.previous_page_number|add:1 }}">{{ orders.next_page_number|add:1 }}</a>
+                    <a href="?page={{ orders.next_page_number|add:1 }}">{{ orders.next_page_number|add:1 }}</a>
                 {% endif %}
 
                 {% if orders.has_next %}
