@@ -9,6 +9,9 @@ from .logic.card_draw_handler import CardDrawHandler
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import *
+import logging
+
+logger = logging.getLogger('django')
 
 
 # Create your views here.
@@ -21,7 +24,9 @@ def get_all_orders(request, pro_id):
 
     # TODO: 分页
     page = request.GET.get('page', 1)
+    logger.debug('page: %s', page)
     order_list = modian_handler.query_project_orders(pro_id, page)
+    logger.debug('order list: %s', order_list)
     paginator = Paginator(order_list, 20)
 
     try:
