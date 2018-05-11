@@ -23,7 +23,7 @@ def get_all_orders(request, pro_id):
     # modian_handler = ModianHandler()
     page = request.GET.get('page', 1)
     logger.debug('page: %s', page)
-    order_list = Order.objects.filter(pro_id=pro_id)
+    order_list = Order.objects.filter(pro_id=pro_id).order_by('-pay_time')
     logger.debug('order list: %s', order_list)
     paginator = Paginator(order_list, 20)
 
