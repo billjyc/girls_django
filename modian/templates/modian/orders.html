@@ -6,11 +6,13 @@
     {% if orders %}
     <h4>订单列表</h4>
     <div class="container-fluid">
-        <table class="display table table-hover" data-toggle="table"
+        <table class="table" data-toggle="table"
                 data-search="true"
-                data-search-on-enter-key="true">
+                data-search-on-enter-key="true"
+                data-striped="true"
+                data-undefined-text="-">
             <thead>
-                <tr class="text-center">
+                <tr class="text-center d-flex">
                     <th class="col-4">时间</th>
                     <th class="col-3">ID</th>
                     <th class="col-3">金额</th>
