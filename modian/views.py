@@ -6,6 +6,8 @@ from django.shortcuts import render
 
 from .logic.modian_handler import ModianHandler
 from .logic.card_draw_handler import CardDrawHandler
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from .models import *
 
 
@@ -16,9 +18,21 @@ def index(request):
 
 def get_all_orders(request, pro_id):
     modian_handler = ModianHandler()
-    order_list = modian_handler.get_all_orders(pro_id)
+
+    # TODO: 分页
+    page = request.GET.get('page', 1)
+    order_list = modian_handler.query_project_orders(pro_id, page)
+    paginator = Paginator(order_list, 20)
+
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        orders = paginator.page(1)
+    except EmptyPage:
+        orders = paginator.page(paginator.num_pages)
+
     context = {
-        'order_list': order_list,
+        'order_list': orders,
     }
     return render(request, 'modian/orders.html', context)
 
