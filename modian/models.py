@@ -21,7 +21,7 @@ class Supporter(models.Model):
 
 
 class Order(models.Model):
-    id = models.CharField(primary_key=True)
+    id = models.CharField(primary_key=True, max_length=100)
     supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='supporter_id')
     backer_money = models.FloatField(db_column='backer_money')
     pay_time = models.DateTimeField(db_column='pay_time')
