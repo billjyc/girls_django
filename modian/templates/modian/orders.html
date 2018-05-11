@@ -18,7 +18,7 @@
                 {% for order in orders %}
                     <tr class="text-center d-flex">
                         <td class="col-4">{{ order.pay_time }}</td>
-                        <td class="col-3">{{ order.nickname }}</td>
+                        <td class="col-3">{{ order.supporter.name }}</td>
                         <td class="col-3">{{ order.backer_money }}元</td>
                     </tr>
                 {% endfor %}
