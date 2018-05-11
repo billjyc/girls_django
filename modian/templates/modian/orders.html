@@ -10,20 +10,21 @@
                 data-search="true"
                 data-search-on-enter-key="true"
                 data-striped="true"
-                data-undefined-text="-">
+                data-undefined-text="-"
+                data-mobile-responsive="true">
             <thead>
-                <tr class="text-center d-flex">
-                    <th class="col-4">时间</th>
-                    <th class="col-3">ID</th>
-                    <th class="col-3">金额</th>
+                <tr class="text-center">
+                    <th>时间</th>
+                    <th>ID</th>
+                    <th>金额</th>
                 </tr>
             </thead>
             <tbody>
                 {% for order in orders %}
-                    <tr class="text-center d-flex">
-                        <td class="col-4">{{ order.pay_time }}</td>
-                        <td class="col-3">{{ order.supporter.name }}</td>
-                        <td class="col-3">{{ order.backer_money }}元</td>
+                    <tr class="text-center">
+                        <td>{{ order.pay_time }}</td>
+                        <td>{{ order.supporter.name }}</td>
+                        <td>{{ order.backer_money }}元</td>
                     </tr>
                 {% endfor %}
             </tbody>
