@@ -37,7 +37,7 @@ def get_all_orders(request, pro_id):
         orders = paginator.page(paginator.num_pages)
 
     context = {
-        'order_list': orders,
+        'orders': orders,
     }
     return render(request, 'modian/orders.html', context)
 
