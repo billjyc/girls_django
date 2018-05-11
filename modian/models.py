@@ -20,6 +20,26 @@ class Supporter(models.Model):
         return 'Supporter[id=%s, name=%s]' % (self.id, self.name)
 
 
+class Order(models.Model):
+    id = models.CharField(primary_key=True)
+    supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='supporter_id')
+    backer_money = models.FloatField(db_column='backer_money')
+    pay_time = models.DateTimeField(db_column='pay_time')
+    pro_id = models.IntegerField(db_column='pro_id')
+
+    class Meta:
+        managed = False
+        db_table = 'order'
+
+    def __unicode__(self):
+        return 'Order[pro_id=%s, supporter=%s, pay_time=%s, backer_money=%s]' \
+               % (self.pro_id, self.supporter.name, self.pay_time, self.backer_money)
+
+    def __str__(self):
+        return 'Order[pro_id=%s, supporter=%s, pay_time=%s, backer_money=%s]' \
+               % (self.pro_id, self.supporter.name, self.pay_time, self.backer_money)
+
+
 class Card(models.Model):
     name = models.CharField(max_length=50)
     url = models.CharField(max_length=500)

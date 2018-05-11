@@ -20,12 +20,10 @@ def index(request):
 
 
 def get_all_orders(request, pro_id):
-    modian_handler = ModianHandler()
-
-    # TODO: 分页
+    # modian_handler = ModianHandler()
     page = request.GET.get('page', 1)
     logger.debug('page: %s', page)
-    order_list = modian_handler.query_project_orders(pro_id, page)
+    order_list = Order.objects.filter(pro_id=pro_id)
     logger.debug('order list: %s', order_list)
     paginator = Paginator(order_list, 20)
 
