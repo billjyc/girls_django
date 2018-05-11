@@ -71,7 +71,7 @@
                     <a href="?page=1">&laquo;</a>
                     <a href="?page={{ orders.previous_page_number }}">上一页</a>
                 {% endif %}
-                {% if orders.previous_page_number-1 > 1 %}
+                {% if orders.previous_page_number - 1 > 1 %}
                     <a href="?page={{ orders.previous_page_number-1 }}">{{ orders.previous_page_number-1 }}</a>
                 {% endif %}
 
@@ -88,7 +88,7 @@
                     <a href="?page={{ orders.next_page_number }}">{{ orders.next_page_number }}</a>
                 {% endif %}
 
-                {% if orders.previous_page_number+1 < orders.paginator.num_pages %}
+                {% if orders.previous_page_number + 1 < orders.paginator.num_pages %}
                     <a href="?page={{ orders.previous_page_number+1 }}">{{ orders.previous_page_number+1 }}</a>
                 {% endif %}
 
