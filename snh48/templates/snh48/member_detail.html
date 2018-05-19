@@ -75,7 +75,11 @@
                                 {% for ph in mph_list %}
                                     <tr class="text-center">
                                         <td>{{ ph.performance_history.performance.name }}</td>
-                                        <td>{{ ph.performance_history.performance.team }}</td>
+                                        <td>{
+                                        {% if ph.performance_history.performance_team %}
+                                        { ph.performance_history.performance.team }}
+                                        {% endif %}
+                                        </td>
                                         <td>{{ ph.performance_history.date }}</td>
                                         <td>{{ ph.performance_history.description }}</td>
                                     </tr>
