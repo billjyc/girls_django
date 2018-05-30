@@ -149,7 +149,7 @@ def get_current_supporter_num(pro_id):
         SELECT COUNT(DISTINCT(`supporter_id`)) FROM `order` WHERE `pro_id`=%s
     """ % (pro_id, ))
     my_logger.info('%s当前集资人数: %s' % (pro_id, rst[0]))
-    return rst[0]
+    return rst[0][0]
 
 
 def get_current_points(pro_id):
