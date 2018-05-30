@@ -79,8 +79,18 @@ def get_61_pk_detail(request):
     fxf_make_trouble_minus_points = wjl_make_trouble_times * modian_pk_handler.WJL_MAKE_TROUBLE_POINTS
     wjl_make_trouble_minus_points = fxf_make_trouble_times * modian_pk_handler.FXF_MAKE_TROUBLE_POINTS
 
-    fxf_total_points = fxf_basic_points + fxf_make_trouble_points - fxf_bonus_minus_points - fxf_make_trouble_minus_points
-    wjl_total_points = wjl_basic_points + wjl_make_trouble_points - wjl_bonus_minus_points - wjl_make_trouble_minus_points
+    fxf_supporter_num = modian_pk_handler.get_current_supporter_num(modian_pk_handler.FXF_PRO_ID)
+    wjl_supporter_num = modian_pk_handler.get_current_supporter_num(modian_pk_handler.WJL_PRO_ID)
+
+    fxf_supporter_points = 0
+    wjl_supporter_points = 0
+    if fxf_supporter_num > wjl_supporter_num:
+        fxf_supporter_points = 61
+    elif fxf_supporter_num < wjl_supporter_num:
+        wjl_supporter_points = 61
+
+    fxf_total_points = fxf_basic_points + fxf_make_trouble_points - fxf_bonus_minus_points - fxf_make_trouble_minus_points + fxf_supporter_points
+    wjl_total_points = wjl_basic_points + wjl_make_trouble_points - wjl_bonus_minus_points - wjl_make_trouble_minus_points + wjl_supporter_points
 
     context = {
         'fxf_basic_points': fxf_basic_points,
@@ -95,6 +105,10 @@ def get_61_pk_detail(request):
         'wjl_make_trouble_points': wjl_make_trouble_points,
         'fxf_make_trouble_minus_points': fxf_make_trouble_minus_points,
         'wjl_make_trouble_minus_points': wjl_make_trouble_minus_points,
+        'fxf_supporter_num': fxf_supporter_num,
+        'wjl_supporter_num': wjl_supporter_num,
+        'fxf_supporter_points': fxf_supporter_points,
+        'wjl_supporter_points': wjl_supporter_points,
         'fxf_total_points': fxf_total_points,
         'wjl_total_points': wjl_total_points
     }
