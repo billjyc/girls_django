@@ -12,7 +12,7 @@ WJL_MAKE_TROUBLE_POINTS = 5
 
 my_logger = logging.getLogger('django')
 
-mysql_util = MySQLUtil('112.74.183.47', 3306, 'root', 'Jyc@1993', 'card_draw')
+mysql_util = MySQLUtil('localhost', 3306, 'root', 'Jyc@1993', 'card_draw')
 
 
 def minus_points(pro_id, pay_amount):
