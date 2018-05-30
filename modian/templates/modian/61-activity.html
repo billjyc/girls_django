@@ -1,0 +1,64 @@
+{% extends "modian/base.html" %}
+
+{% block title %}六一特别活动详情{% endblock %}
+
+{% block content %}
+    {% if records %}
+    <h4>六一特别活动详情</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=20
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true">
+        <thead>
+            <tr class="text-center">
+                <th></th>
+                <th>冯晓菲</th>
+                <th>汪佳翎</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr class="text-center">
+                    <td>捣乱次数</td>
+                    <td>{{ fxf_make_trouble_times }}</td>
+                    <td>{{ wjl_make_trouble_times }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>获得10分的次数</td>
+                    <td>{{ fxf_make_plus_10_times }}</td>
+                    <td>{{ wjl_make_plus_10_times }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>基本分数（集资分数）</td>
+                    <td>{{ fxf_basic_points }}</td>
+                    <td>{{ wjl_basic_points }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>己方捣乱加分（每5次+10分）</td>
+                    <td>{{ fxf_make_trouble_points }}</td>
+                    <td>{{ wjl_make_trouble_points }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>对方捣乱扣分</td>
+                    <td>-{{ fxf_make_trouble_minus_points }}</td>
+                    <td>-{{ wjl_make_trouble_minus_points }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>对方通过达成加+10分给本方扣分</td>
+                    <td>-{{ fxf_make_trouble_minus_points }}</td>
+                    <td>-{{ wjl_make_trouble_minus_points }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>总分</td>
+                    <td>{{ fxf_total_points }}</td>
+                    <td>{{ wjl_total_points }}</td>
+                </tr>
+
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}
