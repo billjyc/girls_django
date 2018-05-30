@@ -48,8 +48,8 @@
                 </tr>
                 <tr class="text-center">
                     <td>对方通过达成加+10分给本方扣分</td>
-                    <td>-{{ fxf_make_trouble_minus_points }}</td>
-                    <td>-{{ wjl_make_trouble_minus_points }}</td>
+                    <td>-{{ fxf_bonus_minus_points }}</td>
+                    <td>-{{ wjl_bonus_minus_points }}</td>
                 </tr>
                 <tr class="text-center">
                     <td>总分</td>
@@ -59,4 +59,82 @@
 
         </tbody>
     </table>
+<div>
+规则：
+    <ol>
+        <li>
+            1. 冯晓菲方计分规则
+            <table class="display table table-hover" data-toggle="table"
+                data-mobile-responsive="true"
+                data-striped="true"
+                data-show-columns="true">
+                <thead>
+                    <th>集资金额</th>
+                    <th>分数变化</th>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                         <td><10.17</td>
+                        <td>0</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>10.17~50</td>
+                        <td>+1</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>50~101.7</td>
+                        <td>+5</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>>=101.7</td>
+                        <td>+10，每多10元再加1分</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>99.9（捣乱）</td>
+                        <td>-9</td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+        <li>
+            2. 汪佳翎方计分规则
+            <table class="display table table-hover" data-toggle="table"
+                data-mobile-responsive="true"
+                data-striped="true"
+                data-show-columns="true">
+                <thead>
+                    <th>集资金额</th>
+                    <th>分数变化</th>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                         <td><7.13</td>
+                        <td>0</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>7.13~50</td>
+                        <td>+1</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>50~71.3</td>
+                        <td>+5</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>>=71.3</td>
+                        <td>+10，每多7元再加1分</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>99.9（捣乱）</td>
+                        <td>-5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+        <li>
+            每5次捣乱为己方+10分
+        </li>
+        <li>每有5次+10分项目 为对方-10分</li>
+        <li>PK结束后，人头数胜利方+61分</li>
+    </ol>
+</div>
 {% endblock %}
