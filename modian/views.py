@@ -89,6 +89,8 @@ def get_61_pk_detail(request):
     elif fxf_supporter_num < wjl_supporter_num:
         wjl_supporter_points = 61
 
+    fxf_points = fxf_basic_points + fxf_make_trouble_points - fxf_bonus_minus_points - fxf_make_trouble_minus_points
+    wjl_points = wjl_basic_points + wjl_make_trouble_points - wjl_bonus_minus_points - wjl_make_trouble_minus_points
     fxf_total_points = fxf_basic_points + fxf_make_trouble_points - fxf_bonus_minus_points - fxf_make_trouble_minus_points + fxf_supporter_points
     wjl_total_points = wjl_basic_points + wjl_make_trouble_points - wjl_bonus_minus_points - wjl_make_trouble_minus_points + wjl_supporter_points
 
@@ -110,6 +112,8 @@ def get_61_pk_detail(request):
         'fxf_supporter_points': fxf_supporter_points,
         'wjl_supporter_points': wjl_supporter_points,
         'fxf_total_points': fxf_total_points,
-        'wjl_total_points': wjl_total_points
+        'wjl_total_points': wjl_total_points,
+        'fxf_points': fxf_points,
+        'wjl_points': wjl_points,
     }
     return render(request, 'modian/61-activity.html', context)
