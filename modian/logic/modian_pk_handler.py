@@ -90,7 +90,6 @@ def get_make_trouble_time(pro_id):
     elif pro_id == WJL_PRO_ID:
         rst = mysql_util.select("""
                     SELECT count(*) FROM `order` WHERE `pro_id`=%s and `backer_money`= %s
-                     and `backer_money` <> 99.9
                 """ % (WJL_PRO_ID, MINUS_AMOUNT))
         my_logger.info('汪佳翎 捣乱次数: %s' % rst[0])
     else:
@@ -115,6 +114,7 @@ def get_plus_10_times(pro_id):
     elif pro_id == WJL_PRO_ID:
         rst = mysql_util.select("""
                     SELECT count(*) FROM `order` WHERE `pro_id`=%s and `backer_money`>= %s
+                     and `backer_money`<> 99.9
                 """ % (WJL_PRO_ID, 71.3))
     else:
         return 0
@@ -164,7 +164,7 @@ def get_current_points(pro_id):
     wjl_supporter_num = get_current_supporter_num(WJL_PRO_ID)
     supporter_num_points = 0
     rst = mysql_util.select("""
-        select * from `order` where pro_id=%s
+        select * from `order` where pro_id=%s and `backer_money` <>99.9
     """ % (pro_id, ))
     points = 0
     for order in rst:
