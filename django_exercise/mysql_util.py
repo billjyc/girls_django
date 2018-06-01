@@ -2,7 +2,7 @@
 
 import pymysql
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('django')
 
 
 class MySQLUtil:
@@ -15,7 +15,7 @@ class MySQLUtil:
             conn = pymysql.connect(host=host, port=port, passwd=passwd, db=db, user=user, charset=charset)
             return conn
         except pymysql.Error as e:
-            logger.error('连接mysql出现错误: %s', e)
+            logger.exception('连接mysql出现错误: %s', e)
 
     def select(self, sql):
         logger.info('查询: %s', sql)
@@ -24,7 +24,7 @@ class MySQLUtil:
             cursor.execute(sql)
             data = cursor.fetchall()
         except pymysql.Error as e:
-            logger.error('数据库select出现错误: %s', e)
+            logger.exception('数据库select出现错误: %s', e)
         finally:
             cursor.close()
         return data
@@ -41,7 +41,7 @@ class MySQLUtil:
             cursor.execute(sql)
             self.conn.commit()
         except pymysql.Error as e:
-            logger.error('数据库操作出现错误: %s', e)
+            logger.exception('数据库操作出现错误: %s', e)
             self.conn.rollback()
         finally:
             cursor.close()
