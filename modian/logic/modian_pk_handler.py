@@ -130,7 +130,7 @@ def get_basic_points(pro_id):
     :return:
     """
     rst = mysql_util.select("""
-            select * from `order` where pro_id=%s
+            select * from `order` where pro_id=%s and `backer_money` <>99.9
         """ % (pro_id,))
     points = 0
     for order in rst:
