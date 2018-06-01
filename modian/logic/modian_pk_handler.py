@@ -137,8 +137,10 @@ def get_basic_points(pro_id):
         """
         (order_id, supporter_id, backer_money, pay_time, pro_id)
         """
+        my_logger.debug(order)
         add = plus_points(pro_id, order[2])
         points += add
+    my_logger.info('%s基本得分: %s' % (pro_id, points))
     return points
 
 
