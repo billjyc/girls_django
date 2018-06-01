@@ -44,6 +44,8 @@ def plus_points(pro_id, pay_amount):
     :return:
     """
     my_logger.info('加分, pro_id: %s, pay_amount: %s' % (pro_id, pay_amount))
+    if pay_amount == 99.9:
+        return 0
     point = 0
     if pro_id == FXF_PRO_ID:
         if pay_amount < 10.17:
@@ -88,6 +90,7 @@ def get_make_trouble_time(pro_id):
     elif pro_id == WJL_PRO_ID:
         rst = mysql_util.select("""
                     SELECT count(*) FROM `order` WHERE `pro_id`=%s and `backer_money`= %s
+                     and `backer_money` <> 99.9
                 """ % (WJL_PRO_ID, MINUS_AMOUNT))
         my_logger.info('汪佳翎 捣乱次数: %s' % rst[0])
     else:
@@ -116,8 +119,8 @@ def get_plus_10_times(pro_id):
     else:
         return 0
     # 本方捣乱次数
-    rst2 = get_make_trouble_time(pro_id)
-    return rst[0][0] + int(rst2 // 5)
+    # rst2 = get_make_trouble_time(pro_id)
+    return rst[0][0]
 
 
 def get_basic_points(pro_id):
