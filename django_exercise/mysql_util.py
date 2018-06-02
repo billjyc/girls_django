@@ -19,8 +19,9 @@ class MySQLUtil:
 
     def select(self, sql):
         logger.info('查询: %s', sql)
+        cursor = self.conn.cursor()
+        data = None
         try:
-            cursor = self.conn.cursor()
             cursor.execute(sql)
             data = cursor.fetchall()
         except pymysql.Error as e:
@@ -36,8 +37,8 @@ class MySQLUtil:
         :return:
         """
         logger.info('mysql语句: %s', sql)
+        cursor = self.conn.cursor()
         try:
-            cursor = self.conn.cursor()
             cursor.execute(sql)
             self.conn.commit()
         except pymysql.Error as e:
