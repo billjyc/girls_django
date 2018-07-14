@@ -44,7 +44,7 @@ def member_detail(request, member_id):
     :return:
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
-    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history.date')
+    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history__date')
 
     # 获取unit表演阵容
     with connections['snh48'].cursor() as cursor:
