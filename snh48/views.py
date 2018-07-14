@@ -44,7 +44,7 @@ def member_detail(request, member_id):
     :return:
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
-    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history_id')
+    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-date')
 
     # 获取unit表演阵容
     with connections['snh48'].cursor() as cursor:
@@ -52,7 +52,7 @@ def member_detail(request, member_id):
                 SELECT uh.performance_history_id, DATE(ph.date) AS p_date, p.name, ph.description, u.id as unit_id, u.name AS unit_name, uh.rank AS unit_rank
 FROM unit u, unit_history uh, performance_history ph, performance p
 WHERE uh.member_id = %s AND uh.`unit_id` = u.id AND ph.id = uh.performance_history_id AND p.id = ph.performance_id
-ORDER BY uh.`performance_history_id` desc, u.id, uh.rank;
+ORDER BY uh.`p_date` desc, u.id, uh.rank;
 
             """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
