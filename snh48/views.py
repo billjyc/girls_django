@@ -7,6 +7,8 @@ from django.db import connection, connections
 from .models import *
 from django_exercise import utils
 import logging
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +36,24 @@ def performance_history_index(request):
         'ph_list': ph_list,
     }
     return render(request, 'snh48/performance_history_index.html', context)
+
+
+def bilibili_stat_index(request):
+    page = request.GET.get('page', 1)
+    bilibili_list = BiliBiliStat.objects.order_by('-view')
+    paginator = Paginator(bilibili_list, 100)
+
+    try:
+        bilibili_list = paginator.page(page)
+    except PageNotAnInteger:
+        bilibili_list = paginator.page(1)
+    except EmptyPage:
+        bilibili_list = paginator.page(paginator.num_pages)
+
+    context = {
+        'bilibili_list': bilibili_list
+    }
+    return render(request, 'snh48/bilibili_stat_index.html', context)
 
 
 def member_detail(request, member_id):

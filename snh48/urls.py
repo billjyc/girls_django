@@ -10,4 +10,5 @@ urlpatterns = [
     # ex: /performance_history/339
     url(r'^performance_history/(?P<performance_history_id>[0-9]+)', views.performance_history_detail, name="performance_history_detail"),
     # url(r'^orders/(?P<pro_id>[0-9]+)', views.get_all_orders, name='get_all_orders'),
+    url(r'^bilibili_stat/index', views.bilibili_stat_index, name='bilibili_stat_index')
 ]
