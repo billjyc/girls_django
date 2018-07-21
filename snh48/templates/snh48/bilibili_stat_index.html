@@ -25,7 +25,7 @@
         <tbody>
             {% for bs in bilibili_list %}
                 <tr class="text-center">
-                    <td>{{ bs.performance_history.date }}</td>
+                    <td><a href="{% url 'performance_history_detail' bs.performance_history.id %}">{{ bs.performance_history.date }}</a></td>
                     <td>
                         {% if bs.performance_history.performance.team %}
                             {{ bs.performance_history.performance.team }}
