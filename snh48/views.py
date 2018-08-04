@@ -40,7 +40,7 @@ def performance_history_index(request):
 
 def bilibili_stat_index(request):
     page = request.GET.get('page', 1)
-    bilibili_list = BiliBiliStat.objects.order_by('-view')
+    bilibili_list = BiliBiliStat.objects.exclude(aid__in=[25573155, 2512486, 2676912, 2517405]).order_by('-view')
     paginator = Paginator(bilibili_list, 100)
 
     try:
