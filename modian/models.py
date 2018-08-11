@@ -55,6 +55,10 @@ class SeatsRecord(models.Model):
         return 'SeatsRecord[supporter_id=%s, supporter_name=%s, seats_type=%s, seats_number=%s]' \
                % (self.supporter.id, self.supporter.name, self.seats_type, self.seats_number)
 
+    class Meta:
+        managed = False
+        db_table = 'seats_record'
+
 
 class Card(models.Model):
     name = models.CharField(max_length=50)
