@@ -59,6 +59,21 @@ def get_card_draw_record_by_supporter(request):
     return render(request, 'modian/draw-records-statistics.html', context)
 
 
+def get_300_activity_detail(request):
+    seat_records = SeatsRecord.objects.filter(seats_type=1).order_by('seats_number')
+    standing_records = SeatsRecord.objects.filter(seat_records=2).order_by('seats_number')
+
+    for seat in seat_records:
+        seat.row = int((seat.seat_number - 1) / 30) + 1
+        seat.col = int((seat.seat_number - 1) % 30) + 1
+
+    context = {
+        'seat_record': seat_records,
+        'standing_record': standing_records,
+    }
+    return render(request, 'modian/300-activity.html', context)
+
+
 def get_61_pk_detail(request):
     from .logic import modian_pk_handler
     fxf_basic_points = modian_pk_handler.get_basic_points(modian_pk_handler.FXF_PRO_ID)

@@ -40,6 +40,22 @@ class Order(models.Model):
                % (self.pro_id, self.supporter.name, self.pay_time, self.backer_money)
 
 
+class SeatsRecord(models.Model):
+    id = models.IntegerField(primary_key=True)
+    supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='modian_id')
+    seats_type = models.IntegerField(db_column='seats_type')
+    seats_number = models.IntegerField(db_column='seats_number')
+    update_time = models.DateTimeField(db_column='update_time')
+
+    def __unicode__(self):
+        return 'SeatsRecord[supporter_id=%s, supporter_name=%s, seats_type=%s, seats_number=%s]' \
+                % (self.supporter.id, self.supporter.name, self.seats_type, self.seats_number)
+
+    def __str__(self):
+        return 'SeatsRecord[supporter_id=%s, supporter_name=%s, seats_type=%s, seats_number=%s]' \
+               % (self.supporter.id, self.supporter.name, self.seats_type, self.seats_number)
+
+
 class Card(models.Model):
     name = models.CharField(max_length=50)
     url = models.CharField(max_length=500)

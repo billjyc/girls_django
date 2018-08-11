@@ -1,0 +1,73 @@
+{% extends "modian/base.html" %}
+
+{% block title %}座位抽选{% endblock %}
+
+{% block content %}
+    {% if seat_records %}
+    <h4>坐区抽选</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=100
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true">
+        <thead>
+            <tr class="text-center">
+                <th>座位号</th>
+                <th>排</th>
+                <th>列</th>
+                <th>摩点ID</th>
+                <th>摩点昵称</th>
+                <th>抽取时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in standing_records %}
+                <tr class="text-center">
+                    <td>{{ record.seats_number }}</td>
+                    <td>{{ record.row }}</td>
+                    <td>{{ record.col }}</td>
+                    <td>{{ record.supporter.id }}</td>
+                    <td>{{ record.supporter.name }}</td>
+                    <td>{{ record.update_time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if standing_records %}
+    <h4>站区抽选</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=100
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true">
+        <thead>
+            <tr class="text-center">
+                <th>座位号</th>
+                <th>摩点ID</th>
+                <th>摩点昵称</th>
+                <th>抽取时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in standing_records %}
+                <tr class="text-center">
+                    <td>{{ record.seats_number }}</td>
+                    <td>{{ record.supporter.id }}</td>
+                    <td>{{ record.supporter.name }}</td>
+                    <td>{{ record.update_time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}
