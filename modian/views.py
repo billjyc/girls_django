@@ -68,8 +68,8 @@ def get_300_activity_detail(request):
         seat.col = int((seat.seats_number - 1) % 30) + 1
 
     context = {
-        'seat_record': seat_records,
-        'standing_record': standing_records,
+        'seat_records': seat_records,
+        'standing_records': standing_records,
     }
     return render(request, 'modian/300-activity.html', context)
 
