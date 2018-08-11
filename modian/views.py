@@ -61,7 +61,7 @@ def get_card_draw_record_by_supporter(request):
 
 def get_300_activity_detail(request):
     seat_records = SeatsRecord.objects.filter(seats_type=1).order_by('seats_number')
-    standing_records = SeatsRecord.objects.filter(seat_records=2).order_by('seats_number')
+    standing_records = SeatsRecord.objects.filter(seat_type=2).order_by('seats_number')
 
     for seat in seat_records:
         seat.row = int((seat.seat_number - 1) / 30) + 1
