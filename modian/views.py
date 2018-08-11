@@ -64,8 +64,8 @@ def get_300_activity_detail(request):
     standing_records = SeatsRecord.objects.filter(seats_type=2).order_by('seats_number')
 
     for seat in seat_records:
-        seat.row = int((seat.seat_number - 1) / 30) + 1
-        seat.col = int((seat.seat_number - 1) % 30) + 1
+        seat.row = int((seat.seats_number - 1) / 30) + 1
+        seat.col = int((seat.seats_number - 1) % 30) + 1
 
     context = {
         'seat_record': seat_records,
