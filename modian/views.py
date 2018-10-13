@@ -146,4 +146,5 @@ def submit_birthday_wish(request):
 
             wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish)
             wish.save()
-    return None
+            return {'success': True}
+    return {'success': False}
