@@ -10,4 +10,6 @@ urlpatterns = [
     path('draw-records-statistics/', views.get_card_draw_record_by_supporter, name='get_draw_record_by_supporter'),
     # path('61-activity/', views.get_61_pk_detail, name='get_61_pk_detail'),
     path('300-activity/', views.get_300_activity_detail, name='get_300_detail'),
+    # 2018生日特别活动
+    path('submit-birthday-wish/', views.submit_birthday_wish, name='submit_birthday_wish')
 ]

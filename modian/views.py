@@ -9,6 +9,7 @@ from .logic.card_draw_handler import CardDrawHandler
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import *
+from .logic.birthday_form import BirthdayForm
 import logging
 
 logger = logging.getLogger('django')
@@ -132,3 +133,17 @@ def get_61_pk_detail(request):
         'wjl_points': wjl_points,
     }
     return render(request, 'modian/61-activity.html', context)
+
+
+def submit_birthday_wish(request):
+    if request.method == 'POST':
+        form = BirthdayForm(request.POST)
+
+        if form.is_valid():
+            userid = form.cleaned_data['userid']
+            birthdaywish = form.cleaned_data['birthdaywish']
+            province_code = 10
+
+            wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish)
+            wish.save()
+    return None
