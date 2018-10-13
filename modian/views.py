@@ -11,6 +11,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 from .logic.birthday_form import BirthdayForm
 import logging
+from django.http import HttpResponse
+import json
 
 logger = logging.getLogger('django')
 
@@ -146,5 +148,10 @@ def submit_birthday_wish(request):
 
             wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish)
             wish.save()
-            return {'success': True}
+            response = HttpResponse(json.dumps({'success': True}))
+            response["Access-Control-Allow-Origin"] = "*"
+            response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+            response["Access-Control-Max-Age"] = "1000"
+            response["Access-Control-Allow-Headers"] = "*"
+            return response
     return {'success': False}
