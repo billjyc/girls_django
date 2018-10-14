@@ -13,6 +13,7 @@ from .logic.birthday_form import BirthdayForm
 import logging
 from django.http import HttpResponse
 import json
+from django_exercise import utils
 
 logger = logging.getLogger('django')
 
@@ -138,20 +139,19 @@ def get_61_pk_detail(request):
 
 
 def submit_birthday_wish(request):
+    import time
     if request.method == 'POST':
         form = BirthdayForm(request.POST)
+        print(form)
 
         if form.is_valid():
-            userid = form.cleaned_data['userid']
-            birthdaywish = form.cleaned_data['birthdaywish']
-            province_code = 10
+            userid = form.cleaned_data['user_id']
+            birthdaywish = form.cleaned_data['birthday_wish']
+            province_code = form.cleaned_data['province_code']
+            time_str = utils.convert_timestamp_to_timestr(time.time() * 1000)
 
-            wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish)
+            wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish,
+                                update_time=time_str)
             wish.save()
-            response = HttpResponse(json.dumps({'success': True}))
-            response["Access-Control-Allow-Origin"] = "*"
-            response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
-            response["Access-Control-Max-Age"] = "1000"
-            response["Access-Control-Allow-Headers"] = "*"
-            return response
-    return {'success': False}
+            return HttpResponse(json.dumps({'success': True}), content_type="application/json")
+    return HttpResponse(json.dumps({'success': False}), content_type="application/json")

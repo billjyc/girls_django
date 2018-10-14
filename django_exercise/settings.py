@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -77,6 +77,26 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_exercise.wsgi.application'
 
 
+#跨域增加忽略
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = ( '*')
+CORS_ALLOW_METHODS = ( 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'VIEW', )
+CORS_ALLOW_HEADERS = (
+'XMLHttpRequest',
+'X_FILENAME',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'X-CSRFTOKEN',
+'x-requested-with',
+'Pragma',
+)
+
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -92,8 +112,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'snh48',
-        'USER': 'user_00',
-        'PASSWORD': 'Jyc@123456',
+        'USER': 'root',
+        'PASSWORD': 'Jyc@1993',
         'HOST': 'localhost',
         'PORT': '3306'
     },
@@ -160,9 +180,6 @@ STATIC_URL = '/static/'
 
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'
-
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS')
 
 LOGGING = {
     'version': 1,
