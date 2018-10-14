@@ -142,6 +142,14 @@ def get_61_pk_detail(request):
     return render(request, 'modian/61-activity.html', context)
 
 
+def birthday_index(request):
+    return render(request, 'birthdaywish/index.html')
+
+
+def wish_form(request):
+    return render(request, 'birthdaywish/form.html')
+
+
 def submit_birthday_wish(request):
     import time
     if request.method == 'POST':
