@@ -132,13 +132,27 @@ $(function() {
 	});
 
 	$('#form').bootstrapValidator({
+	    feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
         fields: {
             user_id: {
                 message: 'ID验证失败',
                 validators: {
                     notEmpty: {
                         message: 'ID不能为空'
-                    }
+                    },
+                    stringLength: {/*长度提示*/
+                        min: 3,
+                        max: 30,
+                        message: '用户名长度必须在3到30之间'
+                    },
+                    regexp: {/* 只需加此键值对，包含正则表达式，和提示 */
+                        regexp: /^[a-zA-Z0-9_\.]+$/,
+                        message: '只能是数字和字母_.'
+                    },
                 }
             },
             birthday_wish: {
@@ -146,6 +160,10 @@ $(function() {
                 validators: {
                     notEmpty: {
                         message: '生日祝福不能为空'
+                    },
+                    stringLength: {/*长度提示*/
+                        max: 100,
+                        message: '生日祝福必须在100字符以下'
                     }
                 }
             }
