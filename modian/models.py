@@ -87,18 +87,18 @@ class DrawRecord(models.Model):
 
 
 class BirthdayWish(models.Model):
-    id = models.IntegerField(primary_key=True)
     user_id = models.CharField(max_length=30, db_column='user_id')
     birthday_wish = models.CharField(max_length=100, db_column='wish')
     province_code = models.IntegerField(db_column='province_code')
     update_time = models.DateTimeField(db_column='update_time')
+    ip = models.CharField(max_length=100, db_column='ip', primary_key=True)
 
     class Meta:
         managed = False
         db_table = 'wish'
 
     def __unicode__(self):
-        return 'BirthdayWish[user_id=%s, birthday_wish=%s, province_code=%s, update_time=%s]'
+        return 'BirthdayWish[user_id=%s, birthday_wish=%s, ip=%s, province_code=%s, update_time=%s]' % (self.user_id, self.birthday_wish, self.ip, self.province_code, self.update_time)
 
     def __str__(self):
-        return 'BirthdayWish[user_id=%s, birthday_wish=%s, province_code=%s, update_time=%s]'
+        return 'BirthdayWish[user_id=%s, birthday_wish=%s, ip=%s, province_code=%s, update_time=%s]' % (self.user_id, self.birthday_wish, self.ip, self.province_code, self.update_time)

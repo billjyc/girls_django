@@ -11,5 +11,6 @@ urlpatterns = [
     # path('61-activity/', views.get_61_pk_detail, name='get_61_pk_detail'),
     path('300-activity/', views.get_300_activity_detail, name='get_300_detail'),
     # 2018生日特别活动
-    path('submit-birthday-wish/', views.submit_birthday_wish, name='submit_birthday_wish')
+    path('submit-birthday-wish/', views.submit_birthday_wish, name='submit_birthday_wish'),
+    path('get-birthday-wish/', views.get_all_birthday_wish, name='get_birthday_wish'),
 ]

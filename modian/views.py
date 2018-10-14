@@ -14,6 +14,9 @@ import logging
 from django.http import HttpResponse
 import json
 from django_exercise import utils
+from django.core import serializers
+from django.db.models import Count
+
 
 logger = logging.getLogger('django')
 
@@ -148,10 +151,17 @@ def submit_birthday_wish(request):
             userid = form.cleaned_data['user_id']
             birthdaywish = form.cleaned_data['birthday_wish']
             province_code = form.cleaned_data['province_code']
+            ip = form.cleaned_data['ip']
             time_str = utils.convert_timestamp_to_timestr(time.time() * 1000)
 
             wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish,
-                                update_time=time_str)
+                                update_time=time_str, ip=ip)
             wish.save()
             return HttpResponse(json.dumps({'success': True}), content_type="application/json")
     return HttpResponse(json.dumps({'success': False}), content_type="application/json")
+
+
+def get_all_birthday_wish(request):
+    birthday_wish = BirthdayWish.objects.raw('select ip, province_code, count(*) as num from `wish` group by province_code;')
+    logger.info(birthday_wish)
+    return HttpResponse(serializers.serialize("json", birthday_wish), content_type='application/json')
