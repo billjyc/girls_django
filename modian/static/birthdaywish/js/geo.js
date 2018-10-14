@@ -113,7 +113,7 @@ $(function() {
 		console.log(province);
 		$('#submit').attr('disabled', true);
 		$('#form').ajaxSubmit({
-			url: 'http://127.0.0.1:8099/modian/submit-birthday-wish/',
+			url: 'http://112.74.183.47:8099/modian/submit-birthday-wish/',
 			type: "POST",
 			data: $('#form').serialize(),
 			dataType: "JSON",

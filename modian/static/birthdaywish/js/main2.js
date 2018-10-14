@@ -402,7 +402,7 @@ function load_data(data2) {
 
 $(document).ready(function() {
     $.ajax({
-        url: 'http://127.0.0.1:8099/modian/get-birthday-wish/',
+        url: 'http://112.74.183.47:8099/modian/get-birthday-wish/',
         dataType: 'json',
         method: 'GET',
         success: function(data) {
