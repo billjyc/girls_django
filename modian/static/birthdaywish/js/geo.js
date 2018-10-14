@@ -132,7 +132,24 @@ $(function() {
 	});
 
 	$('#form').bootstrapValidator({
-
+        fields: {
+            user_id: {
+                message: 'ID验证失败',
+                validators: {
+                    notEmpty: {
+                        message: 'ID不能为空'
+                    }
+                }
+            },
+            birthday_wish: {
+                message: '生日祝福验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '生日祝福不能为空'
+                    }
+                }
+            }
+        }
 	});
 })
 
