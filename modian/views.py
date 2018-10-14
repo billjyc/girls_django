@@ -16,6 +16,7 @@ import json
 from django_exercise import utils
 from django.core import serializers
 from django.db.models import Count
+from django.db import connections
 
 
 logger = logging.getLogger('django')
@@ -162,6 +163,10 @@ def submit_birthday_wish(request):
 
 
 def get_all_birthday_wish(request):
-    birthday_wish = BirthdayWish.objects.raw('select ip, province_code, count(*) as num from `wish` group by province_code;')
-    logger.info(birthday_wish)
-    return HttpResponse(serializers.serialize("json", birthday_wish), content_type='application/json')
+    with connections['modian'].cursor() as cursor:
+        cursor.execute("""
+            select province_code, count(*) as num from `wish` group by province_code
+        """)
+        birthday_wish = utils.dictfetchall(cursor)
+        logger.info(birthday_wish)
+    return HttpResponse(json.dumps(birthday_wish), content_type='application/json')
