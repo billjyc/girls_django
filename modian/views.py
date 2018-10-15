@@ -178,3 +178,10 @@ def get_all_birthday_wish(request):
         birthday_wish = utils.dictfetchall(cursor)
         logger.info(birthday_wish)
     return HttpResponse(json.dumps(birthday_wish), content_type='application/json')
+
+
+def get_all_birthday_wish_2(request):
+    logger.info('get all birthday wish, request: %s' % request)
+    wishes = BirthdayWish.objects.order_by('update_time')
+    wishes_json = serializers.serialize("json", wishes)
+    return HttpResponse(json.dumps(wishes_json), content_type='application/json')
