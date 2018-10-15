@@ -145,7 +145,7 @@ option = {
                 "featureType": "highway",
                 "elementType": "geometry",
                 "stylers": {
-                    "color": "#004981"
+                    "color": "#004981",
                     "visibility": "off"
                 }
             },
