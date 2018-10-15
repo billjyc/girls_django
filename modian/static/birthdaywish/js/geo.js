@@ -149,13 +149,8 @@ $(function() {
                         message: 'ID不能为空'
                     },
                     stringLength: {/*长度提示*/
-                        min: 3,
                         max: 24,
-                        message: '用户名长度必须在3到24之间'
-                    },
-                    regexp: {/* 只需加此键值对，包含正则表达式，和提示 */
-                        regexp: /^[a-zA-Z0-9_\.]+$/,
-                        message: '只能是数字和字母_.'
+                        message: '用户名长度必须在24以下'
                     },
                 }
             },
