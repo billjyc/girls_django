@@ -341,15 +341,19 @@ function load_data(data2) {
             normal: {
                 formatter: '{b}',
                 position: 'right',
-                show: false
+                show: true
             },
             emphasis: {
                 show: true
+            },
+            textStyle: {
+                color: '#fff',
+                fontSize: 9,
             }
         },
         itemStyle: {
             normal: {
-                color: '#ddb926'
+                color: '#fff'
             }
         }
     };
@@ -377,7 +381,7 @@ function load_data(data2) {
         },
         itemStyle: {
             normal: {
-                color: '#f4e925',
+                color: '#fff',
                 shadowBlur: 10,
                 shadowColor: '#333'
             }
