@@ -110,7 +110,7 @@ option = {
     geo: {
         show: true,
         map: 'china',
-        zoom: 2,
+        zoom: 1,
         label: {
             normal: {
                 show: false
@@ -122,7 +122,7 @@ option = {
         roam: true,
         itemStyle: {
             normal: {
-                areaColor: '#031525',
+                areaColor: '#ffffff',
                 borderColor: '#3B5077',
             },
             emphasis: {
