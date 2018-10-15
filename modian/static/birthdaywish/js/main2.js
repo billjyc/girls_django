@@ -124,7 +124,7 @@ option = {
                 "featureType": "land",
                 "elementType": "all",
                 "stylers": {
-                    "color": "#ffffff"
+                    "color": "#004981"
                 }
             },
             {
