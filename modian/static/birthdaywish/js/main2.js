@@ -113,27 +113,27 @@ option = {
         roam: true,
         mapStyle: {
             styleJson: [
-            {
-                "featureType": "water",
-                "elementType": "all",
-                "stylers": {
-                    "color": "#044161"
-                }
-            },
-            {
-                "featureType": "land",
-                "elementType": "all",
-                "stylers": {
-                    "color": "#004981"
-                }
-            },
-            {
-                "featureType": "boundary",
-                "elementType": "geometry",
-                "stylers": {
-                    "color": "#064f85"
-                }
-            },
+//            {
+//                "featureType": "water",
+//                "elementType": "all",
+//                "stylers": {
+//                    "color": "#044161"
+//                }
+//            },
+//            {
+//                "featureType": "land",
+//                "elementType": "all",
+//                "stylers": {
+//                    "color": "#004981"
+//                }
+//            },
+//            {
+//                "featureType": "boundary",
+//                "elementType": "geometry",
+//                "stylers": {
+//                    "color": "#064f85"
+//                }
+//            },
             {
                 "featureType": "railway",
                 "elementType": "all",
@@ -450,12 +450,12 @@ chart.hideLoading();
 var bmap = chart.getModel().getComponent('bmap').getBMap();
 bmap.addControl(new BMap.NavigationControl()); // 缩放控件
 bmap.addControl(new BMap.ScaleControl()); // 比例尺
-//底图
-var tileLayer = new BMap.TileLayer();
-tileLayer.getTilesUrl = function(tileCoord, zoom) {
-    var x = tileCoord.x;
-        var y = tileCoord.y;
-        var url = '../imgs/background.jpg';
-        return url;
-}
-bmap.addTileLayer(tileLayer);
+////底图
+//var tileLayer = new BMap.TileLayer();
+//tileLayer.getTilesUrl = function(tileCoord, zoom) {
+//    var x = tileCoord.x;
+//        var y = tileCoord.y;
+//        var url = '../imgs/background.jpg';
+//        return url;
+//}
+//bmap.addTileLayer(tileLayer);
