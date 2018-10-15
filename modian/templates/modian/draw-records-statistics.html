@@ -24,7 +24,7 @@
                     <th>
                         {{ card.name }}
                         <br />
-                        <img src="{{ card.url }}" class="img-fluid">
+                        <!--<img src="{{ card.url }}" class="img-fluid">-->
                     </th>
                 {% endfor %}
             </tr>
@@ -46,8 +46,6 @@
                 <td>{{ v.cards.8.count | default_if_none:"0" }}</td>
                 <td>{{ v.cards.9.count | default_if_none:"0" }}</td>
                 <td>{{ v.cards.10.count | default_if_none:"0" }}</td>
-                <td>{{ v.cards.11.count | default_if_none:"0" }}</td>
-                <td>{{ v.cards.12.count | default_if_none:"0" }}</td>
             </tr>
             {% endfor  %}
         </tbody>
