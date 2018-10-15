@@ -1,5 +1,4 @@
 #background {
     /*最主要的是这两行,上面的都是打酱油的*/
     background: url('../img/background.jpg') no-repeat center!important;/*注意：最高权重必须要给，不然样式会被覆盖掉*/
-    background-size: 100% 100%!important; /*注意：背景图大小宽高都给到100%,且加上最高权重*/
 }
