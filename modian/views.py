@@ -144,7 +144,51 @@ def get_61_pk_detail(request):
 
 def birthday_index(request):
     logger.info('get all birthday wish, request: %s' % request)
-    wishes = BirthdayWish.objects.order_by('update_time')
+    wishes = BirthdayWish.objects.order_by('-update_time')
+    logger.info(wishes)
+
+    provinceCode = {
+        "11": "北京",
+        "12": "天津",
+        "31": "上海",
+        "50": "重庆",
+        "13": "河北",
+        "41": "河南",
+        "53": "云南",
+        "21": "辽宁",
+        "23": "黑龙江",
+        "43": "湖南",
+        "34": "安徽",
+        "37": "山东",
+        "65": "新疆",
+        "32": "江苏",
+        "33": "浙江",
+        "36": "江西",
+        "42": "湖北",
+        "45": "广西",
+        "62": "甘肃",
+        "14": "山西",
+        "15": "内蒙古",
+        "61": "陕西",
+        "22": "吉林",
+        "35": "福建",
+        "52": "贵州",
+        "44": "广东",
+        "63": "青海",
+        "54": "西藏",
+        "51": "四川",
+        "64": "宁夏",
+        "46": "海南",
+        "101": "香港",
+        "102": "澳门",
+        "103": "台湾",
+        "0": "海外"
+    }
+
+    for wish in wishes:
+        logger.info(wish.province_code)
+        wish.province = provinceCode[str(wish.province_code)]
+
     context = {
         'wishes': wishes
     }
@@ -187,7 +231,7 @@ def get_all_birthday_wish(request):
 
 def get_all_birthday_wish_2(request):
     logger.info('get all birthday wish, request: %s' % request)
-    wishes = BirthdayWish.objects.order_by('update_time')
+    wishes = BirthdayWish.objects.order_by('-update_time')
     wishes_json = serializers.serialize("json", wishes)
     logger.info(wishes_json)
     return HttpResponse(json.dumps(wishes_json), content_type='application/json')

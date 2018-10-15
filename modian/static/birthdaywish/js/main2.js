@@ -9,10 +9,10 @@ var provinceCode = {
     "21": "辽宁省",
     "23": "黑龙江省",
     "43": "湖南省",
-    "34": "安徽省",
     "37": "山东省",
     "65": "新疆维吾尔自治区",
     "32": "江苏省",
+    "33": "浙江省",
     "36": "江西省",
     "42": "湖北省",
     "45": "广西壮族自治区",
@@ -393,7 +393,7 @@ function load_data(data2) {
         name: '点',
         type: 'scatter',
         coordinateSystem: 'geo',
-        symbol: 'pin', //气泡
+        symbol: 'image://http://112.74.183.47:8099/static/birthdaywish/imgs/symbol.png', //气泡
         symbolSize: function(val) {
             var a = (maxSize4Pin - minSize4Pin) / (max - min);
             var b = minSize4Pin - a * min;

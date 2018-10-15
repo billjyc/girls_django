@@ -46,10 +46,10 @@ var provinceCode = {
 	"辽宁省": 21,
 	"黑龙江省": 23,
 	"湖南省": 43,
-	"安徽省": 34,
 	"山东省": 37,
 	"新疆维吾尔自治区": 65,
 	"江苏省": 32,
+	"浙江省": 33,
 	"江西省": 36,
 	"湖北省": 42,
 	"广西壮族自治区": 45,
@@ -100,7 +100,11 @@ $(function() {
 		province = addComp.province;
 		// console.log(province);
 
-		$('#province_code').val(provinceCode[province]);
+        if(provinceCode[province]) {
+		    $('#province_code').val(provinceCode[province]);
+		} else {
+		    $('#province_code').val(0);
+		}
 		// console.log($('#province_code').val());
 
 		// console.log(returnCitySN["cip"]);
@@ -146,8 +150,8 @@ $(function() {
                     },
                     stringLength: {/*长度提示*/
                         min: 3,
-                        max: 30,
-                        message: '用户名长度必须在3到30之间'
+                        max: 24,
+                        message: '用户名长度必须在3到24之间'
                     },
                     regexp: {/* 只需加此键值对，包含正则表达式，和提示 */
                         regexp: /^[a-zA-Z0-9_\.]+$/,
@@ -162,8 +166,8 @@ $(function() {
                         message: '生日祝福不能为空'
                     },
                     stringLength: {/*长度提示*/
-                        max: 100,
-                        message: '生日祝福必须在100字符以下'
+                        max: 240,
+                        message: '生日祝福必须在240字符以下'
                     }
                 }
             }

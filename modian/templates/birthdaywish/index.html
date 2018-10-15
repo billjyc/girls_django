@@ -22,36 +22,38 @@
 <body>
 	<div class="container" style="margin-top: 20px">
 		<div class="row" style="margin-bottom: 10px">
-			<div class="col-md-10 offset-md-1 text-center">
+			<div class="col-md-8 offset-md-2 text-center">
 				<h1>- FXF生日快乐 -</h1>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8 text-center">
+			<div class="col-md-7 text-center">
                 <div id="map-main" style="height:600px;width:100%;"></div>
 			</div>
-			<div class="col-md-4 text-center pre-scrollable">
-				<table id="wish-table" class="display table table-hover"
-                data-mobile-responsive="true">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>对FXF的生日祝福</th>
-							<th>区域</th>
+			<div class="col-md-5 text-center">
+				<table id="wish-table" class="display table table-hover table-responsive row mx-0"
+                data-mobile-responsive="true" style="height:600px;width:100%;word-break:break-all; word-wrap:break-all;">
+					<thead class="w-100">
+						<tr class="row mx-0">
+							<th class="col-3">ID</th>
+							<th class="col-7">对FXF的生日祝福</th>
+							<th class="col-2">区域</th>
 						</tr>
 					</thead>
-					{% for wish in wishes %}
-					<tr>
-						<td>{{ wish.user_id }}</td>
-						<td>{{ wish.birthday_wish }}</td>
-						<td>{{ wish.province_code }}</td>
-					</tr>
-					{% endfor %}
+                    <tbody class="w-100">
+                        {% for wish in wishes %}
+                        <tr class="row mx-0">
+                            <td class="col-3">{{ wish.user_id }}</td>
+                            <td class="col-7">{{ wish.birthday_wish }}</td>
+                            <td class="col-2">{{ wish.province }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
 				</table>
 			</div>
 		</div>
 		<div class="row" style="margin-top: 40px">
-			<div class="col-md-10 offset-md-1 text-center">
+			<div class="col-md-8 offset-md-2 text-center">
 				<button class="btn btn-primary" id="submit-wish">提交你的生日祝福</button>
 			</div>
 		</div>
