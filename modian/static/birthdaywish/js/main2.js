@@ -122,8 +122,8 @@ option = {
         roam: true,
         itemStyle: {
             normal: {
-                areaColor: 'rgba(128, 128, 128, 0.1)',
-                borderColor: '#3B5077',
+                areaColor: 'rgba(128, 128, 128, 0.3)',
+                borderColor: '#7FFFD4',
             },
             emphasis: {
                 areaColor: '#2B91B7',
