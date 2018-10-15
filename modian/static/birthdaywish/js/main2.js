@@ -91,7 +91,7 @@ var convertData = function (data) {
 
 
 option = {
-    // backgroundColor: '#404a59',
+    backgroundColor: '#ffffff',
     // title: {
     //     text: '全国主要城市空气质量',
     //     subtext: 'data from PM25.in',
@@ -146,6 +146,7 @@ option = {
                 "elementType": "geometry",
                 "stylers": {
                     "color": "#004981"
+                    "visibility": "off"
                 }
             },
             {
