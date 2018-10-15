@@ -91,7 +91,7 @@ var convertData = function (data) {
 
 
 option = {
-//    backgroundColor: '#ffffff',
+    backgroundColor: '#ffffff',
     // title: {
     //     text: '全国主要城市空气质量',
     //     subtext: 'data from PM25.in',
@@ -107,143 +107,165 @@ option = {
             return params.data.name + '<br />祝福数量: ' + params.value[2];
         }
     },
-    bmap: {
-        center: [104.114129, 37.550339],
-        zoom: 5,
-        roam: true,
-        mapStyle: {
-            styleJson: [
-            {
-                "featureType": "water",
-                "elementType": "all",
-                "stylers": {
-                    "color": "#044161"
-                }
+    geo: {
+        show: true,
+        map: mapName,
+        label: {
+            normal: {
+                show: false
             },
-            {
-                "featureType": "land",
-                "elementType": "all",
-                "stylers": {
-                    "color": "#004981"
-                }
-            },
-            {
-                "featureType": "boundary",
-                "elementType": "geometry",
-                "stylers": {
-                    "color": "#064f85"
-                }
-            },
-            {
-                "featureType": "railway",
-                "elementType": "all",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "highway",
-                "elementType": "geometry",
-                "stylers": {
-                    "color": "#004981",
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "highway",
-                "elementType": "geometry.fill",
-                "stylers": {
-                    "color": "#005b96",
-                    "lightness": 1
-                }
-            },
-            {
-                "featureType": "highway",
-                "elementType": "labels",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "arterial",
-                "elementType": "geometry",
-                "stylers": {
-                    "color": "#004981"
-                }
-            },
-            {
-                "featureType": "arterial",
-                "elementType": "geometry.fill",
-                "stylers": {
-                    "color": "#00508b"
-                }
-            },
-            {
-                "featureType": "poi",
-                "elementType": "all",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "green",
-                "elementType": "all",
-                "stylers": {
-                    "color": "#056197",
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "subway",
-                "elementType": "all",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "manmade",
-                "elementType": "all",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "local",
-                "elementType": "all",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "arterial",
-                "elementType": "labels",
-                "stylers": {
-                    "visibility": "off"
-                }
-            },
-            {
-                "featureType": "boundary",
-                "elementType": "geometry.fill",
-                "stylers": {
-                    "color": "#029fd4"
-                }
-            },
-            {
-                "featureType": "building",
-                "elementType": "all",
-                "stylers": {
-                    "color": "#1a5787"
-                }
-            },
-            {
-                "featureType": "label",
-                "elementType": "all",
-                "stylers": {
-                    "visibility": "off"
-                }
+            emphasis: {
+                show: false,
             }
-            ]
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#031525',
+                borderColor: '#3B5077',
+            },
+            emphasis: {
+                areaColor: '#2B91B7',
+            }
         }
+    },
+//    bmap: {
+//        center: [104.114129, 37.550339],
+//        zoom: 5,
+//        roam: true,
+//        mapStyle: {
+//            styleJson: [
+//            {
+//                "featureType": "water",
+//                "elementType": "all",
+//                "stylers": {
+//                    "color": "#044161"
+//                }
+//            },
+//            {
+//                "featureType": "land",
+//                "elementType": "all",
+//                "stylers": {
+//                    "color": "#004981"
+//                }
+//            },
+//            {
+//                "featureType": "boundary",
+//                "elementType": "geometry",
+//                "stylers": {
+//                    "color": "#064f85"
+//                }
+//            },
+//            {
+//                "featureType": "railway",
+//                "elementType": "all",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "highway",
+//                "elementType": "geometry",
+//                "stylers": {
+//                    "color": "#004981",
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "highway",
+//                "elementType": "geometry.fill",
+//                "stylers": {
+//                    "color": "#005b96",
+//                    "lightness": 1
+//                }
+//            },
+//            {
+//                "featureType": "highway",
+//                "elementType": "labels",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "arterial",
+//                "elementType": "geometry",
+//                "stylers": {
+//                    "color": "#004981"
+//                }
+//            },
+//            {
+//                "featureType": "arterial",
+//                "elementType": "geometry.fill",
+//                "stylers": {
+//                    "color": "#00508b"
+//                }
+//            },
+//            {
+//                "featureType": "poi",
+//                "elementType": "all",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "green",
+//                "elementType": "all",
+//                "stylers": {
+//                    "color": "#056197",
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "subway",
+//                "elementType": "all",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "manmade",
+//                "elementType": "all",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "local",
+//                "elementType": "all",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "arterial",
+//                "elementType": "labels",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            },
+//            {
+//                "featureType": "boundary",
+//                "elementType": "geometry.fill",
+//                "stylers": {
+//                    "color": "#029fd4"
+//                }
+//            },
+//            {
+//                "featureType": "building",
+//                "elementType": "all",
+//                "stylers": {
+//                    "color": "#1a5787"
+//                }
+//            },
+//            {
+//                "featureType": "label",
+//                "elementType": "all",
+//                "stylers": {
+//                    "visibility": "off"
+//                }
+//            }
+//            ]
+//        }
     },
     // series : [
     // {
@@ -447,9 +469,9 @@ chart.setOption(option);
 chart.hideLoading();
 
 // 获取百度地图实例，使用百度地图自带的控件
-var bmap = chart.getModel().getComponent('bmap').getBMap();
-bmap.addControl(new BMap.NavigationControl()); // 缩放控件
-bmap.addControl(new BMap.ScaleControl()); // 比例尺
+//var bmap = chart.getModel().getComponent('bmap').getBMap();
+//bmap.addControl(new BMap.NavigationControl()); // 缩放控件
+//bmap.addControl(new BMap.ScaleControl()); // 比例尺
 ////底图
 //var tileLayer = new BMap.TileLayer();
 //tileLayer.getTilesUrl = function(tileCoord, zoom) {
