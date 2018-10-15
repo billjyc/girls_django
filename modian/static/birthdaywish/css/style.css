@@ -1,4 +1,3 @@
 #background {
-    /*最主要的是这两行,上面的都是打酱油的*/
-    background: url('../img/background.jpg') no-repeat center!important;/*注意：最高权重必须要给，不然样式会被覆盖掉*/
+    background: url('../img/background.jpg');
 }
