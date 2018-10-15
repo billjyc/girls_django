@@ -331,7 +331,7 @@ function load_data(data2) {
     sery = {
         name: 'wish',
         type: 'scatter',
-        coordinateSystem: 'bmap',
+        coordinateSystem: 'geo',
         data: convertData(data2),
         symbolSize: function (val) {
             return val[2] / 10;
@@ -355,7 +355,7 @@ function load_data(data2) {
     sery2 = {
         name: 'Top 5',
         type: 'effectScatter',
-        coordinateSystem: 'bmap',
+        coordinateSystem: 'geo',
         data: convertData(data2.sort(function (a, b) {
             return b.value - a.value;
         }).slice(0, 6)),
@@ -387,7 +387,7 @@ function load_data(data2) {
     {
         name: '点',
         type: 'scatter',
-        coordinateSystem: 'bmap',
+        coordinateSystem: 'geo',
         symbol: 'pin', //气泡
         symbolSize: function(val) {
             var a = (maxSize4Pin - minSize4Pin) / (max - min);
