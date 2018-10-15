@@ -449,9 +449,7 @@ var maxSize4Pin = 100,
     minSize4Pin = 40;
 
 var chart = echarts.init(document.getElementById('map-main'));
-chart.showLoading();
 chart.setOption(option);
-chart.hideLoading();
 
 // 获取百度地图实例，使用百度地图自带的控件
 //var bmap = chart.getModel().getComponent('bmap').getBMap();
