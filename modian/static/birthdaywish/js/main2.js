@@ -113,27 +113,27 @@ option = {
         roam: true,
         mapStyle: {
             styleJson: [
-//            {
-//                "featureType": "water",
-//                "elementType": "all",
-//                "stylers": {
-//                    "color": "#044161"
-//                }
-//            },
-//            {
-//                "featureType": "land",
-//                "elementType": "all",
-//                "stylers": {
-//                    "color": "#004981"
-//                }
-//            },
-//            {
-//                "featureType": "boundary",
-//                "elementType": "geometry",
-//                "stylers": {
-//                    "color": "#064f85"
-//                }
-//            },
+            {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": {
+                    "color": "#044161"
+                }
+            },
+            {
+                "featureType": "land",
+                "elementType": "all",
+                "stylers": {
+                    "color": "#ffffff"
+                }
+            },
+            {
+                "featureType": "boundary",
+                "elementType": "geometry",
+                "stylers": {
+                    "color": "#064f85"
+                }
+            },
             {
                 "featureType": "railway",
                 "elementType": "all",

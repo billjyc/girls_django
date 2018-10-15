@@ -154,7 +154,7 @@ def submit_birthday_wish(request):
     import time
     if request.method == 'POST':
         form = BirthdayForm(request.POST)
-        print(form)
+        logger.info(form)
 
         if form.is_valid():
             userid = form.cleaned_data['user_id']
