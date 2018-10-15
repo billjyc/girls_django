@@ -9,7 +9,15 @@
 	{% load static %}
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static 'birthdaywish/css/style.css' %}">
-
+    <style type="text/css">
+        #background {
+            background: url("{% static 'birthdaywish/imgs/background.jpg' %}");
+            width:100%;
+            height:100%;
+            background-size: cover;
+            -moz-background-size: cover;
+        }
+    </style>
 	<!--SNH48冯晓菲应援会101724227-->
 </head>
 <body>
@@ -19,15 +27,6 @@
 				<h1>生日祝福地区分布</h1>
 			</div>
 		</div>
-        <script type="text/css">
-            #background {
-                background: url("{% static 'birthdaywish/imgs/background.jpg' %}");
-                width:100%;
-                height:100%;
-                background-size: cover;
-                -moz-background-size: cover;
-            }
-        </script>
 		<div class="row">
 			<div class="col-md-8 text-center" id="background">
 				<div id="map-main" style="height:100%;width:100%;"></div>
