@@ -450,3 +450,12 @@ chart.hideLoading();
 var bmap = chart.getModel().getComponent('bmap').getBMap();
 bmap.addControl(new BMap.NavigationControl()); // 缩放控件
 bmap.addControl(new BMap.ScaleControl()); // 比例尺
+//底图
+var tileLayer = new BMap.TileLayer();
+tileLayer.getTilesUrl = function(tileCoord, zoom) {
+    var x = tileCoord.x;
+        var y = tileCoord.y;
+        var url = '../imgs/background.jpg';
+        return url;
+}
+bmap.addTileLayer(tileLayer);
