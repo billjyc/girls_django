@@ -184,4 +184,5 @@ def get_all_birthday_wish_2(request):
     logger.info('get all birthday wish, request: %s' % request)
     wishes = BirthdayWish.objects.order_by('update_time')
     wishes_json = serializers.serialize("json", wishes)
+    logger.info(wishes_json)
     return HttpResponse(json.dumps(wishes_json), content_type='application/json')
