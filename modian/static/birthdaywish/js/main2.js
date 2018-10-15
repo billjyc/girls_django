@@ -424,10 +424,6 @@ function load_data(data2) {
     chart.setOption(option);
 }
 
-function load_birthday_wishes(data) {
-
-}
-
 $(document).ready(function() {
     //获取省份生日祝福的数量
     $.ajax({
@@ -444,18 +440,6 @@ $(document).ready(function() {
 
     $('#submit-wish').click(function() {
         $(window).attr('location', './wish-form');
-    });
-    //获取生日祝福
-    $.ajax({
-        url: 'http://112.74.183.47:8099/modian/get-birthday-wish-2/',
-        dataType: 'json',
-        method: 'GET',
-        success: function(data) {
-            load_birthday_wishes(data);
-        },
-        error: function(xhr) {
-            console.error('error:' + JSON.stringify(xhr));
-        }
     });
 });
 

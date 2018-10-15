@@ -143,7 +143,12 @@ def get_61_pk_detail(request):
 
 
 def birthday_index(request):
-    return render(request, 'birthdaywish/index.html')
+    logger.info('get all birthday wish, request: %s' % request)
+    wishes = BirthdayWish.objects.order_by('update_time')
+    context = {
+        'wishes': wishes
+    }
+    return render(request, 'birthdaywish/index.html', context)
 
 
 def wish_form(request):

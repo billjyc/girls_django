@@ -20,13 +20,11 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-10 text-center">
-				<div id="background">
-					<div id="map-main" style="width: 700px"></div>
-				</div>
+			<div class="col-md-10 text-center" id="background">
+				<div id="map-main" style="width: 700px"></div>
 			</div>
 			<div class="col-md-2 text-center">
-				<table id="wish-table">
+				<table id="wish-table" class="display table table-hover">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -34,6 +32,13 @@
 							<th>区域</th>
 						</tr>
 					</thead>
+					{% for wish in wishes %}
+					<tr>
+						<td>{{ wish.user_id }}</td>
+						<td>{{ wish.wish }}</td>
+						<td>{{ wish.province_code }}</td>
+					</tr>
+					{% endfor %}
 				</table>
 			</div>
 		</div>

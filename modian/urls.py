@@ -15,5 +15,5 @@ urlpatterns = [
     path('wish-form', views.wish_form, name="wish_form"),
     path('submit-birthday-wish/', views.submit_birthday_wish, name='submit_birthday_wish'),
     path('get-birthday-wish/', views.get_all_birthday_wish, name='get_birthday_wish'),
-    path('get-birthday-wish-2/', views.get_all_birthday_wish_2, name='get_birthday_wish2')
+    # path('get-birthday-wish-2/', views.get_all_birthday_wish_2, name='get_birthday_wish2')
 ]
