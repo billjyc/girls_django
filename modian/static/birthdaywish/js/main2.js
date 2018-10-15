@@ -109,7 +109,7 @@ option = {
     },
     geo: {
         show: true,
-        map: mapName,
+        map: 'china',
         label: {
             normal: {
                 show: false
