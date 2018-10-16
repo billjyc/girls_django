@@ -161,8 +161,8 @@ $(function() {
                         message: '生日祝福不能为空'
                     },
                     stringLength: {/*长度提示*/
-                        max: 240,
-                        message: '生日祝福必须在240字符以下'
+                        max: 120,
+                        message: '生日祝福长度必须在120以下'
                     }
                 }
             }
