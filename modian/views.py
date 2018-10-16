@@ -203,20 +203,29 @@ def submit_birthday_wish(request):
     import time
     logger.info(request)
     if request.method == 'POST':
-        form = BirthdayForm(request.POST)
-        logger.debug(form)
-
-        if form.is_valid():
-            userid = form.cleaned_data['user_id']
-            birthdaywish = form.cleaned_data['birthday_wish']
-            province_code = form.cleaned_data['province_code']
-            ip = form.cleaned_data['ip']
-            time_str = utils.convert_timestamp_to_timestr(time.time() * 1000)
-
-            wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish,
-                                update_time=time_str, ip=ip)
-            wish.save()
-            return HttpResponse(json.dumps({'success': True}), content_type="application/json")
+        userid = request.POST['user_id']
+        birthdaywish = request.POST['birthday_wish']
+        province_code = request.POST['province_code']
+        ip = request.POST['ip']
+        time_str = utils.convert_timestamp_to_timestr(time.time() * 1000)
+        wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish,
+                            update_time=time_str, ip=ip)
+        wish.save()
+        return HttpResponse(json.dumps({'success': True}), content_type="application/json")
+        # form = BirthdayForm(request.POST)
+        # logger.debug(form)
+        #
+        # if form.is_valid():
+        #     userid = form.cleaned_data['user_id']
+        #     birthdaywish = form.cleaned_data['birthday_wish']
+        #     province_code = form.cleaned_data['province_code']
+        #     ip = form.cleaned_data['ip']
+        #     time_str = utils.convert_timestamp_to_timestr(time.time() * 1000)
+        #
+        #     wish = BirthdayWish(user_id=userid, province_code=province_code, birthday_wish=birthdaywish,
+        #                         update_time=time_str, ip=ip)
+        #     wish.save()
+        #     return HttpResponse(json.dumps({'success': True}), content_type="application/json")
     return HttpResponse(json.dumps({'success': False}), content_type="application/json")
 
 
