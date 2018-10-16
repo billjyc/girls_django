@@ -162,7 +162,7 @@ $(function() {
                     },
                     stringLength: {/*长度提示*/
                         max: 120,
-                        message: '生日祝福长度必须在120以下'
+                        message: '生日祝福长度必须在120以下' //120
                     }
                 }
             }
