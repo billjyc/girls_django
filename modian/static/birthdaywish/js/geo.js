@@ -17,6 +17,7 @@ function convertLatLntToProvince(resolve, reject, lng, lat) {
 
 
 function locate(resolve, reject) {
+    console.log('method locate()...')
 	var geolocation = new BMap.Geolocation();
 	var rst = {};
 	geolocation.getCurrentPosition(function(r){
