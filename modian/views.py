@@ -201,6 +201,7 @@ def wish_form(request):
 
 def submit_birthday_wish(request):
     import time
+    logger.info(request)
     if request.method == 'POST':
         form = BirthdayForm(request.POST)
         logger.debug(form)
