@@ -203,6 +203,7 @@ def submit_birthday_wish(request):
     import time
     logger.info(request)
     if request.method == 'POST':
+        logger.info('post params:%s', request.POST)
         userid = request.POST['user_id']
         birthdaywish = request.POST['birthday_wish']
         province_code = request.POST['province_code']
