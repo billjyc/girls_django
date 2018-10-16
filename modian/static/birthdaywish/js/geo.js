@@ -116,8 +116,8 @@ $(function() {
 	$('#submit').on("click", function() {
 		console.log(province);
 		$('#submit').attr('disabled', true);
-		console.log($("#birthday_wish").val().length)
-		console.log($("#user_id").val().length)
+		console.log($("#birthday_wish").val().length);
+		console.log($("#userid").val().length);
 		$('#form').ajaxSubmit({
 			url: 'http://112.74.183.47:8099/modian/submit-birthday-wish/',
 			type: "POST",
