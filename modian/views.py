@@ -182,7 +182,8 @@ def birthday_index(request):
         "101": "香港",
         "102": "澳门",
         "103": "台湾",
-        "0": "海外"
+        "0": "海外",
+        "1": "灰推心里"
     }
 
     for wish in wishes:
