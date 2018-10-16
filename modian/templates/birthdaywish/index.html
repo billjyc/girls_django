@@ -68,16 +68,16 @@
 					<thead class="w-100">
 						<tr class="row mx-0">
 							<th class="col-3">ID</th>
-							<th class="col-7">对FXF的生日祝福</th>
-							<th class="col-2">区域</th>
+							<th class="col-6">对FXF的生日祝福</th>
+							<th class="col-3">区域</th>
 						</tr>
 					</thead>
                     <tbody class="w-100">
                         {% for wish in wishes %}
                         <tr class="row mx-0">
                             <td class="col-3">{{ wish.user_id }}</td>
-                            <td class="col-7">{{ wish.birthday_wish }}</td>
-                            <td class="col-2">{{ wish.province }}</td>
+                            <td class="col-6">{{ wish.birthday_wish }}</td>
+                            <td class="col-3">{{ wish.province }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
