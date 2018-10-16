@@ -103,6 +103,7 @@ $(function() {
         if(provinceCode[province]) {
 		    $('#province_code').val(provinceCode[province]);
 		} else {
+		    console.log('在国外');
 		    $('#province_code').val(0);
 		}
 		// console.log($('#province_code').val());
