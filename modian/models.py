@@ -81,6 +81,7 @@ class DrawRecord(models.Model):
     # card = models.ForeignKey('Card', models.DO_NOTHING, db_column='card_id')
     card_id = models.IntegerField(db_column='card_id')
     draw_time = models.DateTimeField()
+    backer_money = models.FloatField(db_column='backer_money')
 
     class Meta:
         managed = False

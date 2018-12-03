@@ -19,6 +19,7 @@
                 <th>时间</th>
                 <th>ID</th>
                 <th>卡</th>
+                <th>金额</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,9 @@
                     <td>{{ record.draw_time }}</td>
                     <td>{{ record.supporter.name }}</td>
                     <td>{{ record.card_id }}</td>
+                    {% if record.backer_money %}
+                        <td>{{ record.backer_money }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
