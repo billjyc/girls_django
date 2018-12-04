@@ -1,0 +1,35 @@
+{% extends "modian/base.html" %}
+
+{% block title %}积分统计{% endblock %}
+
+{% block content %}
+<h4>积分统计</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-sort-stable="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=20
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true"
+                data-show-fullscreen="true">
+        <thead>
+            <tr class="text-center">
+                <th>摩点ID</th>
+                <th>摩点昵称</th>
+                <th>积分</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in score_rank %}
+                <tr class="text-center">
+                    <td>{{ record.modian_id }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.total }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

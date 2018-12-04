@@ -56,6 +56,21 @@ def get_all_card_draw_record(request):
     return render(request, 'modian/draw-records.html', context)
 
 
+def get_score_detail(request):
+    with connections['modian'].cursor() as cursor:
+        cursor.execute("""
+            select modian_id, s.name, sum(score) as `total` from t_card_score, supporter s 
+            where s.id = modian_id 
+            group by modian_id 
+            order by `total` desc;
+        """)
+        score_rank = utils.namedtuplefetchall(cursor)
+    context = {
+        "score_rank": score_rank
+    }
+    return render(request, 'modian/score.html', context)
+
+
 def get_card_draw_record_by_supporter(request):
     handler = CardDrawHandler()
     records = handler.get_draw_record_by_supporter()
