@@ -98,7 +98,7 @@ class DrawFuRecord(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'draw_fu_record'
+        db_table = 't_draw_fu_record'
 
 
 class BirthdayWish(models.Model):

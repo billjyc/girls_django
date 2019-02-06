@@ -44,7 +44,7 @@ class CardDrawHandler:
         with connections['modian'].cursor() as cursor:
             cursor.execute("""
             select s.`id` as supporter_id, s.`name` as supporter_name, dr.`fu_idx` as fu_id, dr.`fu_name` as fu_name, count(*) as c
-                from  supporter s, draw_record dr 
+                from  supporter s, t_draw_fu_record dr 
                 where s.`id` = dr.`supporter_id`
                 group by dr.`fu_idx`, s.id
                 order by s.id, dr.`fu_idx`;
