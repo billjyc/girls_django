@@ -1,0 +1,35 @@
+{% extends "modian/base.html" %}
+
+{% block title %}抽福记录{% endblock %}
+
+{% block content %}
+    {% if records %}
+    <h4>抽福记录</h4>
+    <table class="display table table-hover" data-toggle="table"
+                data-pagination="true"
+                data-page-list="[10, 20, 50, 100]"
+                data-mobile-responsive="true"
+                data-page-size=20
+                data-striped="true"
+                data-search="true"
+                data-search-on-enter-key="true"
+                data-show-columns="true">
+        <thead>
+            <tr class="text-center">
+                <th>时间</th>
+                <th>ID</th>
+                <th>卡</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr class="text-center">
+                    <td>{{ record.update_time }}</td>
+                    <td>{{ record.supporter.name }}</td>
+                    <td>{{ record.fu_name }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

@@ -88,6 +88,19 @@ class DrawRecord(models.Model):
         db_table = 'draw_record'
 
 
+class DrawFuRecord(models.Model):
+    supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='supporter_id')
+    # card = models.ForeignKey('Card', models.DO_NOTHING, db_column='card_id')
+    fu_idx = models.IntegerField(db_column='fu_idx')
+    fu_name = models.CharField(db_column='fu_name')
+    update_time = models.DateTimeField(db_column='update_time')
+    # backer_money = models.FloatField(db_column='backer_money')
+
+    class Meta:
+        managed = False
+        db_table = 'draw_fu_record'
+
+
 class BirthdayWish(models.Model):
     user_id = models.CharField(max_length=30, db_column='user_id')
     birthday_wish = models.CharField(max_length=100, db_column='wish')

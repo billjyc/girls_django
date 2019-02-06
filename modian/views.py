@@ -262,3 +262,22 @@ def get_all_birthday_wish_2(request):
     wishes_json = serializers.serialize("json", wishes)
     logger.info(wishes_json)
     return HttpResponse(json.dumps(wishes_json), content_type='application/json')
+
+
+def get_draw_fu_record(request):
+    records = DrawFuRecord.objects.order_by('-update_time')
+    context = {
+        'records': records,
+    }
+    return render(request, 'modian/draw-fu-records.html', context)
+
+
+def get_fu_draw_record_by_supporter(request):
+    handler = CardDrawHandler()
+    records = handler.get_draw_fu_record_by_supporter()
+    # cards = Card.objects.order_by('id')
+    context = {
+        'records': records,
+        # 'cards': cards,
+    }
+    return render(request, 'modian/draw-fu-records-statistics.html', context)
