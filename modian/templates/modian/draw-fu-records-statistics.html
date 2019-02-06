@@ -17,7 +17,6 @@
                 data-show-columns="true"
                 data-show-fullscreen="true">
         <thead>
-            {% if cards %}
             <tr class="text-center">
                 <th>ID</th>
                 <th>学业福</th>
@@ -25,9 +24,7 @@
                 <th>吹风福</th>
                 <th>冲冲福</th>
                 <th>巨款福</th>
-                {% endfor %}
             </tr>
-            {% endif %}
         </thead>
         {% if records %}
         <tbody>
