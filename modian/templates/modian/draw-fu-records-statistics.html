@@ -24,6 +24,12 @@
                 <th>吹风福</th>
                 <th>冲冲福</th>
                 <th>巨款福</th>
+                <th>拍立得</th>
+                <th>签名</th>
+                <th>口头祝福</th>
+                <th>大礼包</th>
+                <th>乐高</th>
+                <th>赫敏大头</th>
             </tr>
         </thead>
         {% if records %}
@@ -37,7 +43,12 @@
                 <td>{{ v.cards.2.count | default_if_none:"0" }}</td>
                 <td>{{ v.cards.3.count | default_if_none:"0" }}</td>
                 <td>{{ v.cards.4.count | default_if_none:"0" }}</td>
-
+                <td>{{ v.cards.5.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.6.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.7.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.8.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.9.count | default_if_none:"0" }}</td>
+                <td>{{ v.cards.10.count | default_if_none:"0" }}</td>
             </tr>
             {% endfor  %}
         </tbody>
