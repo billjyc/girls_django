@@ -2,6 +2,10 @@
 
 import pymysql
 import logging
+from django_exercise import db_config as Config
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 logger = logging.getLogger('django')
 
 
@@ -49,6 +53,13 @@ class MySQLUtil:
 
     def close(self):
         self.conn.close()
+
+
+engine = create_engine('mysql+mysqlconnector://{}:{}@{}:{}/{}'.format(Config.DB_USER, Config.DB_PASSWORD,
+                                                                      Config.DB_HOST, Config.DB_PORT,
+                                                                      Config.DB_DBNAME))
+DBSession = sessionmaker(bind=engine)
+Base = declarative_base()
 
 
 if __name__ == '__main__':
