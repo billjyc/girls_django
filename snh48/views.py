@@ -31,7 +31,16 @@ def index(request):
 
 
 def performance_history_index(request):
+    page = request.GET.get('page', 1)
     ph_list = PerformanceHistory.objects.order_by('-date')
+    paginator = Paginator(ph_list, 100)
+
+    try:
+        ph_list = paginator.page(page)
+    except PageNotAnInteger:
+        ph_list = paginator.page(1)
+    except EmptyPage:
+        ph_list = paginator.page(paginator.num_pages)
     context = {
         'ph_list': ph_list,
     }

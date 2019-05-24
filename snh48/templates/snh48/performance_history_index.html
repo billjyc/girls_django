@@ -3,43 +3,80 @@
 {% block title %}公演{% endblock %}
 
 {% block content %}
-    {% if ph_list %}
-        <h4>公演列表</h4>
+{% if ph_list %}
+<h4>公演列表</h4>
+<div class="container-fluid">
 
-        <table class="display table table-hover" data-toggle="table"
-                data-pagination="true"
-                data-page-list="[10, 20, 50, 100]"
-                data-mobile-responsive="true"
-                data-page-size=100
-                data-striped="true"
-                data-search="true"
-                data-search-on-enter-key="true"
-                data-show-columns="true">
-            <thead>
-                <tr class="text-center">
-                    <th>日期</th>
-                    <th>队伍</th>
-                    <th>公演</th>
-                    <th>备注</th>
-                </tr>
-            </thead>
+    <table class="display table table-hover" data-toggle="table"
+           data-pagination="true"
+           data-page-list="[10, 20, 50, 100]"
+           data-mobile-responsive="true"
+           data-page-size=100
+           data-striped="true"
+           data-search="true"
+           data-search-on-enter-key="true"
+           data-show-columns="true">
+        <thead>
+        <tr class="text-center">
+            <th>日期</th>
+            <th>队伍</th>
+            <th>公演</th>
+            <th>备注</th>
+        </tr>
+        </thead>
 
-            <tbody>
-                {% for ph in ph_list %}
-                    <tr class="text-center">
-                        <td><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }}</a></td>
-                        <td>
-                            {% if ph.performance.team %}
-                                {{ ph.performance.team }}
-                            {% endif %}
-                        </td>
-                        <td>{{ ph.performance.name }}</td>
-                        <td>{{ ph.description }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+        <tbody>
+        {% for ph in ph_list %}
+        <tr class="text-center">
+            <td><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }}</a></td>
+            <td>
+                {% if ph.performance.team %}
+                {{ ph.performance.team }}
+                {% endif %}
+            </td>
+            <td>{{ ph.performance.name }}</td>
+            <td>{{ ph.description }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
 
-        </table>
+    </table>
 
-    {% endif %}
+    <div class="pagination row">
+        <span class="step-links">
+            {% if ph_list.has_previous %}
+                <a href="?page=1">&laquo;</a>
+                <a href="?page={{ ph_list.previous_page_number }}">上一页</a>
+            {% endif %}
+            {% if ph_list.previous_page_number|add:-1 > 1 %}
+                <a href="?page={{ ph_list.previous_page_number|add:-1 }}">{{ ph_list.previous_page_number|add:-1 }}</a>
+            {% endif %}
+
+            {% if ph_list.has_previous %}
+                <a href="?page={{ ph_list.previous_page_number }}">{{ ph_list.previous_page_number }}</a>
+            {% endif %}
+
+            <span class="current">
+                {{ ph_list.number }}
+            </span>
+
+
+            {% if ph_list.has_next %}
+                <a href="?page={{ ph_list.next_page_number }}">{{ ph_list.next_page_number }}</a>
+            {% endif %}
+
+            {% if ph_list.next_page_number|add:1 < ph_list.paginator.num_pages %}
+                <a href="?page={{ ph_list.next_page_number|add:1 }}">{{ ph_list.next_page_number|add:1 }}</a>
+            {% endif %}
+
+            {% if ph_list.has_next %}
+                <a href="?page={{ ph_list.next_page_number }}">下一页</a>
+                <a href="?page={{ ph_list.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+            <span>共{{ ph_list.paginator.num_pages }}页</span>
+        </span>
+    </div>
+</div>
+
+{% endif %}
 {% endblock %}
