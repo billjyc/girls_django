@@ -29,7 +29,7 @@ def get_aid_from_link(link):
 
 
 try:
-    conn = pymysql.connect(host='112.74.183.47', port=3306, passwd='Jyc@1993', db='snh48', user='root', charset='utf8')
+    conn = pymysql.connect(host='localhost', port=3306, passwd='***', db='snh48', user='**', charset='utf8')
     cursor = conn.cursor()
     cursor.execute("""
         select id, video_url from performance_history where video_url is not null order by date desc
