@@ -24,19 +24,22 @@ def get_video_stat(aid):
 
 
 def get_aid_from_link(link):
-    strs = link.split('av')
-    return strs[1]
+    strs = link.split('/')
+    return strs[4].split('av')[1]
 
 
 try:
-    conn = pymysql.connect(host='root', port=3306, passwd='Jyc@1993', db='snh48', user='root', charset='utf8')
+    conn = pymysql.connect(host='112.74.183.47', port=3306, passwd='Jyc@1993', db='snh48', user='root', charset='utf8')
     cursor = conn.cursor()
     cursor.execute("""
-        select id, video_url from performance_history where video_url is not null
+        select id, video_url from performance_history where video_url is not null order by date desc
     """)
     rst = cursor.fetchall()
     for (id, video_url) in rst:
         aid = get_aid_from_link(video_url)
+        print(aid)
+        if not aid:
+            continue
         datas = get_video_stat(aid)
         print(datas)
         cursor.execute("""
@@ -54,6 +57,7 @@ try:
                 UPDATE bilibili_stat SET view=%s,danmaku=%s,reply=%s,favorite=%s,coin=%s,share=%s, update_time='%s' WHERE performance_history_id=%s
             """ % (datas['view'], datas['danmaku'], datas['reply'], datas['favorite'], datas['coin'], datas['share'], time_str, id))
         conn.commit()
+        time.sleep(2)
     conn.close()
 
 except pymysql.Error as e:
@@ -63,6 +67,7 @@ except pymysql.Error as e:
 
 if __name__ == '__main__':
     pass
-    # aid = get_aid_from_link('https://www.bilibili.com/video/av22103177')
+    # aid = get_aid_from_link('https://www.bilibili.com/video/av2517405/?p=1')
+    # print(aid)
     # r = get_video_stat(19424846)
     # print(r)

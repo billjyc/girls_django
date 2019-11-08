@@ -34,6 +34,8 @@ def get_video_stat(keyword):
         writer = csv.writer(f, dialect=('excel'))
         writer.writerow(['上传时间', '公演', '播放量', '弹幕'])
         for video in result:
+            if '生日会' in video['title']:
+                continue
             # 转换成localtime
             time_local = time.localtime(video['created'])
             # 转换成新的时间格式(2016-05-05 20:28:54)
@@ -43,13 +45,13 @@ def get_video_stat(keyword):
 
 
 if __name__ == '__main__':
-    get_video_stat('Team NII')
-    get_video_stat('Team HII')
-    get_video_stat('Team X')
-    get_video_stat('Team XII')
-    get_video_stat('Team B')
-    get_video_stat('Team E')
-    get_video_stat('Team J')
-    get_video_stat('Team G')
-    get_video_stat('Team NIII')
+    # get_video_stat('Team NII')
+    # get_video_stat('Team HII')
+    # get_video_stat('Team X')
+    # get_video_stat('Team XII')
+    # get_video_stat('Team B')
+    # get_video_stat('Team E')
+    # get_video_stat('Team J')
+    # get_video_stat('Team G')
+    # get_video_stat('Team NIII')
     get_video_stat('Team Z')
