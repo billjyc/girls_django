@@ -39,20 +39,28 @@
             </ul>
         </div>
         <div class="col-4">
-            <h4>Team Ft</h4>
+            <h4>已退</h4>
             <ul>
-                {% for member in team_ft %}
+                {% for member in hiatus %}
                     <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-4">
-            <h4>Team 预备生</h4>
-            <ul>
-                {% for member in team_trainee %}
-                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
+<!--        <div class="col-4">-->
+<!--            <h4>Team Ft</h4>-->
+<!--            <ul>-->
+<!--                {% for member in team_ft %}-->
+<!--                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="col-4">-->
+<!--            <h4>Team 预备生</h4>-->
+<!--            <ul>-->
+<!--                {% for member in team_trainee %}-->
+<!--                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--        </div>-->
     </div>
 {% endblock %}

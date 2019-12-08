@@ -19,6 +19,9 @@ def index(request):
     member_list = Memberinfo.objects.filter(
         is_valid=1
     ).order_by('id').order_by('team')
+    hiatus_list = Memberinfo.objects.filter(
+        is_valid=0
+    ).order_by('id')
     context = {
         'team_sii': member_list.filter(team__id=1),
         'team_nii': member_list.filter(team__id=2),
@@ -26,6 +29,7 @@ def index(request):
         'team_x': member_list.filter(team__id=4),
         'team_ft': member_list.filter(team__id=6),
         'team_trainee': member_list.filter(team__id=7),
+        'hiatus': hiatus_list
     }
     return render(request, 'snh48/index.html', context)
 
