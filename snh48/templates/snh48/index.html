@@ -3,48 +3,55 @@
 {% block title %}成员{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-4">
+<!--    <div class="row">-->
+<!--        <div class="col-4">-->
             <h4>Team SII</h4>
-            <ul>
+            <div class="row">
+                <ul class="list-group list-group-horizontal">
                 {% for member in team_sii %}
-                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
-        </div>
-        <div class="col-4">
+            </div>
+
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--        </div>-->
+<!--        <div class="col-4">-->
             <h4>Team NII</h4>
-            <ul>
+            <ul class="list-group list-group-horizontal">
                 {% for member in team_nii %}
-                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
-        </div>
-        <div class="col-4">
+<!--    </div>-->
+<!--        </div>-->
+<!--        <div class="col-4">-->
+<!--<div class="row">-->
             <h4>Team HII</h4>
-            <ul>
+            <ul class="list-group list-group-horizontal">
                 {% for member in team_hii %}
-                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--        <div class="col-4">-->
             <h4>Team X</h4>
-            <ul>
+            <ul class="list-group list-group-horizontal">
                 {% for member in team_x %}
-                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
-        </div>
-        <div class="col-4">
+<!--        </div>-->
+<!--        <div class="col-4">-->
             <h4>已退</h4>
-            <ul>
+            <ul class="list-group list-group-horizontal">
                 {% for member in hiatus %}
-                    <li><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'member_detail' member.id %}">{{ member.name }}</a></li>
                 {% endfor %}
             </ul>
-        </div>
-    </div>
+<!--        </div>-->
+<!--    </div>-->
 {% endblock %}
