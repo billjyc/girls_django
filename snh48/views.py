@@ -27,8 +27,6 @@ def index(request):
         'team_nii': member_list.filter(team__id=2),
         'team_hii': member_list.filter(team__id=3),
         'team_x': member_list.filter(team__id=4),
-        'team_ft': member_list.filter(team__id=6),
-        'team_trainee': member_list.filter(team__id=7),
         'hiatus': hiatus_list
     }
     return render(request, 'snh48/index.html', context)

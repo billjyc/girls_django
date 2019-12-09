@@ -1,7 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+根据公演av号获取B站视频播放量，弹幕数等信息
+@Author: billjyc
+"""
+
 import requests
 import logging
 import pymysql
 from django_exercise import utils
+from django_exercise import db_config as Config
 import time
 
 logger = logging.getLogger(__name__)
@@ -29,7 +36,8 @@ def get_aid_from_link(link):
 
 
 try:
-    conn = pymysql.connect(host='localhost', port=3306, passwd='***', db='snh48', user='**', charset='utf8')
+    conn = pymysql.connect(host=Config.DB_HOST, port=Config.DB_PORT, passwd=Config.DB_PASSWORD, db='snh48',
+                           user=Config.DB_USER, charset=Config.DB_CHARSET)
     cursor = conn.cursor()
     cursor.execute("""
         select id, video_url from performance_history where video_url is not null order by date desc
@@ -67,7 +75,3 @@ except pymysql.Error as e:
 
 if __name__ == '__main__':
     pass
-    # aid = get_aid_from_link('https://www.bilibili.com/video/av2517405/?p=1')
-    # print(aid)
-    # r = get_video_stat(19424846)
-    # print(r)

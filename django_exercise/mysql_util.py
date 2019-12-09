@@ -3,9 +3,6 @@
 import pymysql
 import logging
 from django_exercise import db_config as Config
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 logger = logging.getLogger('django')
 
 
@@ -55,17 +52,12 @@ class MySQLUtil:
         self.conn.close()
 
 
-engine = create_engine('mysql+mysqlconnector://{}:{}@{}:{}/{}'.format(Config.DB_USER, Config.DB_PASSWORD,
-                                                                      Config.DB_HOST, Config.DB_PORT,
-                                                                      Config.DB_DBNAME))
-DBSession = sessionmaker(bind=engine)
-Base = declarative_base()
+mysql_util = MySQLUtil(Config.DB_HOST, Config.DB_PORT, Config.DB_USER, Config.DB_PASSWORD, 'snh48')
+mysql_util2 = MySQLUtil(Config.DB_HOST, Config.DB_PORT, Config.DB_USER, Config.DB_PASSWORD, 'card_draw')
 
 
 if __name__ == '__main__':
-    mysql_util = MySQLUtil('localhost', 3306, 'root', 'root', 'card_draw')
-    rst = mysql_util.select('select count(distinct(supporter_id)) from `order`')
-    print(rst[0][0])
+    pass
 
 
 

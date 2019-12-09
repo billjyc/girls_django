@@ -1,4 +1,7 @@
-import uuid
+# -*- coding: utf-8 -*-
+"""
+从snh48club.com处获取参加公演成员的信息
+"""
 import logging
 from django_exercise.mysql_util import mysql_util
 from bs4 import BeautifulSoup
@@ -19,8 +22,8 @@ print(name_to_id_dict)
 def get_performance_data(performance_url, performance_id):
     """
     获取公演资料
-    :param performance_url:
-    :param performance_id:
+    :param performance_url: snh48club.com的公演详情url
+    :param performance_id: db中存放的公演记录id
     :return:
     """
     r = requests.get(performance_url).text.replace('\n', '').replace('\r', '')

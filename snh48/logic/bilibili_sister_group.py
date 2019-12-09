@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import requests
-import logging
-import pymysql
-from django_exercise import utils
-import time
+"""
+根据队伍名称，获取所有公演的B站播放量，并导出为csv文件
+"""
 import csv
+import logging
+import time
+
+import requests
 
 logger = logging.getLogger(__name__)
 

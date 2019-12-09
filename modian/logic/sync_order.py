@@ -2,10 +2,9 @@ from modian.logic.modian_handler import *
 from modian.logic.modian_handler_bs4 import *
 import uuid
 import logging
-from django_exercise.mysql_util import MySQLUtil
+from django_exercise.mysql_util import mysql_util2 as mysql_util
 
 logger = logging.getLogger(__name__)
-mysql_util = MySQLUtil('localhost', 3306, '***', '****', '***')
 
 
 def sync_order(pro_id):

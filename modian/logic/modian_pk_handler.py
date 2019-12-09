@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
-from django_exercise.mysql_util import MySQLUtil
-import time
 import logging
+import time
+
+from django_exercise.mysql_util import mysql_util2 as mysql_util
 
 MINUS_AMOUNT = 99.9
 FXF_PRO_ID = 18966
@@ -11,8 +12,6 @@ FXF_MAKE_TROUBLE_POINTS = 9
 WJL_MAKE_TROUBLE_POINTS = 5
 
 my_logger = logging.getLogger('django')
-
-mysql_util = MySQLUtil('112.74.183.47', 3306, 'root', 'Jyc@1993', 'card_draw')
 
 
 def minus_points(pro_id, pay_amount):
@@ -152,13 +151,13 @@ def get_current_supporter_num(pro_id):
     """
     rst = mysql_util.select("""
         SELECT COUNT(DISTINCT(`supporter_id`)) FROM `order` WHERE `pro_id`=%s
-    """ % (pro_id, ))
+    """ % (pro_id,))
     my_logger.info('%s当前集资人数: %s' % (pro_id, rst[0]))
     return rst[0][0]
 
 
 def get_current_points(pro_id):
-    if pro_id not in[FXF_PRO_ID, WJL_PRO_ID]:
+    if pro_id not in [FXF_PRO_ID, WJL_PRO_ID]:
         return 0
     time0 = time.time()
     # 当前集资人数
@@ -167,7 +166,7 @@ def get_current_points(pro_id):
     supporter_num_points = 0
     rst = mysql_util.select("""
         select * from `order` where pro_id=%s and `backer_money` <>99.9
-    """ % (pro_id, ))
+    """ % (pro_id,))
     points = 0
     for order in rst:
         """
@@ -228,4 +227,3 @@ if __name__ == '__main__':
     print(get_basic_points(18954))
     get_current_points(15972)
     get_current_points(15980)
-

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-import requests
+"""
+从snh48的售票记录中爬取公演信息
+"""
 import logging
+
 import pymysql
-from django_exercise import utils
-import time
-import csv
+import requests
 
 logger = logging.getLogger(__name__)
 

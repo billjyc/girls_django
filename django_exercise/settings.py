@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django_exercise import db_config as Config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -28,7 +28,6 @@ SECRET_KEY = 'fsr#s5ywx7!-0_q4s%mqc5$toghw#y$zny38a^3*5f$imf1w#3'
 DEBUG = True
 
 ALLOWED_HOSTS = ['112.74.183.47', 'localhost', '127.0.0.1']
-
 
 # Application definition
 
@@ -76,69 +75,57 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_exercise.wsgi.application'
 
-
-#跨域增加忽略
+# 跨域增加忽略
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = ( '*')
-CORS_ALLOW_METHODS = ( 'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'VIEW', )
+CORS_ORIGIN_WHITELIST = ('*')
+CORS_ALLOW_METHODS = ('DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT', 'VIEW',)
 CORS_ALLOW_HEADERS = (
-'XMLHttpRequest',
-'X_FILENAME',
-'accept-encoding',
-'authorization',
-'content-type',
-'dnt',
-'origin',
-'user-agent',
-'X-CSRFTOKEN',
-'x-requested-with',
-'Pragma',
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'X-CSRFTOKEN',
+    'x-requested-with',
+    'Pragma',
 )
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'snh48',
-    #     'USER': 'user_00',
-    #     'PASSWORD': 'Jyc@123456',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306'
-    # },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'snh48',
-        'USER': 'root',
-        'PASSWORD': 'Jyc@1993',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'USER': Config.DB_USER,
+        'PASSWORD': Config.DB_PASSWORD,
+        'HOST': Config.DB_HOST,
+        'PORT': Config.DB_PORT
     },
     'snh48': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'snh48',
-        'USER': 'user_00',
-        'PASSWORD': 'Jyc@123456',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'USER': Config.DB_USER,
+        'PASSWORD': Config.DB_PASSWORD,
+        'HOST': Config.DB_HOST,
+        'PORT': Config.DB_PORT
     },
     'modian': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'card_draw',
-        'USER': 'user_00',
-        'PASSWORD': 'Jyc@123456',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'USER': Config.DB_USER,
+        'PASSWORD': Config.DB_PASSWORD,
+        'HOST': Config.DB_HOST,
+        'PORT': Config.DB_PORT
     }
 }
 
-
 DATABASE_ROUTERS = ['routers.snh48_router.MemberRouter',
                     'routers.modian_router.ModianRouter']
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -158,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -172,7 +158,6 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -185,8 +170,9 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
-       'standard': {
-            'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'}  #日志格式
+        'standard': {
+            'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'}
+        # 日志格式
     },
     'filters': {
     },
@@ -197,41 +183,41 @@ LOGGING = {
             'include_html': True,
         },
         'default': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': 'logs/all.log',     #日志输出文件
-            'maxBytes': 1024*1024*50,                  #文件大小
-            'backupCount': 5,                         #备份份数
-            'formatter':'standard',                   #使用哪种formatters日志格式
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/all.log',  # 日志输出文件
+            'maxBytes': 1024 * 1024 * 50,  # 文件大小
+            'backupCount': 5,  # 备份份数
+            'formatter': 'standard',  # 使用哪种formatters日志格式
         },
         'error': {
-            'level':'ERROR',
-            'class':'logging.handlers.RotatingFileHandler',
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'logs/error.log',
-            'maxBytes':1024*1024*5,
+            'maxBytes': 1024 * 1024 * 5,
             'backupCount': 5,
-            'formatter':'standard',
+            'formatter': 'standard',
         },
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'standard'
         },
         'request_handler': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'logs/script.log',
-            'maxBytes': 1024*1024*5,
+            'maxBytes': 1024 * 1024 * 5,
             'backupCount': 5,
-            'formatter':'standard',
+            'formatter': 'standard',
         },
         'scripts_handler': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename':'logs/script.log',
-            'maxBytes': 1024*1024*5,
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'logs/script.log',
+            'maxBytes': 1024 * 1024 * 5,
             'backupCount': 5,
-            'formatter':'standard',
+            'formatter': 'standard',
         }
     },
     'loggers': {
