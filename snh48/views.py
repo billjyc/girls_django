@@ -32,6 +32,13 @@ def index(request):
     return render(request, 'snh48/index.html', context)
 
 
+def team_list(request):
+    context = {
+
+    }
+    return render(request, 'snh48/team_list.html', context)
+
+
 def performance_history_index(request):
     page = request.GET.get('page', 1)
     ph_list = PerformanceHistory.objects.order_by('-date')
