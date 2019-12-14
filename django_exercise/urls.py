@@ -24,4 +24,4 @@ urlpatterns = [
     url(r'^modian/', include('modian.urls')),
     url(r'^admin/', admin.site.urls),
 ]
-urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += staticfiles_urlpatterns()
