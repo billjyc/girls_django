@@ -164,6 +164,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/girls_static'
 
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'
