@@ -5,3 +5,30 @@ nav .navbar  > li .dropdown-menu {
 nav .navbar > li:hover .dropdown-menu {
     display: block;
 }
+
+.list-title {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0f6db4;
+    color: #fff;
+    font-family: Roboto,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.45em;
+    text-transform: uppercase;
+    position: relative;
+    text-align: left;
+    padding-left: 15px;
+    margin-top: 20px;
+}
+
+.copyright-content {
+    background: #1f2428;
+    margin: 30px auto;
+    padding: 20px auto;
+    line-height: 25px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    font-family: "Microsoft YaHei";
+}

@@ -1,7 +1,102 @@
 {% extends "snh48/base.html" %}
 
-{% block title %}成员{% endblock %}
+{% block title %}队伍列表{% endblock %}
 
 {% block content %}
+
+{% load static %}
+
+
+<div class="list-title" style="background-color: #63caf3">SNH48</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_s_logo.webp' %}" class="img-thumbnail"/>
+        </div>
+        <div>Team SII</div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_n_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team NII
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_h_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team HII
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_x_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team X
+        </div>
+    </div>
+</div>
+
+
+<div class="list-title" style="background-color: #f84972">BEJ48</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_b_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team B
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_e_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team E
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_j_logo.webp' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team J
+        </div>
+    </div>
+</div>
+
+
+<div class="list-title" style="background-color: rgb(122, 190, 43)">GNZ48</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_g_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team G
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_niii_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team NIII
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            <img src="{% static 'snh48/images/team_icon/Team_z_logo.png' %}" class="img-thumbnail"/>
+        </div>
+        <div>
+            Team Z
+        </div>
+    </div>
+</div>
 
 {% endblock %}

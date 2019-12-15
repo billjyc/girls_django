@@ -27,7 +27,7 @@ def get_performance_data(performance_url, performance_id):
     :return:
     """
     r = requests.get(performance_url).text.replace('\n', '').replace('\r', '')
-    soup = BeautifulSoup(r, 'lxml')
+    soup = BeautifulSoup(r)
     member_list = soup.find(id='spanMember')
     sql = """
     INSERT INTO `member_performance_history` (`member_id`, `performance_history_id`)
@@ -42,20 +42,19 @@ def get_performance_data(performance_url, performance_id):
 
 if __name__ == '__main__':
     performance_list = [
-        ('http://snh48club.com/video/8955.html', 1969),
-        ('http://snh48club.com/video/8951.html', 1975),
-        ('http://snh48club.com/video/8936.html', 1977),
-        ('http://snh48club.com/video/8931.html', 1938),
-        ('http://snh48club.com/video/8906.html' , 1943),
-        ('http://snh48club.com/video/8900.html' , 1948),
-        ('http://snh48club.com/video/8894.html' , 1954),
-        ('http://snh48club.com/video/9017.html' , 1960),
-        ('http://snh48club.com/video/8978.html' , 1961),
-        ('http://snh48club.com/video/10215.html' , 1922),
-        ('http://snh48club.com/video/10205.html' , 1923),
-        ('http://snh48club.com/video/10157.html' , 1928),
-        ('http://snh48club.com/video/10136.html', 1930),
-        ('http://snh48club.com/video/8954.html', 1932),
+        ('http://snh48club.com/video/1236.html', 1552),  # 1004
+        ('http://snh48club.com/video/1234.html', 1553),  # 1003
+        ('http://snh48club.com/video/1222.html', 1556),  # 1002
+        ('http://snh48club.com/video/1221.html', 1557),  # 0921
+        ('http://snh48club.com/video/1213.html' , 1560),  # 0920
+        ('http://snh48club.com/video/1202.html' , 1563),  # 0919
+        # ('http://snh48club.com/video/1275.html', 1574),  # 0914
+        # ('http://snh48club.com/video/1272.html' , 1577),  # 0913
+        # ('http://snh48club.com/video/1271.html' , 1578),  # 0912
+        # ('http://snh48club.com/video/1266.html', 1579),  # 0908
+        # ('http://snh48club.com/video/1264.html', 1582),  # 0907
+        # ('http://snh48club.com/video/1246.html', 1547),  # 0823
+        # ('http://snh48club.com/video/1238.html' , 1550),  # 0817
 
     ]
     for performance in performance_list:
