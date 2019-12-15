@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('team/list/', views.team_list, name='team_list'),
+    url(r'^team/(?P<team_id>[0-9]+)', views.team_info, name='team_info'),
     url(r'^$', views.team_list, name='team_list'),
     url(r'^index', views.index, name='index'),
     url(r'^performance_history/index', views.performance_history_index, name='performance_history_index'),

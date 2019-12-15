@@ -32,3 +32,9 @@ nav .navbar > li:hover .dropdown-menu {
     text-align: center;
     font-family: "Microsoft YaHei";
 }
+
+.team-info {
+    text-align: center;
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+}

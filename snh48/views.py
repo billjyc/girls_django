@@ -39,6 +39,13 @@ def team_list(request):
     return render(request, 'snh48/team_list.html', context)
 
 
+def team_info(request, team_id):
+    context = {
+        'team_id': team_id
+    }
+    return render(request, 'snh48/team_info.html', context)
+
+
 def performance_history_index(request):
     page = request.GET.get('page', 1)
     ph_list = PerformanceHistory.objects.order_by('-date')
