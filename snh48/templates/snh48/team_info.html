@@ -6,4 +6,50 @@
 
 {% load static %}
 
+<div class="row">
+    <div class="col-sm-12">
+        <div class="col-4 col-sm-3 float-left">
+            <img class="img-fluid" src="{% static 'snh48/images/team_icon/' %}{{ team_detail.icon }}"/>
+        </div>
+        <div class="col-8 col-sm-9 float-right">
+            <div>{{ team_detail.name }}</div>
+            <div>成立时间 {{ team_detail.found_date }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="table-title">成员列表</div>
+        <div class="responsive-table">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>姓名</th>
+                        <th>英文名</th>
+                        <th>期数</th>
+                        <th>生日</th>
+                        <th>入团时间</th>
+                        <th>星座</th>
+                        <th>家乡</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in member_list %}
+                        <tr>
+                            <th scope="row">{{ member.name }}</th>
+                            <td>{{ member.english_name }}</td>
+                            <td>{{ member.batch }}</td>
+                            <td>{{ member.birthday }}</td>
+                            <td>{{ member.join_time }}</td>
+                            <td>{{ member.constellation }}</td>
+                            <td>{{ member.birth_place }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

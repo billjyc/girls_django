@@ -178,6 +178,8 @@ class Team(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30, blank=True, null=True)
     found_date = models.DateField(blank=True, null=True)
+    is_valid = models.IntegerField(blank=False, null=False, default=1)
+    icon = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False

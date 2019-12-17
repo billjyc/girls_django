@@ -40,9 +40,15 @@ def team_list(request):
 
 
 def team_info(request, team_id):
+    member_list = Memberinfo.objects.filter(team__id=team_id).filter(
+        is_valid=1
+    ).order_by('id')
+    team_detail = Team.objects.get(pk=team_id)
     context = {
-        'team_id': team_id
+        'member_list': member_list,
+        'team_detail': team_detail
     }
+
     return render(request, 'snh48/team_info.html', context)
 
 

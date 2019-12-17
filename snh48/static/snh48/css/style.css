@@ -38,3 +38,14 @@ nav .navbar > li:hover .dropdown-menu {
     font-family: "Microsoft YaHei";
     font-size: 18px;
 }
+
+.table-title {
+    line-height: 50px;
+    width: 100%;
+    position: relative;
+    background-color: #0f6db4;
+    color: #fff;
+    font-size: 24px;
+    padding-left: 15px;
+    margin-top: 20px;
+}

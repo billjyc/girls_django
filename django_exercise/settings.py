@@ -166,6 +166,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/girls_static'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'
