@@ -6,3 +6,4 @@ beautifulsoup4
 django-cors-headers
 mysqlclient
 gevent
+gunicorn
