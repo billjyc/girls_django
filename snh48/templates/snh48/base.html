@@ -31,12 +31,12 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'team_list' %}">全部</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Team SII</a>
-                  <a class="dropdown-item" href="#">Team NII</a>
-                    <a class="dropdown-item" href="#">Team HII</a>
-                    <a class="dropdown-item" href="#">Team X</a>
+                  <a class="dropdown-item" href="{% url 'team_info' 1 %}">Team SII</a>
+                  <a class="dropdown-item" href="{% url 'team_info' 2 %}">Team NII</a>
+                    <a class="dropdown-item" href="{% url 'team_info' 3 %}">Team HII</a>
+                    <a class="dropdown-item" href="{% url 'team_info' 4 %}">Team X</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">IDFT</a>
+                  <a class="dropdown-item" href="{% url 'team_info' 701 %}">IDFT</a>
                 </div>
               </li>
                 <li class="nav-item dropdown">

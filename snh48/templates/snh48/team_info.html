@@ -7,12 +7,12 @@
 {% load static %}
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 team-info">
         <div class="col-4 col-sm-3 float-left">
             <img class="img-fluid" src="{% static 'snh48/images/team_icon/' %}{{ team_detail.icon }}"/>
         </div>
         <div class="col-8 col-sm-9 float-right">
-            <div>{{ team_detail.name }}</div>
+            <div><h2>{{ team_detail.name }}</h2></div>
             <div>成立时间 {{ team_detail.found_date }}</div>
         </div>
     </div>
@@ -22,7 +22,7 @@
     <div class="col-sm-12">
         <div class="table-title">成员列表</div>
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover" id="member-list">
                 <thead class="thead-dark">
                     <tr>
                         <th>姓名</th>
@@ -37,7 +37,12 @@
                 <tbody>
                     {% for member in member_list %}
                         <tr>
-                            <th scope="row">{{ member.name }}</th>
+                            <th scope="row">
+                                <a href="{% url 'member_detail' member.id %}" target="_blank">
+                                    <img class="img-fluid rounded-circle member-img" src="{{ member.image_link }}"/>
+                                </a>
+                                <a href="{% url 'member_detail' member.id %}" target="_blank">{{ member.name }}</a>
+                            </th>
                             <td>{{ member.english_name }}</td>
                             <td>{{ member.batch }}</td>
                             <td>{{ member.birthday }}</td>

@@ -34,9 +34,8 @@ nav .navbar > li:hover .dropdown-menu {
 }
 
 .team-info {
-    text-align: center;
     font-family: "Microsoft YaHei";
-    font-size: 18px;
+    margin: 20px auto;
 }
 
 .table-title {
@@ -48,4 +47,15 @@ nav .navbar > li:hover .dropdown-menu {
     font-size: 24px;
     padding-left: 15px;
     margin-top: 20px;
+}
+
+.member-img {
+    max-width: 42px;
+    width: 42px;
+    display: inline-block;
+    margin: 0 7px;
+}
+
+#member-list td {
+    vertical-align: middle;
 }
