@@ -90,7 +90,11 @@
             'icon-alt': 'mdi-chevron-down',
             model: true,
             children: [
-              { icon: 'mdi-cup', text: '全部队伍' },
+              {
+                icon: 'mdi-cup',
+                text: '全部队伍',
+                router: 'TeamList',
+              },
             ],
           },
           {
