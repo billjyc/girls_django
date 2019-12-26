@@ -59,3 +59,37 @@ nav .navbar > li:hover .dropdown-menu {
 #member-list td {
     vertical-align: middle;
 }
+
+.info-card {
+    border-top: 2px solid #5fade4;
+    background-color: #fff;
+    font-size: 14px;
+    margin: 8px auto;
+}
+
+.avatar {
+    position: relative;
+    text-align: center;
+}
+
+.avatar h3 {
+    font-size: 24px;
+    line-height: 36px;
+}
+
+.avatar em {
+    font-size: 18px;
+    font-family: Arial,sans-serif;
+    color: #626262;
+    line-height: 34px;
+}
+
+.detail {
+    margin-top: 10px;
+}
+
+.info-panel {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 14px 0;
+}
