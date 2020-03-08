@@ -159,7 +159,7 @@ def sync_order4(pro_id):
         single_price = order['amount']
         pay_amount = order['nums']
 
-        backer_money = single_price * pay_amount
+        backer_money = single_price
         listid = int(order['id'])
 
         my_logger.debug('oid: %s', listid)
@@ -191,5 +191,5 @@ if __name__ == '__main__':
     # 69304, 70158, 70956, 71842, 72535, 73894, 74791, 75412
     # sync_order2(79264)
     # sync_order3('4mr9Xz920100009000043331')
-    sync_order4('1053')
+    sync_order4('1114')
 
