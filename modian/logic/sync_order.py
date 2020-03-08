@@ -1,9 +1,11 @@
 from modian.logic.modian_handler import *
 from modian.logic.modian_handler_bs4 import *
 from modian.logic.weixin_handler import *
+from modian.logic.taoba_handler import *
 import uuid
 import logging
 from django_exercise.mysql_util import mysql_util2 as mysql_util
+from django_exercise import utils
 
 logger = logging.getLogger(__name__)
 
@@ -135,10 +137,55 @@ def sync_order3(pro_id):
     mysql_util.close()
 
 
+def sync_order4(pro_id):
+    """
+    桃叭补充遗漏订单
+    :param pro_id:
+    :return:
+    """
+    entity_array = []
+    entity1 = TaoBaEntity('http://www.baidu.com', 'test', pro_id)
+    entity_array.append(entity1)
+    handler = TaoBaAccountHandler(['483548995'], entity_array)
+
+    # handler.get_project_profiles(entity1)
+
+    orders = handler.get_all_orders(entity1)
+    for order in orders:
+        user_id = order['userid']
+        nickname = order['nickname']
+        pay_time = utils.convert_timestamp_to_timestr(order['addtime'] * 1000)
+
+        single_price = order['amount']
+        pay_amount = order['nums']
+
+        backer_money = single_price * pay_amount
+        listid = int(order['id'])
+
+        my_logger.debug('oid: %s', listid)
+
+        rst = mysql_util.select("""
+                                    select * from `order` where id='%s'
+                                """ % listid)
+        if len(rst) == 0:
+            print('该订单不在数据库中')
+            print('oid: %s' % listid)
+            # 每次需要更新一下昵称
+            mysql_util.query("""
+                INSERT INTO `order` (`id`, `supporter_id`, `backer_money`, `pay_time`, `pro_id`) VALUES
+                                            ('%s', '%s', %s, '%s', '%s');
+                                    """ % (listid, user_id, backer_money, pay_time, pro_id))
+        else:
+            pass
+            # print('该订单已经在数据库中')
+    mysql_util.close()
+
+
 if __name__ == '__main__':
     # 44611, 45584, 47645, 47863, 48285, 50755, 51567, 54590, 55194, 57085, 57083, 59267,
     # 59708, 61410, 62988, 64096, 64735, 65643, 66888, 68067,
     # 69304, 70158, 70956, 71842, 72535, 73894, 74791, 75412
     # sync_order2(79264)
-    sync_order3('4mr9Xz920100009000043331')
+    # sync_order3('4mr9Xz920100009000043331')
+    sync_order4('1053')
 
