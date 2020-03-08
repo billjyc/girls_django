@@ -172,6 +172,10 @@ def sync_order4(pro_id):
             print('oid: %s' % listid)
             # 每次需要更新一下昵称
             mysql_util.query("""
+                                                    INSERT INTO `supporter` (`id`, `name`) VALUES (%s, %s)  ON DUPLICATE KEY
+                                                        UPDATE `id`=%s
+                                                    """, (user_id, nickname, user_id))
+            mysql_util.query("""
                 INSERT INTO `order` (`id`, `supporter_id`, `backer_money`, `pay_time`, `pro_id`) VALUES
                                             ('%s', '%s', %s, '%s', '%s');
                                     """ % (listid, user_id, backer_money, pay_time, pro_id))
