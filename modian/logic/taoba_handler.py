@@ -85,17 +85,30 @@ class TaoBaAccountHandler:
         :param request_time:
         :return:
         """
+        all_orders = []
         my_logger.info('查询项目订单, id: %s', taoba_entity.taoba_id)
         url = 'https://www.tao-ba.club/idols/refund/orders'
-        data = {'id': taoba_entity.taoba_id, 'offset': 0, 'ismore': False, 'requestTime': request_time,
-                'pf': 'h5'}
-        r = self.session.post(url=url, data=self.encrypt(data), headers=self.taoba_header())
-        r = self.decrypt(r.text)
-        if int(r['code']) != 0:
-            raise RuntimeError('获取订单信息失败')
-        orders = r['list']
-        my_logger.info('项目订单: page: %s, orders: %s', page, orders)
-        return orders
+        page = 0
+        while True:
+            data = {'id': taoba_entity.taoba_id, 'offset': page * 25, 'ismore': False,
+                    'requestTime': int(time.time() * 1000),
+                    'pf': 'h5'}
+            my_logger.info('taoba token: {}'.format(self.token))
+            my_logger.debug('data: {}'.format(data))
+            my_logger.debug('data: {}'.format(self.encrypt(data)))
+            my_logger.debug('header: {}'.format(self.taoba_header()))
+            r = self.session.post(url=url, data=self.encrypt(data), headers=self.taoba_header())
+            r = self.decrypt(r.text)
+
+            if int(r['code']) != 0:
+                raise RuntimeError('获取订单信息失败')
+            orders = r['list']
+            my_logger.info('项目订单: page: %s, orders: %s, len: %s', page + 1, orders, len(orders))
+            if not orders:
+                break
+            all_orders.extend(orders)
+            page += 1
+        return all_orders
 
     def get_current_and_target(self, taoba_entity):
         """
