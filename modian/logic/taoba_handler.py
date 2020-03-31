@@ -72,7 +72,7 @@ class TaoBaAccountHandler:
         """
         header = {
             'Content-Type': 'application/json',
-            'SIGNATURE': '3130313531323438247b226964223a31303135313234382c225f223a313538333637363034387d6ce2c12a3308',
+            'SIGNATURE': '3130313531323438247b226964223a31303135313234382c225f223a313538353635373739357d6ce2c1922b75',
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36',
         }
         return header
