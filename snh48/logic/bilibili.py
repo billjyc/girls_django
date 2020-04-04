@@ -30,9 +30,41 @@ def get_video_stat(aid):
     return None
 
 
+def get_aid_from_bid(bid):
+    """
+    从bid获取aid
+    :param bid:
+    :return:
+    """
+    logger.info('1.获取cid')
+    url = 'https://api.bilibili.com/x/player/pagelist?bvid=%s&jsonp=jsonp' % bid
+    header = {
+        'Host': 'api.bilibili.com',
+        'Origin': 'https://www.bilibili.com',
+        'Referer': 'https://www.bilibili.com/video/bv%s' % bid,
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+    }
+    try:
+        r = requests.get(url, headers=header).json()
+        if r['code'] == 0:
+            cid = r['data'][0]['cid']
+
+            logger.info('2.获取aid')
+            url2 = 'https://api.bilibili.com/x/web-interface/view?cid=%s&bvid=BV%s' % (cid, bid)
+            r2 = requests.get(url2, headers=header).json()
+            if r2['code'] == 0:
+                return r2['data']['aid']
+    except Exception as e:
+        logger.exception(e)
+    return None
+
+
 def get_aid_from_link(link):
     strs = link.split('/')
-    return strs[4].split('av')[1]
+    if 'av' in strs[4]:
+        return strs[4].split('av')[1]
+    else:
+        return get_aid_from_bid(strs[4].split('BV')[1])
 
 
 try:
