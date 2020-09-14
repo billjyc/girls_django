@@ -1,5 +1,5 @@
 ## 启动
-* `nohup gunicorn django_exercise.wsgi:application -c gunicorn_config.py
+* `nohup gunicorn django_exercise.wsgi:application -c gunicorn_config.py &
 `
 
 ## 静态文件修改
