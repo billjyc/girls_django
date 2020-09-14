@@ -23,10 +23,10 @@ def index(request):
         is_valid=0
     ).order_by('id')
     context = {
-        'team_sii': member_list.filter(team__id=1),
-        'team_nii': member_list.filter(team__id=2),
-        'team_hii': member_list.filter(team__id=3),
-        'team_x': member_list.filter(team__id=4),
+        'team_sii': member_list.filter(team__id=101),
+        'team_nii': member_list.filter(team__id=102),
+        'team_hii': member_list.filter(team__id=103),
+        'team_x': member_list.filter(team__id=104),
         'hiatus': hiatus_list
     }
     return render(request, 'snh48/index.html', context)
