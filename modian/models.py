@@ -6,7 +6,7 @@ from django.db import models
 
 # Create your models here.
 class Supporter(models.Model):
-    id = models.CharField(primary_key=True)
+    id = models.CharField(primary_key=True, max_length=20)
     name = models.CharField(max_length=50)
 
     class Meta:

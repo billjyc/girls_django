@@ -27,14 +27,15 @@ SECRET_KEY = 'fsr#s5ywx7!-0_q4s%mqc5$toghw#y$zny38a^3*5f$imf1w#3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['112.74.183.47', 'localhost', '127.0.0.1']
+# 域名访问权限
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
     'corsheaders',
-    'snh48.apps.Snh48Config',
-    'modian.apps.ModianConfig',
+    'snh48',
+    'modian',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,8 +50,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -61,7 +63,8 @@ ROOT_URLCONF = 'django_exercise.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR + '/templates'],  # 模版目录
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'snh48/templates'),
+                 os.path.join(BASE_DIR, 'modian/templates')],  # 模版目录
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -165,6 +168,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+# 收集整个项目的静态资源并存放在一个新的文件夹，然后由该文件夹与服务器之间构建映射关系
 STATIC_ROOT = '/home/girls_static'
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
