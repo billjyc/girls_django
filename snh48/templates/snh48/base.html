@@ -29,33 +29,33 @@
                   队伍
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'team_list' %}">全部</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_list' %}">全部</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'team_info' 1 %}">Team SII</a>
-                  <a class="dropdown-item" href="{% url 'team_info' 2 %}">Team NII</a>
-                    <a class="dropdown-item" href="{% url 'team_info' 3 %}">Team HII</a>
-                    <a class="dropdown-item" href="{% url 'team_info' 4 %}">Team X</a>
+                  <a class="dropdown-item" href="{% url 'snh48:team_info' 101 %}">Team SII</a>
+                  <a class="dropdown-item" href="{% url 'snh48:team_info' 102 %}">Team NII</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 103 %}">Team HII</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 104 %}">Team X</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'team_info' 701 %}">IDFT</a>
+                  <a class="dropdown-item" href="{% url 'snh48:team_info' 701 %}">IDFT</a>
                 </div>
               </li>
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="memberDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'snh48:index' %}" id="memberDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   成员
                 </a>
                 <div class="dropdown-menu" aria-labelledby="memberDropdown">
-                  <a class="dropdown-item" href="{% url 'index' %}">在团成员</a>
+                  <a class="dropdown-item" href="{% url 'snh48:index' %}">在团成员</a>
                   <a class="dropdown-item" href="#">退团成员</a>
                 </div>
               </li>
 <!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="{% url 'index' %}">成员<span class="sr-only">(current)</span></a>-->
+<!--                <a class="nav-link" href="{% url 'snh48:index' %}">成员<span class="sr-only">(current)</span></a>-->
 <!--              </li>-->
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'performance_history_index' %}">公演</a>
+                <a class="nav-link" href="{% url 'snh48:performance_history_index' %}">公演</a>
               </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bilibili_stat_index' %}">B站数据</a>
+                    <a class="nav-link" href="{% url 'snh48:bilibili_stat_index' %}">B站数据</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">

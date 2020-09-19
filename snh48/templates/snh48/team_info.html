@@ -44,10 +44,10 @@
                     {% for member in member_list %}
                         <tr>
                             <th scope="row">
-                                <a href="{% url 'member_detail' member.id %}" target="_blank">
+                                <a href="{% url 'snh48:member_detail' member.id %}" target="_blank">
                                     <img class="img-fluid rounded-circle member-img" src="{{ member.image_link }}"/>
                                 </a>
-                                <a href="{% url 'member_detail' member.id %}" target="_blank">{{ member.name }}</a>
+                                <a href="{% url 'snh48:member_detail' member.id %}" target="_blank">{{ member.name }}</a>
                             </th>
                             <td>{{ member.english_name }}</td>
                             <td>{{ member.batch }}</td>

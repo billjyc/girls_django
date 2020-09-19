@@ -28,7 +28,7 @@
         <tbody>
         {% for ph in ph_list %}
         <tr class="text-center">
-            <td><a href="{% url 'performance_history_detail' ph.id %}">{{ ph.date }}</a></td>
+            <td><a href="{% url 'snh48:performance_history_detail' ph.id %}">{{ ph.date }}</a></td>
             <td>
                 {% if ph.performance.team %}
                 {{ ph.performance.team }}

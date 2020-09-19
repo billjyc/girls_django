@@ -32,7 +32,7 @@
         <h5>参演成员</h5>
         <ul>
             {% for member in member_list %}
-                <li><a href="{% url 'member_detail' member.member.id %}">{{ member.member.name }}</a></li>
+                <li><a href="{% url 'snh48:member_detail' member.member.id %}">{{ member.member.name }}</a></li>
             {% endfor %}
         </ul>
         {% if unit_list %}
