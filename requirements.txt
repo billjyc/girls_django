@@ -1,6 +1,5 @@
 django
 requests
-pymysql
 xlwt
 beautifulsoup4
 django-cors-headers
