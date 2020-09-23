@@ -4,9 +4,10 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
+    path('', views.team_list, name='team_list'),
     path('team/list/', views.team_list, name='team_list'),
     path('team/<int:team_id>', views.team_info, name='team_info'),
-    path('', views.team_list, name='team_list'),
+
     path('index', views.index, name='index'),
     path('performance_history/index', views.performance_history_index, name='performance_history_index'),
     # ex: /member/10001
