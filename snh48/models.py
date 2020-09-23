@@ -12,12 +12,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-import sys
-
-# reload(sys)
-# sys.setdefaultencoding("utf-8")
-
-
 class MemberPerformanceHistory(models.Model):
     member = models.ForeignKey('Memberinfo', models.DO_NOTHING, blank=True, null=True)
     performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, blank=True, null=True)
@@ -27,6 +21,8 @@ class MemberPerformanceHistory(models.Model):
         db_table = 'member_performance_history'
         unique_together = (('member', 'performance_history'),)
         app_label = 'snh48'
+        verbose_name = '成员公演记录'
+        verbose_name_plural = '成员公演记录'
 
 
 class MemberPerformanceHistoryTmp(models.Model):
@@ -38,6 +34,8 @@ class MemberPerformanceHistoryTmp(models.Model):
         db_table = 'member_performance_history_tmp'
         unique_together = (('member', 'performance_history'),)
         app_label = 'snh48'
+        verbose_name = '成员公演记录-本年度'
+        verbose_name_plural = '成员公演记录-本年度'
 
 
 class Memberinfo(models.Model):
@@ -66,12 +64,14 @@ class Memberinfo(models.Model):
         managed = False
         db_table = 'memberinfo'
         app_label = 'snh48'
+        verbose_name = '成员信息'
+        verbose_name_plural = '成员信息'
 
     def __unicode__(self):
-        return str(self.team) + ' ' + self.name
+        return str(self.team) + '-' + self.name
 
     def __str__(self):
-        return str(self.team) + ' ' + self.name
+        return str(self.team) + '-' + self.name
 
 
 class Performance(models.Model):
@@ -87,16 +87,18 @@ class Performance(models.Model):
         managed = False
         db_table = 'performance'
         app_label = 'snh48'
+        verbose_name = '公演信息'
+        verbose_name_plural = '公演信息'
 
     def __unicode__(self):
         if self.team is None:
             return self.name
-        return str(self.team) + ' ' + self.name
+        return self.name + '-' +  str(self.team)
 
     def __str__(self):
         if self.team is None:
             return self.name
-        return str(self.team) + ' ' + self.name
+        return self.name + '-' +  str(self.team)
 
 
 class Unit(models.Model):
@@ -108,6 +110,8 @@ class Unit(models.Model):
         managed = False
         db_table = 'unit'
         app_label = 'snh48'
+        verbose_name = 'Unit曲'
+        verbose_name_plural = 'Unit曲'
 
     def __unicode__(self):
         return str(self.performance.name) + ' ' + self.name + ' 人数：' + str(self.num) + '人'
@@ -127,6 +131,8 @@ class UnitHistory(models.Model):
         managed = False
         db_table = 'unit_history'
         app_label = 'snh48'
+        verbose_name = 'Unit曲表演记录'
+        verbose_name_plural = 'Unit曲表演记录'
 
     def __unicode__(self):
         return str(self.unit) + ' ' + str(self.member) + ' 顺位: ' + str(self.rank)
@@ -146,6 +152,8 @@ class PerformanceHistory(models.Model):
         managed = False
         db_table = 'performance_history'
         app_label = 'snh48'
+        verbose_name = '公演日程'
+        verbose_name_plural = '公演日程'
 
     def __unicode__(self):
         return str(self.date) + ' ' + str(self.performance) + ' ' + self.description
@@ -169,6 +177,8 @@ class BiliBiliStat(models.Model):
         managed = False
         db_table = 'bilibili_stat'
         app_label = 'snh48'
+        verbose_name = '公演B站数据'
+        verbose_name_plural = '公演B站数据'
 
     def __str__(self):
         return str(self.performance_history)
@@ -185,6 +195,8 @@ class Team(models.Model):
         managed = False
         db_table = 'team'
         app_label = 'snh48'
+        verbose_name = '队伍信息'
+        verbose_name_plural = '队伍信息'
 
     def __unicode__(self):
         return self.name
@@ -205,6 +217,8 @@ class Weibo(models.Model):
         managed = False
         db_table = 'weibo'
         app_label = 'snh48'
+        verbose_name = '微博数据'
+        verbose_name_plural = '微博数据'
 
 
 class WeiboDataHistory(models.Model):
@@ -219,3 +233,5 @@ class WeiboDataHistory(models.Model):
         managed = False
         db_table = 'weibo_data_history'
         app_label = 'snh48'
+        verbose_name = '微博历史数据'
+        verbose_name_plural = '微博历史数据'
