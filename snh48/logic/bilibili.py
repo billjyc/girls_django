@@ -76,6 +76,8 @@ try:
     """)
     rst = cursor.fetchall()
     for (id, video_url) in rst:
+        if not video_url:
+            continue
         aid = get_aid_from_link(video_url)
         print(aid)
         if not aid:
