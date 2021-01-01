@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gunicorn'
+    'gunicorn',
+    'ckeditor',
+    'ckeditor_uploader'
 ]
 
 MIDDLEWARE = [
@@ -175,10 +177,22 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 # 收集整个项目的静态资源并存放在一个新的文件夹，然后由该文件夹与服务器之间构建映射关系
-STATIC_ROOT = '/home/girls_static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
 # )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = 'images'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full'
+    }
+}
+CKEDITOR_ALLOW_NOIMAGE_FILES = False
+CKEDITOR_BROWSE_SHOW_DIRS = True
 
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'

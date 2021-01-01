@@ -11,4 +11,5 @@ install:
 script:
   - cd /home/girls_django
   - ps -eux | grep gunicorn | awk '{print $2}' | xargs kill -9
+  - python3 manage.py collectstatic
   - gunicorn django_exercise.wsgi:application -c gunicorn_config.py
