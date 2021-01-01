@@ -1,0 +1,14 @@
+sudo: false
+
+language: python
+
+python:
+  - 3.8
+
+install:
+ - pip3 install -r requirements.txt
+
+script:
+  - cd /home/girls_django
+  - ps -eux | grep gunicorn | awk '{print $2}' | xargs kill -9
+  - gunicorn django_exercise.wsgi:application -c gunicorn_config.py
