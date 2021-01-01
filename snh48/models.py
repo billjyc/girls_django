@@ -40,25 +40,25 @@ class MemberPerformanceHistoryTmp(models.Model):
 
 class Memberinfo(models.Model):
     id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20, blank=True, null=True)
-    nick_name = models.CharField(max_length=100, blank=True, null=True)
-    height = models.IntegerField(blank=True, null=True)
-    blood_type = models.CharField(max_length=10, blank=True, null=True)
+    name = models.CharField(max_length=20, blank=True, null=True, verbose_name='姓名')
+    nick_name = models.CharField(max_length=100, blank=True, null=True, verbose_name='昵称')
+    height = models.IntegerField(blank=True, null=True, verbose_name='身高')
+    blood_type = models.CharField(max_length=10, blank=True, null=True, verbose_name='血型')
     team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
-    batch = models.CharField(max_length=100, blank=True, null=True)
-    birthday = models.DateField(blank=True, null=True)
-    english_name = models.CharField(max_length=50, blank=True, null=True)
-    join_time = models.DateField(blank=True, null=True)
-    link = models.CharField(max_length=300, blank=True, null=True)
-    image_link = models.CharField(max_length=300, blank=True, null=True)
-    hobby = models.CharField(max_length=100, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    is_valid = models.IntegerField()
-    constellation = models.CharField(max_length=50)
-    birth_place = models.CharField(max_length=50)
-    agency = models.CharField(max_length=50)
-    speciality = models.CharField(max_length=50)
-    pid = models.IntegerField(blank=True, null=True)
+    batch = models.CharField(max_length=100, blank=True, null=True, verbose_name='期数')
+    birthday = models.DateField(blank=True, null=True, verbose_name='生日')
+    english_name = models.CharField(max_length=50, blank=True, null=True, verbose_name='英文名')
+    join_time = models.DateField(blank=True, null=True, verbose_name='入团时间')
+    link = models.CharField(max_length=300, blank=True, null=True, verbose_name='资料链接')
+    image_link = models.CharField(max_length=300, blank=True, null=True, verbose_name='图片链接')
+    hobby = models.CharField(max_length=100, blank=True, null=True, verbose_name='爱好')
+    description = models.TextField(blank=True, null=True, verbose_name='备注')
+    is_valid = models.IntegerField(verbose_name='是否在团')
+    constellation = models.CharField(max_length=50, verbose_name='星座')
+    birth_place = models.CharField(max_length=50, verbose_name='出生地')
+    agency = models.CharField(max_length=50, verbose_name='日期')
+    speciality = models.CharField(max_length=50, verbose_name='特长')
+    pid = models.IntegerField(blank=True, null=True, verbose_name='期数编号')
 
     class Meta:
         managed = False
@@ -75,13 +75,13 @@ class Memberinfo(models.Model):
 
 
 class Performance(models.Model):
-    name = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True, verbose_name='公演名称')
     team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
-    debut_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
-    link = models.CharField(max_length=200, blank=True, null=True)
-    logo_link = models.CharField(max_length=100)
-    is_active = models.IntegerField()
+    debut_date = models.DateField(blank=True, null=True, verbose_name='首演日期')
+    end_date = models.DateField(blank=True, null=True, verbose_name='千秋乐日期')
+    link = models.CharField(max_length=200, blank=True, null=True, verbose_name='公演详情页链接')
+    logo_link = models.CharField(max_length=100, verbose_name='公演logo链接')
+    is_active = models.IntegerField(verbose_name='是否演出中')
 
     class Meta:
         managed = False
@@ -103,8 +103,8 @@ class Performance(models.Model):
 
 class Unit(models.Model):
     performance = models.ForeignKey('Performance', models.DO_NOTHING, db_column='performance_id', blank=True, null=True)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    num = models.IntegerField()
+    name = models.CharField(max_length=50, blank=True, null=True, verbose_name='歌曲名称')
+    num = models.IntegerField(verbose_name='歌曲人数')
 
     class Meta:
         managed = False
@@ -125,7 +125,7 @@ class UnitHistory(models.Model):
     performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING,
                                             db_column='performance_history_id', blank=True, null=True)
     member = models.ForeignKey('MemberInfo', models.DO_NOTHING, db_column='member_id', blank=True, null=True)
-    rank = models.IntegerField()
+    rank = models.IntegerField(verbose_name='站位序号')
 
     class Meta:
         managed = False
@@ -144,9 +144,9 @@ class UnitHistory(models.Model):
 class PerformanceHistory(models.Model):
     # performance_id = models.IntegerField(blank=True, null=True)
     performance = models.ForeignKey('Performance', models.DO_NOTHING, blank=True, null=True)
-    date = models.DateTimeField(blank=True, null=True)
-    description = models.CharField(max_length=100, blank=True, null=True)
-    video_url = models.CharField(max_length=500, blank=True, null=True)
+    date = models.DateTimeField(blank=True, null=True, verbose_name='公演时间')
+    description = models.CharField(max_length=100, blank=True, null=True, verbose_name='备注')
+    video_url = models.CharField(max_length=500, blank=True, null=True, verbose_name='视频链接')
 
     class Meta:
         managed = False
@@ -164,13 +164,13 @@ class PerformanceHistory(models.Model):
 
 class BiliBiliStat(models.Model):
     performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, db_column='performance_history_id')
-    aid = models.IntegerField()
-    view = models.IntegerField()
-    danmaku = models.IntegerField()
-    reply = models.IntegerField()
-    favorite = models.IntegerField()
-    coin = models.IntegerField()
-    share = models.IntegerField()
+    aid = models.IntegerField(verbose_name='视频BID')
+    view = models.IntegerField(verbose_name='观看量')
+    danmaku = models.IntegerField(verbose_name='弹幕数量')
+    reply = models.IntegerField(verbose_name='评论数量')
+    favorite = models.IntegerField(verbose_name='收藏数量')
+    coin = models.IntegerField(verbose_name='投币数量')
+    share = models.IntegerField(verbose_name='分享数量')
     update_time = models.DateTimeField()
 
     class Meta:
@@ -185,9 +185,9 @@ class BiliBiliStat(models.Model):
 
 
 class Team(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=30, blank=True, null=True)
-    found_date = models.DateField(blank=True, null=True)
+    id = models.IntegerField(primary_key=True, verbose_name='队伍编号')
+    name = models.CharField(max_length=30, blank=True, null=True, verbose_name='队伍名称')
+    found_date = models.DateField(blank=True, null=True, verbose_name='建队时间')
     is_valid = models.IntegerField(blank=False, null=False, default=1)
     icon = models.CharField(max_length=500, blank=True, null=True)
 

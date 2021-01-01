@@ -133,6 +133,12 @@ DATABASES = {
 DATABASE_ROUTERS = ['routers.snh48_router.MemberRouter',
                     'routers.modian_router.ModianRouter']
 
+DATABASES_APPS_MAPPING = {
+    'snh48': 'snh48',
+    'modian': 'modian',
+    'admin': 'default'
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
