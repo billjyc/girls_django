@@ -175,12 +175,13 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# django利用STATIC_URL来让浏览器可以直接访问静态文件
 STATIC_URL = '/static/'
 # 收集整个项目的静态资源并存放在一个新的文件夹，然后由该文件夹与服务器之间构建映射关系
+# 线上部署时会用到，部署的时候执行python manage.py collectstatic，django会把所有App下的static文件都复制到STATIC_ROOT文件夹下
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+# 开发时会用到，首先到STATICFILES_DIRS里面寻找静态文件，其次再到各个app的static文件夹里面找
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'publicStatic'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
