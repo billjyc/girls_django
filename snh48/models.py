@@ -74,6 +74,32 @@ class Memberinfo(models.Model):
         return str(self.team) + '-' + self.name
 
 
+class MemberAbility(models.Model):
+    member = models.ForeignKey(Memberinfo, models.DO_NOTHING, db_column='member_id', blank=True, null=True)
+    sing = models.IntegerField(db_column='sing', verbose_name='唱歌')
+    dance = models.IntegerField(db_column='dance', verbose_name='舞蹈')
+    variety = models.IntegerField(db_column='variety', verbose_name='综艺感')
+    act = models.IntegerField(db_column='act', verbose_name='演技')
+    health = models.IntegerField(db_column='health', verbose_name='健康')
+    concentration = models.IntegerField(db_column='concentration', verbose_name='工作投入')
+    leadership = models.IntegerField(db_column='leadership', verbose_name='领导力')
+    ambition = models.IntegerField(db_column='ambition', verbose_name='野心')
+    pressure = models.IntegerField(db_column='pressure', verbose_name='抗压能力')
+
+    class Meta:
+        managed = False
+        db_table = 'ability'
+        app_label = 'snh48'
+        verbose_name = '成员能力'
+        verbose_name_plural = '成员能力'
+
+    def __unicode__(self):
+        return str(self.member.name)
+
+    def __str__(self):
+        return str(self.member.name)
+
+
 class Performance(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name='公演名称')
     team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
@@ -190,6 +216,7 @@ class Team(models.Model):
     found_date = models.DateField(blank=True, null=True, verbose_name='建队时间')
     is_valid = models.IntegerField(blank=False, null=False, default=1)
     icon = models.CharField(max_length=500, blank=True, null=True)
+    background_color = models.CharField(max_length=100, blank=True, null=True, verbose_name='应援色')
 
     class Meta:
         managed = False

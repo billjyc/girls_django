@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.db import connection, connections
 from django.db.models import Q
 import datetime
+import json
 
 from .models import *
 from django_exercise import utils
@@ -39,6 +40,16 @@ def team_list(request):
 
     }
     return render(request, 'snh48/team_list.html', context)
+
+
+def member_ability(request):
+    member_id = request.GET.get('member_id')
+    ability = MemberAbility.objects.filter(member__id=member_id)
+    if ability:
+        ret = json.dumps(ability[0])
+    else:
+        ret = {}
+    return HttpResponse(ret)
 
 
 def team_info(request, team_id):
@@ -118,6 +129,7 @@ def member_detail(request, member_id):
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
     member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history__date')
+    ability = MemberAbility.objects.filter(member__id=member_id)
 
     # 获取unit表演阵容
     with connections['snh48'].cursor() as cursor:
@@ -134,6 +146,10 @@ ORDER BY `p_date` desc, u.id, uh.rank;
         'mph_list': member_performance_history_list,
         'unit_list': unit_list
     }
+    if ability:
+        context['ability'] = ability[0]
+    else:
+        context['ability'] = None
     return render(request, 'snh48/member_detail.html', context)
 
 

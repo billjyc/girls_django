@@ -16,4 +16,6 @@ urlpatterns = [
     path('performance_history/<int:performance_history_id>', views.performance_history_detail,
          name="performance_history_detail"),
     path('bilibili_stat/index', views.bilibili_stat_index, name='bilibili_stat_index'),
+
+    path('member/ability/<int:member_id>', views.member_ability, name='member_ability')
 ]

@@ -50,7 +50,7 @@
                         <tr class="text-center">
                     {% endif %}
 
-                    <td>
+                    <td {% if member.member.team.background_color %}style="background-color: {{ member.member.team.background_color }}"{% endif %}>
                         <a href="{% url 'snh48:member_detail' member.member.id %}" target="_blank">
                             <img class="img-fluid rounded-circle member-img"
                                  src="{{ member.member.image_link }}"/>
