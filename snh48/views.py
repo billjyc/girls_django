@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 from django.db import connection, connections
+from django.db.models import Q
+import datetime
 
 from .models import *
 from django_exercise import utils
@@ -54,9 +56,16 @@ def team_info(request, team_id):
 
 def performance_history_index(request):
     page = request.GET.get('page', 1)
-    ph_list = PerformanceHistory.objects.order_by('-date')
+    where = {}
+    if request.GET.get('year'):
+        where['date__year__in'] = request.GET.getlist('year')
+    if request.GET.get('team'):
+        where['performance__team__in'] = request.GET.getlist('team')
+    if request.GET.get('performance'):
+        where['performance__id__in'] = request.GET.getlist('performance')
+    ph_list = PerformanceHistory.objects.filter(**where).order_by('-date')
     paginator = Paginator(ph_list, 100)
-
+    logger.info(ph_list.query)
     try:
         ph_list = paginator.page(page)
     except PageNotAnInteger:
@@ -71,7 +80,20 @@ def performance_history_index(request):
 
 def bilibili_stat_index(request):
     page = request.GET.get('page', 1)
-    bilibili_list = BiliBiliStat.objects.exclude(aid__in=[25573155, 2512486, 2676912, 2517405]).order_by('-view')
+    # 筛选逻辑
+    where = {}
+    if request.GET.get('year'):
+        where['performance_history__date__year__in'] = request.GET.getlist('year')
+    if request.GET.get('team'):
+        where['performance_history__performance__team__in'] = request.GET.getlist('team')
+    if request.GET.get('performance'):
+        where['performance_history__performance__id__in'] = request.GET.getlist('performance')
+    if request.GET.get('keywords'):
+        where['keywords__icontains'] = request.GET.get('keywords')
+    bilibili_list = BiliBiliStat.objects.filter(**where).exclude(
+        aid__in=[25573155, 2512486, 2676912, 2517405]
+    ).order_by('-view')
+    logger.info(bilibili_list.query)
     paginator = Paginator(bilibili_list, 100)
 
     try:
