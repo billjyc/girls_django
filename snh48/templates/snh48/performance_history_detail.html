@@ -1,10 +1,14 @@
 {% extends "snh48/base.html" %}
 
+
 {% block title %}
-公演详情
+    公演详情
 {% endblock %}
 
 {% block content %}
+    <div class="row justify-content-center">
+    <div class="col-2"></div>
+    <div class="col-8">
     {% if ph.performance.team %}
         <h4>{{ ph.performance.team }} {{ ph.performance.name }}</h4>
     {% else %}
@@ -13,43 +17,73 @@
     <h5>{{ ph.date }} </h5>
     <h5>{{ ph.description }}</h5>
     {% if ph.video_url %}
-    <h5><a href="{{ ph.video_url }}" target="_blank">{{ ph.video_url }}</a></h5>
+        <h5><a href="{{ ph.video_url }}" target="_blank">{{ ph.video_url }}</a></h5>
     {% endif %}
-    <br />
+    <br/>
 
     {% if bs %}
-    <h5>B站播放数据</h5>
-    <ul>
-        <li>播放量: {{ bs.0.view }}</li>
-        <li>弹幕: {{ bs.0.danmaku }}</li>
-        <li>硬币: {{ bs.0.coin }}</li>
-        <li>收藏: {{ bs.0.favorite }}</li>
-        <li>评论: {{ bs.0.reply }}</li>
-        <li>分享: {{ bs.0.share }}</li>
-    </ul>
+        <h5>B站播放数据</h5>
+        <ul>
+            <li>播放量: {{ bs.0.view }}</li>
+            <li>弹幕: {{ bs.0.danmaku }}</li>
+            <li>硬币: {{ bs.0.coin }}</li>
+            <li>收藏: {{ bs.0.favorite }}</li>
+            <li>评论: {{ bs.0.reply }}</li>
+            <li>分享: {{ bs.0.share }}</li>
+        </ul>
     {% endif %}
     {% if member_list %}
         <h5>参演成员</h5>
-        <ul>
-            {% for member in member_list %}
-                <li><a href="{% url 'snh48:member_detail' member.member.id %}">{{ member.member.name }}</a></li>
-            {% endfor %}
-        </ul>
+        {#        <ul>#}
+        {#            {% for member in member_list %}#}
+        {#                <li><a href="{% url 'snh48:member_detail' member.member.id %}">{{ member.member.name }}</a></li>#}
+        {#            {% endfor %}#}
+        {#        </ul>#}
+
+        <div class="table-responsive">
+            <table class="display table table-bordered" data-toggle="table"
+                   data-mobile-responsive="true"
+                   data-striped="true">
+                <tbody>
+                {% for member in member_list %}
+                    {% if forloop.counter0|divisibleby:6 %}
+                        <tr class="text-center">
+                    {% endif %}
+
+                    <td>
+                        <a href="{% url 'snh48:member_detail' member.member.id %}" target="_blank">
+                            <img class="img-fluid rounded-circle member-img"
+                                 src="{{ member.member.image_link }}"/>
+                        </a>
+                        <a href="{% url 'snh48:member_detail' member.member.id %}"
+                           target="_blank">{{ member.member.name }}</a>
+                    </td>
+                {% if forloop.counter0|add:1|divisibleby:6 %}
+                    </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+
         {% if unit_list %}
             <h5>Unit表演阵容</h5>
-            <table class="display table table-hover" data-toggle="table"
-                data-pagination="true"
-                data-page-list="[10, 20, 50]"
-                data-mobile-responsive="true"
-                data-page-size=20
-                data-striped="true"
-                data-show-columns="true">
-                <thead class="text-center">
+            <div class="table-responsive">
+                <table class="display table table-hover" data-toggle="table"
+                       data-pagination="true"
+                       data-page-list="[10, 20, 50]"
+                       data-mobile-responsive="true"
+                       data-page-size=20
+                       data-striped="true"
+                       data-show-columns="true">
+                    <thead class="text-center">
                     <th>歌曲</th>
                     <th>顺位</th>
                     <th>成员</th>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {% for result in unit_list %}
                         <tr class="text-center">
                             <td>{{ result.unit_name }}</td>
@@ -57,10 +91,14 @@
                             <td>{{ result.member_name }}</td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         {% endif %}
     {% else %}
         <h5>暂无数据！</h5>
     {% endif %}
+    </div>
+<div class="col-2"></div>
+    </div>
 {% endblock %}

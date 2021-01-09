@@ -5,7 +5,8 @@
 {% block content %}
 
 {% load static %}
-
+<div class="row justify-content-center">
+<div class="col-8">
 <div class="row">
     <div class="col-sm-12 team-info">
         <div class="col-4 col-sm-3 float-left">
@@ -27,6 +28,7 @@
                    data-pagination="true"
                    data-page-list="[20, 50, 100]"
                    data-mobile-responsive="true"
+                   data-undefined-text="-"
                    data-page-size="20"
                    id="member-list">
                 <thead class="thead-dark">
@@ -62,5 +64,6 @@
         </div>
     </div>
 </div>
-
+</div>
+</div>
 {% endblock %}

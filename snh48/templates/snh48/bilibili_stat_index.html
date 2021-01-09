@@ -3,9 +3,11 @@
 {% block title %}B站录播数据{% endblock %}
 
 {% block content %}
+    <div class="row justify-content-center">
+    <div class="col-8">
 <h4>公演B站录播数据</h4>
 {% if bilibili_list %}
-<div class="container-fluid">
+<div class="table-responsive">
     <table class="table" data-toggle="table"
                 data-search="true"
                 data-search-on-enter-key="true"
@@ -39,7 +41,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class="pagination row">
+    <div class="row">
             <span class="step-links">
                 {% if bilibili_list.has_previous %}
                     <a href="?page=1">&laquo;</a>
@@ -74,7 +76,8 @@
             </span>
         </div>
 </div>
-
+    </div>
+    </div>
 {% endif %}
 {% endblock %}
 
