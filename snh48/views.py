@@ -6,6 +6,7 @@ from django.db import connection, connections
 from django.db.models import Q
 import datetime
 import json
+from django.core import serializers
 
 from .models import *
 from django_exercise import utils
@@ -35,6 +36,30 @@ def index(request):
     return render(request, 'snh48/index.html', context)
 
 
+def compare(request):
+    team_list = Team.objects.filter(is_valid=1)
+    member_list = Memberinfo.objects.filter(is_valid=1)
+
+    member_dict = {}
+    for member in member_list:
+        if str(member.team.id) not in member_dict:
+            member_dict[str(member.team.id)] = []
+        member_dict[str(member.team.id)].append(member)
+
+    context = {
+        'team_list': team_list,
+        'member_list': member_dict
+    }
+    return render(request, 'snh48/compare.html', context)
+
+
+def get_member_by_team(request, team_id):
+    member_list = Memberinfo.objects.filter(is_valid=1).filter(team__id=team_id)
+    logger.debug(member_list)
+    member_list_json = serializers.serialize("json", member_list)
+    return HttpResponse(member_list_json)
+
+
 def team_list(request):
     context = {
 
@@ -42,14 +67,14 @@ def team_list(request):
     return render(request, 'snh48/team_list.html', context)
 
 
-def member_ability(request):
-    member_id = request.GET.get('member_id')
+def member_ability(request, member_id):
     ability = MemberAbility.objects.filter(member__id=member_id)
     if ability:
-        ret = json.dumps(ability[0])
+        ret = {'ability': serializers.serialize("json", ability), 'info': serializers.serialize("json", [ability[0].member])}
     else:
         ret = {}
-    return HttpResponse(ret)
+
+    return HttpResponse(json.dumps(ret))
 
 
 def team_info(request, team_id):

@@ -1,0 +1,231 @@
+{% extends "snh48/base.html" %}
+
+{% block title %}数据对比{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+
+        <div class="col-sm-2 col-md-2 align-self-center">
+            <h5>成员数据对比</h5>
+        </div>
+        <div class="col-sm-8 col-md-6 justify-content-center">
+            <div class="row">
+            <h6>队伍</h6>
+            <select class="selectpicker" id="select1">
+                <option value="0">请选择队伍</option>
+                {% for team in team_list %}
+                    <option value="{{ team.id }}">{{ team.name }}</option>
+                {% endfor %}
+            </select>
+
+            <select class="selectpicker" id="select2">
+                <option value="0">请选择队伍</option>
+                {% for team in team_list %}
+                    <option value="{{ team.id }}"> {{ team.name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+            <div class="row">
+                <h6>成员</h6>
+        <select class="selectpicker" id="member-select1">
+
+            </select>
+
+            <select class="selectpicker" id="member-select2">
+
+            </select>
+        </div>
+
+        </div>
+
+        <div class="col-sm-2 col-md-2 align-self-center">
+            <button type="button" class="btn btn-primary" id="compareButton">对比</button>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-8 col-md-2 align-self-center">
+            <div class="row">
+                <img id="avatar1" style="max-width: 300px"/>
+            </div>
+            <div class="row">
+                <h5 id="name1"></h5>
+            </div>
+            <div class="row">
+                <h5 id="batch1"></h5>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-6 align-self-center justify-content-center">
+            <div id="ability-chart" style="display: block;padding: 10px 20px;height: 500px;">
+
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-2 align-self-center">
+            <div class="row">
+                <img id="avatar2" style="max-width: 300px"/>
+            </div>
+            <div class="row">
+                <h5 id="name2"></h5>
+            </div>
+            <div class="row">
+                <h5 id="batch2"></h5>
+            </div>
+        </div>
+    </div>
+    <script>
+    if(typeof jQuery!=='undefined'){
+                console.log('jQuery Loaded');
+            }
+            else {
+        console.log('not loaded yet');
+    }
+            let member1 = null;
+            let member2 = null;
+            let info1 = null;
+            let info2 = null;
+        $(() => {
+			$('#select1').change(() => {
+				let teamId = $('#select1').val();
+				if(teamId === 0)  {
+				    return;
+                }
+				$('#member-select1').empty();
+                $.ajax({
+                    url: 'get_members_by_team/' + teamId,
+                    success: function (result) {
+                        let JSONObject = JSON.parse(result);
+                        for (let index in JSONObject) {
+                            let key = JSONObject[index];
+                            $('#member-select1').append('<option value="' + key.pk + '">'  + key.fields.name + '</option>')
+                            $('#member-select1').selectpicker('refresh');
+                        }
+                    }
+                });
+			});
+			$('#select2').change(() => {
+				let teamId = $('#select2').val();
+				if(teamId === 0)  {
+				    return;
+                }
+				$('#member-select2').empty();
+                $.ajax({
+                    url: 'get_members_by_team/' + teamId,
+                    success: function (result) {
+                        let JSONObject = JSON.parse(result);
+                        for (let index in JSONObject) {
+                            let key = JSONObject[index];
+                            $('#member-select2').append('<option value="' + key.pk + '">'  + key.fields.name + '</option>')
+                            $('#member-select2').selectpicker('refresh');
+                        }
+                    }
+                });
+			});
+		});
+
+            $('#compareButton').click(function () {
+                let memberId1 = $('#member-select1').val();
+                let memberId2 = $('#member-select2').val();
+
+                let ismemberId1NotEmpty = memberId1 !== null && memberId1 !== undefined
+                let ismemberId2NotEmpty = memberId2 !== null && memberId2 !== undefined
+                if(ismemberId1NotEmpty && ismemberId2NotEmpty) {
+                    $.get({
+                        url: 'member/ability/' + memberId1,
+                        async : false,
+                        success: function (result) {
+                            let JSONObject = JSON.parse(result);
+                            let infoObject = JSON.parse(JSONObject.info)
+                            $('#avatar1').attr('src', infoObject[0].fields.image_link);
+                            $('#name1').text(infoObject[0].fields.name);
+                            $('#batch1').text(infoObject[0].fields.batch);
+                            member1 = JSON.parse(JSONObject.ability)[0].fields;
+                            info1 = infoObject[0];
+                        }
+                    });
+                    $.get({
+                        url: 'member/ability/' + memberId2,
+                        async : false,
+                        success: function (result) {
+                            let JSONObject = JSON.parse(result);
+                            let infoObject = JSON.parse(JSONObject.info)
+                            $('#avatar2').attr('src', infoObject[0].fields.image_link);
+                            $('#name2').text(infoObject[0].fields.name);
+                            $('#batch2').text(infoObject[0].fields.batch);
+                            member2 = JSON.parse(JSONObject.ability)[0].fields
+                            info2 = infoObject[0];
+                        }
+                    });
+                    console.log(info1);
+                    console.log(info2);
+                    let radar_chart = echarts.init(document.getElementById('ability-chart'));
+            let option = {
+                /*
+                title: {
+                    text: '个人实力'
+                },*/
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    left: 'center',
+                    data: [info1.fields.name, info2.fields.name]
+                },
+                radar: {
+                    name: {
+                        textStyle: {
+                            color: '#fff',
+                            backgroundColor: '#999',
+                            borderRadius: 3,
+                            padding: [3, 5]
+                        }
+                    },
+                    indicator: [
+                        {name: '唱歌', max: 99},
+                        {name: '舞蹈', max: 99},
+                        {name: 'MC', max: 99},
+                        {name: '演技', max: 99},
+                        {name: '健康', max: 99},
+                        {name: '投入度', max: 99},
+                        {name: '领导力', max: 99},
+                        {name: '抗压能力', max: 99}
+                    ]
+                },
+                series: [
+                    {
+                        // name: '能力展现',
+                        type: 'radar',
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        // areaStyle: {normal: {}},
+                        label: {
+                            show: false,
+                            formatter: function (params) {
+                                return params.value;
+                            }
+                        },
+                        data: [
+                            {
+                                value: [member1.sing, member1.dance, member1.variety,
+                                    member1.act, member1.health, member1.concentration,
+                                    member1.leadership, member1.pressure],
+                                name: info1.fields.name
+                            },
+                            {
+                                value: [member2.sing, member2.dance, member2.variety,
+                                    member2.act, member2.health, member2.concentration,
+                                    member2.leadership, member2.pressure],
+                                name: info2.fields.name
+                            }
+                        ]
+                    }
+                ]
+            };
+            radar_chart.setOption(option);
+
+                } else {
+                    console.log('必须选择两个成员才可进行对比');
+                }
+            });
+    </script>
+
+{% endblock %}
