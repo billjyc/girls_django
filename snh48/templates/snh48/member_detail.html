@@ -4,157 +4,153 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-8">
-            <div class="row info-panel" style="margin-top:20px">
-                <div class="col-4 col-sm-3 info-card avatar">
-                    <div class="row">
-                        <div class="row">
-                            <img src="{{ member.image_link }}" class="img-responsive center-block"
-                                 style="max-height: 260px;"/>
-                        </div>
-                        <div class="row">
-                            <h3>{{ member.name }}</h3>
-                        </div>
-                        <div class="row">
-                            <em>{{ member.english_name }}</em>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 col-sm-3 info-card">
-                    {% if ability %}
-                        <div id="ability-charts" style="width: 90%;min-height: 300px">
 
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="col-3 col-sm-3 info-card detail">
-                    <!--        <div class="row" style="margin-bottom:10px">-->
-                    <!--            <h4>{{ member }}</h4>-->
-                    <!--        </div>-->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>昵称: {{ member.nick_name }}</p><br/>
-                            <p>身高: {{ member.height }}</p><br/>
-                            <p>血型: {{ member.blood_type }}</p><br/>
-                            <p>生日: {{ member.birthday }}</p><br/>
-                            <p>星座: {{ member.constellation }}</p><br/>
-                            <p>出生地: {{ member.birth_place }}</p><br/>
-                        </div>
-                        <div class="col-md-6">
-                            <p>个人特长: {{ member.speciality }}</p><br/>
-                            <p>兴趣爱好: {{ member.hobby }}</p><br/>
-                            <p>加入时间: {{ member.join_time }}</p><br/>
-                            <p>加入所属: {{ member.batch }}</p><br/>
-                            <p>所属公司: {{ member.agency }}</p><br/>
-                        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-sm-12">
+                <div class="row info-panel layout justify-content-center" id="info-card">
+                    <div class="col-md-3 col-sm-8 info-card avatar justify-content-center">
+                        <img src="{{ member.image_link }}" class="img-responsive"
+                             style="max-height: 260px;"/>
+                        <h3>{{ member.name }}</h3>
+                        <em>{{ member.english_name }}</em>
+                    </div>
+                    <div class="col-md-4 col-sm-8 info-card justify-content-center">
+                        <h2>成员实力</h2>
+                        {% if ability %}
+                            <div id="ability-charts" style="display: block;padding: 10px 20px;height: 300px;">
+
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-3 col-sm-8 info-card detail justify-content-center">
+                        <!--        <div class="row" style="margin-bottom:10px">-->
+                        <!--            <h4>{{ member }}</h4>-->
+                        <!--        </div>-->
+                        <h2>成员信息</h2>
+                        <p style="line-height: 28px">
+                            {#                        <div class="col-md-6">#}
+                            {#                            <p>昵称: {{ member.nick_name }}</p>#}
+                        身高: {{ member.height }}<br/>
+                        {#                            <p>血型: {{ member.blood_type }}</p><br/>#}
+                        生日: {{ member.birthday }}<br/>
+                        {#                            <p>星座: {{ member.constellation }}</p><br/>#}
+                        出生地: {{ member.birth_place }} <br/>
+                        加入时间: {{ member.join_time }} <br/>
+                        加入所属: {{ member.batch }}<br/>
+                        {#                        </div>#}
+                        {#                        <div class="col-md-6">#}
+                        {#                            <p>个人特长: {{ member.speciality }}</p><br/>#}
+                        {#                            <p>兴趣爱好: {{ member.hobby }}</p><br/>#}
+                        {#                            <p>加入时间: {{ member.join_time }}</p><br/>#}
+                        {#                            <p>加入所属: {{ member.batch }}</p><br/>#}
+                        {#                            <p>所属公司: {{ member.agency }}</p><br/>#}
+                        {#                        </div>#}
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p>经历备注: {{ member.description | linebreaks }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" style="margin-top:10px">
-                <div class="col-md-12">
-                    <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="p-member-tab" data-toggle="pill" href="#p-member"
-                               role="tab" aria-controls="p-member" aria-selected="true">公演</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="p-unit-tab" data-toggle="pill" href="#p-unit"
-                               role="tab" aria-controls="p-unit" aria-selected="false">Unit</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-
-                        <div class="tab-pane fade show active" id="p-member" role="tabpanel"
-                             aria-labelledby="p-member-tab">
-                            {% if mph_list %}
-                                <table class="display table table-hover" data-toggle="table"
-                                       data-pagination="true"
-                                       data-page-list="[10, 20, 50, 100]"
-                                       data-mobile-responsive="true"
-                                       data-page-size=100
-                                       data-striped="true">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th>公演</th>
-                                        <th>队伍</th>
-                                        <th>日期</th>
-                                        <th>备注</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for ph in mph_list %}
-                                        <tr class="text-center">
-                                            <td>{{ ph.performance_history.performance.name }}</td>
-                                            <td>
-                                                {% if ph.performance_history.performance.team %}
-                                                    {{ ph.performance_history.performance.team }}
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ ph.performance_history.date }}</td>
-                                            <td>{{ ph.performance_history.description }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <p>No performance history available.</p>
-                            {% endif %}
-                        </div>
-                        <div class="tab-pane fade" id="p-unit" role="tabpanel" aria-labelledby="p-unit-tab">
-                            {% if unit_list %}
-                                <table class="display table table-hover" data-toggle="table"
-                                       data-pagination="true"
-                                       data-page-list="[10, 20, 50, 100]"
-                                       data-mobile-responsive="true"
-                                       data-page-size=100
-                                       data-striped="true">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th>日期</th>
-                                        <th>Unit</th>
-                                        <th>顺位</th>
-                                        <th>公演</th>
-                                        <th>备注</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for result in unit_list %}
-                                        <tr class="text-center">
-                                            <td>{{ result.p_date }}</td>
-                                            <td>{{ result.unit_name }}</td>
-                                            <td>{{ result.unit_rank }}</td>
-                                            <td>{{ result.name }}</td>
-                                            <td>{{ result.description }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <p>暂无Unit曲的表演记录</p>
-                            {% endif %}
-                        </div>
-                    </div>
-
-
+                    {#                    <div class="row">#}
+                    {#                        <div class="col-md-12">#}
+                    {#                            <p>经历备注: {{ member.description | linebreaks }}</p>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
                 </div>
             </div>
         </div>
-    </div>
+        <div class="row justify-content-center" style="margin-top:10px">
+            <div class="col-md-10">
+                <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="p-member-tab" data-toggle="pill" href="#p-member"
+                           role="tab" aria-controls="p-member" aria-selected="true">公演</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="p-unit-tab" data-toggle="pill" href="#p-unit"
+                           role="tab" aria-controls="p-unit" aria-selected="false">Unit</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+
+                    <div class="tab-pane fade show active" id="p-member" role="tabpanel"
+                         aria-labelledby="p-member-tab">
+                        {% if mph_list %}
+                            <table class="display table table-hover" data-toggle="table"
+                                   data-pagination="true"
+                                   data-page-list="[10, 20, 50, 100]"
+                                   data-mobile-responsive="true"
+                                   data-page-size=100
+                                   data-striped="true">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>公演</th>
+                                    <th>队伍</th>
+                                    <th>日期</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for ph in mph_list %}
+                                    <tr class="text-center">
+                                        <td>{{ ph.performance_history.performance.name }}</td>
+                                        <td>
+                                            {% if ph.performance_history.performance.team %}
+                                                {{ ph.performance_history.performance.team }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ ph.performance_history.date }}</td>
+                                        <td>{{ ph.performance_history.description }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No performance history available.</p>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane fade" id="p-unit" role="tabpanel" aria-labelledby="p-unit-tab">
+                        {% if unit_list %}
+                            <table class="display table table-hover" data-toggle="table"
+                                   data-pagination="true"
+                                   data-page-list="[10, 20, 50, 100]"
+                                   data-mobile-responsive="true"
+                                   data-page-size=100
+                                   data-striped="true">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>日期</th>
+                                    <th>Unit</th>
+                                    <th>顺位</th>
+                                    <th>公演</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for result in unit_list %}
+                                    <tr class="text-center">
+                                        <td>{{ result.p_date }}</td>
+                                        <td>{{ result.unit_name }}</td>
+                                        <td>{{ result.unit_rank }}</td>
+                                        <td>{{ result.name }}</td>
+                                        <td>{{ result.description }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>暂无Unit曲的表演记录</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
     {% if ability %}
         <script>
             let radar_chart = echarts.init(document.getElementById('ability-charts'));
             let option = {
+                /*
                 title: {
                     text: '个人实力'
-                },
+                },*/
                 radar: {
                     name: {
                         textStyle: {
@@ -178,7 +174,7 @@
                 },
                 series: [
                     {
-                        name: '能力展现',
+                        // name: '能力展现',
                         type: 'radar',
                         // areaStyle: {normal: {}},
                         label: {

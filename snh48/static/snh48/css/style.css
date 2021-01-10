@@ -60,16 +60,52 @@ nav .navbar > li:hover .dropdown-menu {
     vertical-align: middle;
 }
 
+#info-card {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 14px 0;
+    min-height: 300px;
+    font-size: 0;
+}
+
+#info-card .info-card h2 {
+    font-size: 18px;
+    color: #006bb7;
+    line-height: 34px;
+    padding-left: 20px;
+}
+
+#info-card .info-card.detail p {
+    padding-left: 20px;
+    line-height: 32px;
+    color: #616161;
+}
+
+.layout {
+    /*width: 900px;*/
+    margin: 0 auto;
+}
+
 .info-card {
+    display: inline-block;
+    zoom: 1;
+    width: 300px;
+    height: 398px;
     border-top: 2px solid #5fade4;
     background-color: #fff;
     font-size: 14px;
-    margin: 8px auto;
+    margin-left: 8px;
+    vertical-align: top;
 }
 
-.avatar {
+.info-card.avatar {
     position: relative;
     text-align: center;
+}
+
+.info-card.avatar img {
+    margin-top: 20px;
+    height: 200px;
 }
 
 .avatar h3 {
@@ -85,7 +121,7 @@ nav .navbar > li:hover .dropdown-menu {
 }
 
 .detail {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 .info-panel {
