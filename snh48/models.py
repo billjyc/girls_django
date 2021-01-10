@@ -153,7 +153,6 @@ class MemberAbility(models.Model):
     health = models.IntegerField(db_column='health', verbose_name='健康')
     concentration = models.IntegerField(db_column='concentration', verbose_name='工作投入')
     leadership = models.IntegerField(db_column='leadership', verbose_name='领导力')
-    ambition = models.IntegerField(db_column='ambition', verbose_name='野心')
     pressure = models.IntegerField(db_column='pressure', verbose_name='抗压能力')
 
     class Meta:
