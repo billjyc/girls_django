@@ -12,7 +12,7 @@ import json
 logger = logging.getLogger(__name__)
 
 
-years = ['2013', '2014', '2015', '2016']
+years = ['2016', '2017', '2018', '2019', '2020']
 months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
 
@@ -52,11 +52,11 @@ def get_performance_history():
 
 
 def get_performance_history_new(gid, date_str):
-    conn = pymysql.connect(host='localhost', port=3306, passwd='****', db='snh48', user='root', charset='utf8')
+    conn = pymysql.connect(host='112.74.183.47', port=3306, passwd='***', db='snh48', user='root', charset='utf8')
     cursor = conn.cursor()
     time0 = int(time.time() * 1000)
 
-    url = 'https://api.snh48.com/getticketinfo.php?gid={}&callback=jQuery1111042178951578927815_1580971010393&act=choose&date={}&team=ALL&_={}'.format(gid, date_str, time0)
+    url = 'https://api.snh48.com/getticketinfo.php?gid={}&callback=jQuery111106273575462013581_1602229982548&act=choose&date={}&team=ALL&_={}'.format(gid, date_str, time0)
     header = {
         'Host': 'api.snh48.com',
         'Referer': 'http://www.snh48.com/ticket.php',
@@ -70,10 +70,11 @@ def get_performance_history_new(gid, date_str):
         '_': time0
     }
     r = requests.get(url, headers=header).text
-    prefix_len = len('jQuery1111042178951578927815_1580971010393')
+    prefix_len = len('jQuery111106273575462013581_1602229982548')
     r = r[prefix_len + 2: -1]
     r = json.loads(r, encoding='utf-8')
-    for history in r['desc']:
+    for i in range(len(r['desc']) - 1, -1, -1):
+        history = r['desc'][i]
         print(history)
         try:
             cursor.execute("""
@@ -89,6 +90,10 @@ def get_performance_history_new(gid, date_str):
 
 if __name__ == '__main__':
     # get_performance_history()
-    get_performance_history_new(2, '2020-01')
-    get_performance_history_new(1, '2020-01')
-    get_performance_history_new(3, '2020-01')
+    for year in years:
+        for month in months:
+            if year == '2016' and month in ['01', '02', '03']:
+                continue
+            date_str = year + '-' + month
+            get_performance_history_new(2, date_str)
+
