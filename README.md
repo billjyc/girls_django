@@ -1,5 +1,6 @@
 ## 启动
 * `nohup gunicorn django_exercise.wsgi:application -c gunicorn_config.py &
+* docker启动方法：`docker run -d -p 8099:8099 -v /data/logs/girls_django/:/usr/app/logs billjyc/girls_django:latest`
 `
 
 ## 静态文件修改
