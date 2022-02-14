@@ -7,6 +7,8 @@ COPY ./ .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+EXPOSE 8099
+
 CMD ["sh", "docker_start.sh"]
 
 
