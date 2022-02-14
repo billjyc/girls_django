@@ -3,7 +3,7 @@ import multiprocessing
 
 bind = '0:8099'  # 绑定ip和端口号
 backlog = 512  # 监听队列
-chdir = '/var/lib/jenkins/workspace/girls_django'  # gunicorn要切换到的目的工作目录
+# chdir = '/usr/app'  # gunicorn要切换到的目的工作目录
 timeout = 30  # 超时
 worker_class = 'gevent'  # 使用gevent模式，还可以使用sync 模式，默认的是sync模式
 

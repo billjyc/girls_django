@@ -1,5 +1,5 @@
-from django.conf.urls import url
-from django.urls import path, re_path
+# -*- coding: utf-8 -*-
+from django.urls import path
 
 from . import views
 
