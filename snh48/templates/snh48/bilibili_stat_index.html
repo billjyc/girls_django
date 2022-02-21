@@ -82,7 +82,7 @@
     <script>
         let url = 'get_bilibili_stat';
         let columns = [
-            {field: 'date', title: '日期'},
+            {field: 'date', title: '日期', formatter: dateFormatter},
             {field: 'team', title: '队伍'},
             {field: 'performance', title: '公演'},
             {field: 'remark', title: '备注'},
@@ -121,6 +121,9 @@
                 };
             },
         });
+        function dateFormatter(value, row) {
+            return '<a href="../performance_history/' + row.performance_history_id + '" target="_blank">' + value + '</a>'
+        }
     </script>
     {#{% endif %}#}
 {% endblock %}

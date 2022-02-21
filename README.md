@@ -1,3 +1,8 @@
+## Docker打包方法
+* 登录docker hub：`docker login`
+* 打包：`docker build -t billjyc/girls_django:latest .`
+* 上传：`docker push billjyc/girls_django:latest`
+
 ## 启动
 * `nohup gunicorn django_exercise.wsgi:application -c gunicorn_config.py &
 * docker启动方法：`docker run -d -p 8099:8099 -v /data/logs/girls_django/:/usr/app/logs billjyc/girls_django:latest`
