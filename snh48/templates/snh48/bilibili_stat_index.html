@@ -4,82 +4,127 @@
 
 {% block content %}
     <div class="row justify-content-center">
-    <div class="col-8">
-<h4>公演B站录播数据</h4>
-{% if bilibili_list %}
-<div class="table-responsive">
-    <table class="table" data-toggle="table"
-                data-search="true"
-                data-search-on-enter-key="true"
-                data-striped="true"
-                data-undefined-text="-"
-                data-mobile-responsive="true">
-        <thead>
-            <tr class="text-center">
-                <th>日期</th>
-                <th>队伍</th>
-                <th>公演</th>
-                <th>备注</th>
-                <th>播放量</th>
-                <th>弹幕</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for bs in bilibili_list %}
-                <tr class="text-center">
-                    <td><a href="{% url 'snh48:performance_history_detail' bs.performance_history.id %}">{{ bs.performance_history.date }}</a></td>
-                    <td>
-                        {% if bs.performance_history.performance.team %}
-                            {{ bs.performance_history.performance.team }}
-                        {% endif %}
-                    </td>
-                    <td>{{ bs.performance_history.performance.name }}</td>
-                    <td>{{ bs.performance_history.description }}</td>
-                    <td>{{ bs.view }}</td>
-                    <td>{{ bs.danmaku }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="row">
-            <span class="step-links">
-                {% if bilibili_list.has_previous %}
-                    <a href="?page=1">&laquo;</a>
-                    <a href="?page={{ bilibili_list.previous_page_number }}">上一页</a>
-                {% endif %}
-                {% if bilibili_list.previous_page_number|add:-1 > 1 %}
-                    <a href="?page={{ bilibili_list.previous_page_number|add:-1 }}">{{ bilibili_list.previous_page_number|add:-1 }}</a>
-                {% endif %}
-
-                {% if bilibili_list.has_previous %}
-                    <a href="?page={{ bilibili_list.previous_page_number }}">{{ bilibili_list.previous_page_number }}</a>
-                {% endif %}
-
-                <span class="current">
-                    {{ bilibili_list.number }}
-                </span>
-
-
-                {% if bilibili_list.has_next %}
-                    <a href="?page={{ bilibili_list.next_page_number }}">{{ bilibili_list.next_page_number }}</a>
-                {% endif %}
-
-                {% if bilibili_list.next_page_number|add:1 < bilibili_list.paginator.num_pages %}
-                    <a href="?page={{ bilibili_list.next_page_number|add:1 }}">{{ bilibili_list.next_page_number|add:1 }}</a>
-                {% endif %}
-
-                {% if bilibili_list.has_next %}
-                    <a href="?page={{ bilibili_list.next_page_number }}">下一页</a>
-                    <a href="?page={{ bilibili_list.paginator.num_pages }}">&raquo;</a>
-                {% endif %}
-                <span>共{{ bilibili_list.paginator.num_pages }}页</span>
-            </span>
+        <div class="col-8">
+            <h4>公演B站录播数据</h4>
+            {#{% if bilibili_list %}#}
+            <div class="table-responsive">
+                <table id="bilibili_stat"></table>
+                {#    <table class="table" data-toggle="table"#}
+                {#                data-search="true"#}
+                {#                data-search-on-enter-key="true"#}
+                {#                data-striped="true"#}
+                {#                data-undefined-text="-"#}
+                {#                data-mobile-responsive="true">#}
+                {#        <thead>#}
+                {#            <tr class="text-center">#}
+                {#                <th>日期</th>#}
+                {#                <th>队伍</th>#}
+                {#                <th>公演</th>#}
+                {#                <th>备注</th>#}
+                {#                <th>播放量</th>#}
+                {#                <th>弹幕</th>#}
+                {#            </tr>#}
+                {#        </thead>#}
+                {#        <tbody>#}
+                {#            {% for bs in bilibili_list %}#}
+                {#                <tr class="text-center">#}
+                {#                    <td><a href="{% url 'snh48:performance_history_detail' bs.performance_history.id %}">{{ bs.performance_history.date }}</a></td>#}
+                {#                    <td>#}
+                {#                        {% if bs.performance_history.performance.team %}#}
+                {#                            {{ bs.performance_history.performance.team }}#}
+                {#                        {% endif %}#}
+                {#                    </td>#}
+                {#                    <td>{{ bs.performance_history.performance.name }}</td>#}
+                {#                    <td>{{ bs.performance_history.description }}</td>#}
+                {#                    <td>{{ bs.view }}</td>#}
+                {#                    <td>{{ bs.danmaku }}</td>#}
+                {#                </tr>#}
+                {#            {% endfor %}#}
+                {#        </tbody>#}
+                {#    </table>#}
+                {#    <div class="row">#}
+                {#            <span class="step-links">#}
+                {#                {% if bilibili_list.has_previous %}#}
+                {#                    <a href="?page=1">&laquo;</a>#}
+                {#                    <a href="?page={{ bilibili_list.previous_page_number }}">上一页</a>#}
+                {#                {% endif %}#}
+                {#                {% if bilibili_list.previous_page_number|add:-1 > 1 %}#}
+                {#                    <a href="?page={{ bilibili_list.previous_page_number|add:-1 }}">{{ bilibili_list.previous_page_number|add:-1 }}</a>#}
+                {#                {% endif %}#}
+                {##}
+                {#                {% if bilibili_list.has_previous %}#}
+                {#                    <a href="?page={{ bilibili_list.previous_page_number }}">{{ bilibili_list.previous_page_number }}</a>#}
+                {#                {% endif %}#}
+                {##}
+                {#                <span class="current">#}
+                {#                    {{ bilibili_list.number }}#}
+                {#                </span>#}
+                {##}
+                {##}
+                {#                {% if bilibili_list.has_next %}#}
+                {#                    <a href="?page={{ bilibili_list.next_page_number }}">{{ bilibili_list.next_page_number }}</a>#}
+                {#                {% endif %}#}
+                {##}
+                {#                {% if bilibili_list.next_page_number|add:1 < bilibili_list.paginator.num_pages %}#}
+                {#                    <a href="?page={{ bilibili_list.next_page_number|add:1 }}">{{ bilibili_list.next_page_number|add:1 }}</a>#}
+                {#                {% endif %}#}
+                {##}
+                {#                {% if bilibili_list.has_next %}#}
+                {#                    <a href="?page={{ bilibili_list.next_page_number }}">下一页</a>#}
+                {#                    <a href="?page={{ bilibili_list.paginator.num_pages }}">&raquo;</a>#}
+                {#                {% endif %}#}
+                {#                <span>共{{ bilibili_list.paginator.num_pages }}页</span>#}
+                {#            </span>#}
+                {#        </div>#}
+            </div>
         </div>
-</div>
     </div>
-    </div>
-{% endif %}
+    <script>
+        let url = 'get_bilibili_stat';
+        let columns = [
+            {field: 'date', title: '日期'},
+            {field: 'team', title: '队伍'},
+            {field: 'performance', title: '公演'},
+            {field: 'remark', title: '备注'},
+            {field: 'view', title: '播放量'},
+            {field: 'danmaku', title: '弹幕数'},
+        ];
+        $("#bilibili_stat").bootstrapTable({
+            {#toolbar: '#toolbar',                //自定义工具按钮#}
+            url: url,                           //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            pageSize: 100,                       //每页的记录行数（*）
+            pageList: [10, 20, 50, 100], //可供选择的每页的行数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                      //初始化加载第一页，默认第一页
+            search: true,                       //是否显示表格搜索
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            {#minimumCountColumns: 2,             //最少允许的列数#}
+            {#height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度#}
+            showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+            columns: columns,                   //列参数
+            striped: true,
+            searchOnEnterKey: true,
+            {#detailView: true                    //是否显示父子表#}
+            //得到查询的参数
+            queryParams : function (params) {
+                //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                return {
+                    rows: params.limit,                         //页面大小
+                    page: (params.offset / params.limit) + 1,   //页码
+                    sort: params.sort,      //排序列名
+                    sortOrder: params.order,  //排位命令（desc，asc）
+                    keywords: params.search
+                };
+            },
+        });
+    </script>
+    {#{% endif %}#}
 {% endblock %}
 
 {% block js_block %}
+
 {% endblock %}

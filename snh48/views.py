@@ -114,8 +114,9 @@ def performance_history_index(request):
     return render(request, 'snh48/performance_history_index.html', context)
 
 
-def bilibili_stat_index(request):
+def get_bilibili_stat(request):
     page = request.GET.get('page', 1)
+    row = request.GET.get('rows', 10)
     # 筛选逻辑
     where = {}
     if request.GET.get('year'):
@@ -124,13 +125,20 @@ def bilibili_stat_index(request):
         where['performance_history__performance__team__in'] = request.GET.getlist('team')
     if request.GET.get('performance'):
         where['performance_history__performance__id__in'] = request.GET.getlist('performance')
-    if request.GET.get('keywords'):
-        where['keywords__icontains'] = request.GET.get('keywords')
+
     bilibili_list = BiliBiliStat.objects.filter(**where).exclude(
         aid__in=[25573155, 2512486, 2676912, 2517405]
     ).order_by('-view')
+
+    if request.GET.get('keywords'):
+        keywords = request.GET.get('keywords')
+        bilibili_list = bilibili_list.filter(Q(performance_history__description__icontains=keywords) |
+                                             Q(performance_history__performance__name__icontains=keywords) |
+                                             Q(performance_history__performance__team__name__icontains=keywords))
+        # where['performance_history__description__icontains'] = request.GET.get('keywords')
     logger.info(bilibili_list.query)
-    paginator = Paginator(bilibili_list, 100)
+    total = len(bilibili_list)
+    paginator = Paginator(bilibili_list, row)
 
     try:
         bilibili_list = paginator.page(page)
@@ -139,10 +147,64 @@ def bilibili_stat_index(request):
     except EmptyPage:
         bilibili_list = paginator.page(paginator.num_pages)
 
-    context = {
-        'bilibili_list': bilibili_list
+    ret_list = []
+    for bilibili_stat in bilibili_list:
+        ret_list.append({
+            "performance_history_id": bilibili_stat.performance_history.id,
+            "date": bilibili_stat.performance_history.date.strftime("%Y年%m月%d日 %H:%M"),
+            "aid": bilibili_stat.aid,
+            "team": bilibili_stat.performance_history.performance.team.name if bilibili_stat.performance_history.performance.team else '',
+            "performance": bilibili_stat.performance_history.performance.name,
+            "remark": bilibili_stat.performance_history.description,
+            "view": bilibili_stat.view,
+            "danmaku": bilibili_stat.danmaku,
+            "reply": bilibili_stat.reply,
+            "favorite": bilibili_stat.favorite,
+            "coin": bilibili_stat.coin,
+            "share": bilibili_stat.share
+        })
+    logger.debug(ret_list)
+    ret = {
+        "rows": ret_list,
+        "total": total
     }
-    return render(request, 'snh48/bilibili_stat_index.html', context)
+    # bilibili_list = serializers.serialize("json", bilibili_list)
+    return HttpResponse(json.dumps(ret))
+    # context = {
+    #     'bilibili_list': bilibili_list
+    # }
+    # return json.dumps(context)
+
+
+def bilibili_stat_index(request):
+    # page = request.GET.get('page', 1)
+    # # 筛选逻辑
+    # where = {}
+    # if request.GET.get('year'):
+    #     where['performance_history__date__year__in'] = request.GET.getlist('year')
+    # if request.GET.get('team'):
+    #     where['performance_history__performance__team__in'] = request.GET.getlist('team')
+    # if request.GET.get('performance'):
+    #     where['performance_history__performance__id__in'] = request.GET.getlist('performance')
+    # if request.GET.get('keywords'):
+    #     where['keywords__icontains'] = request.GET.get('keywords')
+    # bilibili_list = BiliBiliStat.objects.filter(**where).exclude(
+    #     aid__in=[25573155, 2512486, 2676912, 2517405]
+    # ).order_by('-view')
+    # logger.info(bilibili_list.query)
+    # paginator = Paginator(bilibili_list, 100)
+    #
+    # try:
+    #     bilibili_list = paginator.page(page)
+    # except PageNotAnInteger:
+    #     bilibili_list = paginator.page(1)
+    # except EmptyPage:
+    #     bilibili_list = paginator.page(paginator.num_pages)
+    #
+    # context = {
+    #     'bilibili_list': bilibili_list
+    # }
+    return render(request, 'snh48/bilibili_stat_index.html')
 
 
 def member_detail(request, member_id):
