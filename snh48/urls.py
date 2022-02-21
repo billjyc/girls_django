@@ -10,6 +10,7 @@ urlpatterns = [
 
     path('index', views.index, name='index'),
     path('performance_history/index', views.performance_history_index, name='performance_history_index'),
+    path('performance_history/list', views.get_performance_history_list, name='get_performance_history_list'),
     # ex: /member/10001
     path('member/<int:member_id>', views.member_detail, name="member_detail"),
     # ex: /performance_history/339

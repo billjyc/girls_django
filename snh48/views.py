@@ -90,8 +90,9 @@ def team_info(request, team_id):
     return render(request, 'snh48/team_info.html', context)
 
 
-def performance_history_index(request):
+def get_performance_history_list(request):
     page = request.GET.get('page', 1)
+    row = request.GET.get('rows', 100)
     where = {}
     if request.GET.get('year'):
         where['date__year__in'] = request.GET.getlist('year')
@@ -100,23 +101,46 @@ def performance_history_index(request):
     if request.GET.get('performance'):
         where['performance__id__in'] = request.GET.getlist('performance')
     ph_list = PerformanceHistory.objects.filter(**where).order_by('-date')
-    paginator = Paginator(ph_list, 100)
+
+    if request.GET.get('keywords'):
+        keywords = request.GET.get('keywords')
+        ph_list = ph_list.filter(Q(description__icontains=keywords) |
+                                       Q(performance__name__icontains=keywords) |
+                                       Q(performance__team__name__icontains=keywords))
+    paginator = Paginator(ph_list, row)
     logger.info(ph_list.query)
+    total = len(ph_list)
     try:
         ph_list = paginator.page(page)
     except PageNotAnInteger:
         ph_list = paginator.page(1)
     except EmptyPage:
         ph_list = paginator.page(paginator.num_pages)
-    context = {
-        'ph_list': ph_list,
+
+    ret_list = []
+    for performance_history in ph_list:
+        ret_list.append({
+            "id": performance_history.id,
+            "date": performance_history.date.strftime("%Y年%m月%d日 %H:%M"),
+            "team": performance_history.performance.team.name if performance_history.performance.team else '',
+            "performance": performance_history.performance.name,
+            "description": performance_history.description
+        })
+    logger.debug(ret_list)
+    ret = {
+        "total": total,
+        'rows': ret_list,
     }
-    return render(request, 'snh48/performance_history_index.html', context)
+    return HttpResponse(json.dumps(ret))
+
+
+def performance_history_index(request):
+    return render(request, 'snh48/performance_history_index.html')
 
 
 def get_bilibili_stat(request):
     page = request.GET.get('page', 1)
-    row = request.GET.get('rows', 10)
+    row = request.GET.get('rows', 100)
     # 筛选逻辑
     where = {}
     if request.GET.get('year'):
@@ -168,42 +192,10 @@ def get_bilibili_stat(request):
         "rows": ret_list,
         "total": total
     }
-    # bilibili_list = serializers.serialize("json", bilibili_list)
     return HttpResponse(json.dumps(ret))
-    # context = {
-    #     'bilibili_list': bilibili_list
-    # }
-    # return json.dumps(context)
 
 
 def bilibili_stat_index(request):
-    # page = request.GET.get('page', 1)
-    # # 筛选逻辑
-    # where = {}
-    # if request.GET.get('year'):
-    #     where['performance_history__date__year__in'] = request.GET.getlist('year')
-    # if request.GET.get('team'):
-    #     where['performance_history__performance__team__in'] = request.GET.getlist('team')
-    # if request.GET.get('performance'):
-    #     where['performance_history__performance__id__in'] = request.GET.getlist('performance')
-    # if request.GET.get('keywords'):
-    #     where['keywords__icontains'] = request.GET.get('keywords')
-    # bilibili_list = BiliBiliStat.objects.filter(**where).exclude(
-    #     aid__in=[25573155, 2512486, 2676912, 2517405]
-    # ).order_by('-view')
-    # logger.info(bilibili_list.query)
-    # paginator = Paginator(bilibili_list, 100)
-    #
-    # try:
-    #     bilibili_list = paginator.page(page)
-    # except PageNotAnInteger:
-    #     bilibili_list = paginator.page(1)
-    # except EmptyPage:
-    #     bilibili_list = paginator.page(paginator.num_pages)
-    #
-    # context = {
-    #     'bilibili_list': bilibili_list
-    # }
     return render(request, 'snh48/bilibili_stat_index.html')
 
 
