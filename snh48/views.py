@@ -153,17 +153,42 @@ def get_bilibili_stat(request):
     row = request.GET.get('rows', 100)
     # 筛选逻辑
     where = {}
-    if request.GET.get('year'):
-        where['performance_history__date__year__in'] = request.GET.getlist('year')
+
+    if request.GET.get('startDate'):
+        where['performance_history__date__gte'] = datetime.datetime.strptime(
+            request.GET.get('startDate'), '%Y-%m-%d')
+    if request.GET.get('endDate'):
+        where['performance_history__date__lte'] = datetime.datetime.strptime(
+            request.GET.get('endDate'), '%Y-%m-%d') + datetime.timedelta(hours=23, minutes=59, seconds=59)
     if request.GET.get('team'):
-        where['performance_history__performance__team__in'] = request.GET.getlist('team')
+        team = int(request.GET.get('team'))
+        if team == 0:
+            where['performance_history__performance__team__exact'] = None
+        elif team != -1:
+            where['performance_history__performance__team__exact'] = request.GET.get('team')
+
     if request.GET.get('performance'):
         where['performance_history__performance__id__in'] = request.GET.getlist('performance')
 
+    sort_name = request.GET.get('sort')
+    if sort_name in ['view', 'danmaku']:
+        pass
+    elif sort_name == 'date':
+        sort_name = 'performance_history__date'
+    elif sort_name == 'team':
+        sort_name = 'performance_history__performance__team__name'
+    else:
+        sort_name = 'view'
+
+    if request.GET.get('sortOrder') == 'asc':
+        sort_order = ''
+    else:
+        sort_order = '-'
+
     bilibili_list = BiliBiliStat.objects.filter(**where).exclude(
         aid__in=[25573155, 2512486, 2676912, 2517405]
-    ).order_by('-view')
-
+    ).order_by('{}{}'.format(sort_order, sort_name))
+    logger.info(bilibili_list.query)
     if request.GET.get('keywords'):
         keywords = request.GET.get('keywords')
         bilibili_list = bilibili_list.filter(Q(performance_history__description__icontains=keywords) |
