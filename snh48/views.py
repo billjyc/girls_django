@@ -23,17 +23,27 @@ def index(request):
     member_list = Memberinfo.objects.filter(
         is_valid=1
     ).order_by('id').order_by('team')
-    hiatus_list = Memberinfo.objects.filter(
-        is_valid=0
-    ).order_by('id')
+    # hiatus_list = Memberinfo.objects.filter(
+    #     is_valid=0
+    # ).order_by('id')
     context = {
         'team_sii': member_list.filter(team__id=101),
         'team_nii': member_list.filter(team__id=102),
         'team_hii': member_list.filter(team__id=103),
         'team_x': member_list.filter(team__id=104),
-        'hiatus': hiatus_list
+        # 'hiatus': hiatus_list
     }
     return render(request, 'snh48/index.html', context)
+
+
+def hiatus_index(request):
+    hiatus_list = Memberinfo.objects.filter(
+        is_valid=0
+    ).order_by('id')
+    context = {
+        'hiatus': hiatus_list
+    }
+    return render(request, 'snh48/hiatus_index.html', context)
 
 
 def compare(request):

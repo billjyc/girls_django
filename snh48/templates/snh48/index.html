@@ -1,6 +1,6 @@
 {% extends "snh48/base.html" %}
 
-{% block title %}成员{% endblock %}
+{% block title %}在团成员{% endblock %}
 
 {% block content %}
     <div class="row justify-content-center">
@@ -93,7 +93,7 @@
                         <tr class="text-center">
                     {% endif %}
                     <td>
-                    <a href="{% url 'snh48:member_detail' member.id %}">{{ member.name }}</a>
+                    <a target="_blank" href="{% url 'snh48:member_detail' member.id %}">{{ member.name }}</a>
                     </td>
                     {% if forloop.counter0|add:1|divisibleby:8 %}
                     </tr>
@@ -105,27 +105,6 @@
     <br/>
 <!--        </div>-->
 <!--        <div class="col-4">-->
-            <h4>已退</h4>
-            <div class="table-responsive">
-            <table class="display table table-bordered" data-toggle="table"
-                   data-mobile-responsive="true"
-                   data-striped="true">
-            <tbody>
-                {% for member in hiatus %}
-                    {% if forloop.counter0|divisibleby:8 %}
-                        <tr class="text-center">
-                    {% endif %}
-                    <td>
-                    <a href="{% url 'snh48:member_detail' member.id %}">{{ member.name }}</a>
-                    </td>
-                    {% if forloop.counter0|add:1|divisibleby:8 %}
-                    </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-            </table>
-            </div>
-    <br/>
 <!--        </div>-->
 <!--    </div>-->
     </div>

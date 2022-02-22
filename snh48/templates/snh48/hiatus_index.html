@@ -1,0 +1,30 @@
+{% extends "snh48/base.html" %}
+
+{% block title %}退团成员{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h4>已退</h4>
+            <div class="table-responsive">
+                <table class="display table table-bordered" data-toggle="table"
+                       data-mobile-responsive="true"
+                       data-striped="true">
+                    <tbody>
+                    {% for member in hiatus %}
+                        {% if forloop.counter0|divisibleby:8 %}
+                            <tr class="text-center">
+                        {% endif %}
+                    <td>
+                        <a target="_blank" href="{% url 'snh48:member_detail' member.id %}">{{ member.name }}</a>
+                    </td>
+                    {% if forloop.counter0|add:1|divisibleby:8 %}
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

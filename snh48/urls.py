@@ -8,7 +8,8 @@ urlpatterns = [
     path('team/list/', views.team_list, name='team_list'),
     path('team/<int:team_id>', views.team_info, name='team_info'),
 
-    path('index', views.index, name='index'),
+    path('member/index', views.index, name='index'),
+    path('member/hiatus_list', views.hiatus_index, name='hiatus_list'),
     path('performance_history/index', views.performance_history_index, name='performance_history_index'),
     path('performance_history/list', views.get_performance_history_list, name='get_performance_history_list'),
     # ex: /member/10001
