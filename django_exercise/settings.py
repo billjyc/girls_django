@@ -25,7 +25,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fsr#s5ywx7!-0_q4s%mqc5$toghw#y$zny38a^3*5f$imf1w#3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.getenv('ENV') == 'dev':
+    DEBUG = True
+else:
+    DEBUG = False
 
 # 域名访问权限
 ALLOWED_HOSTS = ['*']
