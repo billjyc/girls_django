@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, get_object_or_404, HttpResponse
-from django.db import connection, connections
-from django.db.models import Q
 import datetime
 import json
-from django.core import serializers
-
-from .models import *
-from django_exercise import utils
 import logging
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from django.core import serializers
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db import connections
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, HttpResponse
+
+from django_exercise import utils
+from .models import *
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,8 @@ def team_list(request):
 def member_ability(request, member_id):
     ability = MemberAbility.objects.filter(member__id=member_id)
     if ability:
-        ret = {'ability': serializers.serialize("json", ability), 'info': serializers.serialize("json", [ability[0].member])}
+        ret = {'ability': serializers.serialize("json", ability),
+               'info': serializers.serialize("json", [ability[0].member])}
     else:
         ret = {}
 
@@ -104,19 +105,51 @@ def get_performance_history_list(request):
     page = request.GET.get('page', 1)
     row = request.GET.get('rows', 100)
     where = {}
-    if request.GET.get('year'):
-        where['date__year__in'] = request.GET.getlist('year')
+
+    if request.GET.get('startDate'):
+        where['date__gte'] = datetime.datetime.strptime(
+            request.GET.get('startDate'), '%Y-%m-%d')
+    if request.GET.get('endDate'):
+        where['date__lte'] = datetime.datetime.strptime(
+            request.GET.get('endDate'), '%Y-%m-%d') + datetime.timedelta(hours=23, minutes=59, seconds=59)
     if request.GET.get('team'):
-        where['performance__team__in'] = request.GET.getlist('team')
+        team = int(request.GET.get('team'))
+        if team == 0:
+            where['performance__team__exact'] = None
+        elif team != -1:
+            where['performance__team__exact'] = request.GET.get('team')
+
     if request.GET.get('performance'):
         where['performance__id__in'] = request.GET.getlist('performance')
-    ph_list = PerformanceHistory.objects.filter(**where).order_by('-date')
+
+    sort_name = request.GET.get('sort')
+    if sort_name == 'date':
+        sort_name = 'date'
+    elif sort_name == 'team':
+        sort_name = 'performance__team__name'
+    elif sort_name == 'performance':
+        sort_name = 'performance__name'
+    else:
+        sort_name = 'date'
+
+    if request.GET.get('sortOrder') == 'asc':
+        sort_order = ''
+    else:
+        sort_order = '-'
+
+    # if request.GET.get('year'):
+    #     where['date__year__in'] = request.GET.getlist('year')
+    # if request.GET.get('team'):
+    #     where['performance__team__in'] = request.GET.getlist('team')
+    # if request.GET.get('performance'):
+    #     where['performance__id__in'] = request.GET.getlist('performance')
+    ph_list = PerformanceHistory.objects.filter(**where).order_by('{}{}'.format(sort_order, sort_name))
 
     if request.GET.get('keywords'):
         keywords = request.GET.get('keywords')
         ph_list = ph_list.filter(Q(description__icontains=keywords) |
-                                       Q(performance__name__icontains=keywords) |
-                                       Q(performance__team__name__icontains=keywords))
+                                 Q(performance__name__icontains=keywords) |
+                                 Q(performance__team__name__icontains=keywords))
     paginator = Paginator(ph_list, row)
     logger.info(ph_list.query)
     total = len(ph_list)
@@ -242,7 +275,8 @@ def member_detail(request, member_id):
     :return:
     """
     member = get_object_or_404(Memberinfo, pk=member_id)
-    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by('-performance_history__date')
+    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by(
+        '-performance_history__date')
     ability = MemberAbility.objects.filter(member__id=member_id)
 
     # 获取unit表演阵容

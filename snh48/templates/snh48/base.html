@@ -76,20 +76,20 @@
 <!--              <li class="nav-item">-->
 <!--                <a class="nav-link" href="{% url 'snh48:index' %}">成员<span class="sr-only">(current)</span></a>-->
 <!--              </li>-->
-{#              <li class="nav-item">#}
-{#                <a class="nav-link" href="{% url 'snh48:performance_history_index' %}">公演</a>#}
-{#              </li>#}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'snh48:performance_history_index' %}">公演</a>
+              </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'snh48:bilibili_stat_index' %}">公演数据</a>
+                    <a class="nav-link" href="{% url 'snh48:bilibili_stat_index' %}">B站数据</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'snh48:compare' %}">数据对比</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
-              <button class="btn btn-outline-info my-2 my-sm-0" type="submit">搜索</button>
-            </form>
+{#            <form class="form-inline my-2 my-lg-0">#}
+{#              <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">#}
+{#              <button class="btn btn-outline-info my-2 my-sm-0" type="submit">搜索</button>#}
+{#            </form>#}
           </div>
         </nav>
         {% block content %}

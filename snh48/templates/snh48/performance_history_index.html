@@ -7,6 +7,32 @@
 <div class="row justify-content-center">
     <div class="col-8">
     <h4>公演列表</h4>
+        <div class="row my-2">
+                <div class="col-6">
+                    <label for="date" class="col-form-label">日期：</label>
+                    <div class="input-group input-daterange" id="datepicker">
+                        <input type="text" id="range-left" class="form-control">
+                        <div class="input-group-addon">至</div>
+                        <input type="text" id="range-right" class="form-control">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="team" class="col-form-label">队伍：</label>
+                    <select class="form-select form-control" aria-label="选择队伍" id="team">
+                        <option value="-1">所有队伍</option>
+                        <option value="0">联合公演</option>
+                        <option value="101">Team SII</option>
+                        <option value="102">Team NII</option>
+                        <option value="103">Team HII</option>
+                        <option value="104">Team X</option>
+                        <option value="105">Team XII</option>
+                        <option value="106">Team FT</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row row-cols-4 justify-content-center my-2">
+                <button class="btn btn-primary" onclick="search()">查询</button>
+            </div>
     <div class="table-responsive">
         <table id="performance-history-list"></table>
     </div>
@@ -85,11 +111,19 @@
     </div>
 </div>
 <script>
+    $('.input-daterange input').each(function () {
+            $(this).datepicker({
+                language: 'zh-CN'
+            });
+        });
+    function search() {
+            $('#performance-history-list').bootstrapTable('refresh');
+        }
     let url = 'list';
         let columns = [
-            {field: 'date', title: '日期', formatter: dateFormatter},
-            {field: 'team', title: '队伍'},
-            {field: 'performance', title: '公演'},
+            {field: 'date', title: '日期', formatter: dateFormatter, sortable: true},
+            {field: 'team', title: '队伍', sortable: true},
+            {field: 'performance', title: '公演', sortable: true},
             {field: 'description', title: '备注'}
         ];
         $("#performance-history-list").bootstrapTable({
@@ -102,15 +136,18 @@
             pageList: [10, 20, 50, 100], //可供选择的每页的行数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                      //初始化加载第一页，默认第一页
-            search: true,                       //是否显示表格搜索
+            {#search: true,                       //是否显示表格搜索#}
             showColumns: true,                  //是否显示所有的列
-            showRefresh: true,                  //是否显示刷新按钮
+            {#showRefresh: true,                  //是否显示刷新按钮#}
             {#minimumCountColumns: 2,             //最少允许的列数#}
             {#height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度#}
-            showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+            {#showToggle: true,                   //是否显示详细视图和列表视图的切换按钮#}
             columns: columns,                   //列参数
             striped: true,
             searchOnEnterKey: true,
+            order: 'desc',
+            sortName: 'date',
+            sortOrder: 'desc',
             {#detailView: true                    //是否显示父子表#}
             //得到查询的参数
             queryParams : function (params) {
@@ -120,7 +157,10 @@
                     page: (params.offset / params.limit) + 1,   //页码
                     sort: params.sort,      //排序列名
                     sortOrder: params.order,  //排位命令（desc，asc）
-                    keywords: params.search
+                    keywords: params.search,
+                    startDate: $('#range-left').val(),
+                    endDate: $('#range-right').val(),
+                    team: $('#team').val()
                 };
             },
         });
