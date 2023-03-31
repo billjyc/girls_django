@@ -20,9 +20,11 @@
                        data-url="{% url 'performance_rank_data' %}"
                        data-side-pagination="server"
                        data-pagination="true"
-                       data-page-size="50">
+                       data-page-size="50"
+                       data-row-style="rankRowStyle">
                     <thead>
                     <tr>
+                        <th data-field="rank">排名</th>
                         <th data-field="name">演员名字</th>
                         <th data-field="num_performances">演出场次</th>
                     </tr>
@@ -34,6 +36,31 @@
 
 
     <script>
+        function rankRowStyle(row, index) {
+            let rank = row.rank;
+            let color;
+
+            switch (rank) {
+                case 1:
+                    color = '#FFD700'; // Gold
+                    break;
+                case 2:
+                    color = '#C0C0C0'; // Silver
+                    break;
+                case 3:
+                    color = '#CD7F32'; // Bronze
+                    break;
+                default:
+                    color = ''; // No font color for other ranks
+            }
+
+            return {
+                css: {
+                    'color': color, // 修改为 'color' 而不是 'background-color'
+                },
+            };
+        }
+
         $(document).ready(function () {
             var $table = $('#actor-table');
             var $filterForm = $('#filter-form');
@@ -41,7 +68,7 @@
 
             $table.bootstrapTable();
 
-            $teamFilter.change(function() {
+            $teamFilter.change(function () {
                 $table.bootstrapTable('refresh', {query: $filterForm.serializeObject()});
             });
         });

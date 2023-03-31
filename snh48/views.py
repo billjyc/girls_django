@@ -8,7 +8,8 @@ import logging
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Window, F
+from django.db.models.functions.window import RowNumber
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import JsonResponse
 
@@ -325,8 +326,10 @@ ORDER BY uh.`performance_history_id`, u.id, uh.rank;
     }
     return render(request, 'snh48/performance_history_detail.html', context)
 
+
 def performance_num_rank_index(request):
     return render(request, 'snh48/performance_rank.html')
+
 
 def performance_num_rank(request):
     page = request.GET.get('page', 1)
@@ -336,7 +339,13 @@ def performance_num_rank(request):
     if team_id:
         members = Memberinfo.objects.filter(team__id=team_id)
     # 筛选逻辑
-    members = members.filter(Q(id__lt=20000)).annotate(num_performance=Count('member_performance_history')).order_by('-num_performance')
+    members = members.filter(Q(id__lt=20000)).annotate(
+        num_performances=Count('member_performance_history')).annotate(
+        rank=Window(
+            expression=RowNumber(),
+            order_by=F('num_performances').desc(),
+        )
+    ).order_by('-num_performance')
     total = members.count()
     paginator = Paginator(members, row)
     try:
@@ -348,6 +357,8 @@ def performance_num_rank(request):
 
     context = {
         "total": total,
-        'rows': members
+        'rows': [
+            {"rank": member.rank, "name": member.name, "team": member.team.name, "num_performances": member.num_performances}
+            for member in members]
     }
     return JsonResponse(context)
