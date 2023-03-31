@@ -21,5 +21,7 @@ urlpatterns = [
     path('bilibili_stat/get_bilibili_stat', views.get_bilibili_stat, name='get_bilibili_stat'),
     path('member/ability/<int:member_id>', views.member_ability, name='member_ability'),
     path('compare', views.compare, name='compare'),
-    path('get_members_by_team/<int:team_id>', views.get_member_by_team, name='get_member_by_team')
+    path('get_members_by_team/<int:team_id>', views.get_member_by_team, name='get_member_by_team'),
+    path('performance_rank/', views.performance_num_rank_index, name='performance_rank'),
+    path('performance_rank/data/', views.performance_num_rank, name='performance_rank_data')
 ]

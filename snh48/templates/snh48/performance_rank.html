@@ -1,0 +1,49 @@
+{% extends "snh48/base.html" %}
+{% block title %}公演场次排行榜{% endblock %}
+{% block content %}
+    {% load static %}
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h4>公演场次排名</h4>
+            <form id="filter-form" class="mb-3">
+                <label for="team-filter">按队伍筛选：</label>
+                <select id="team-filter" name="team" class="form-control" style="width: auto; display: inline;">
+                    <option value="">所有队伍</option>
+                    {% for team in teams %}
+                        <option value="{{ team.id }}">{{ team.name }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <div class="table-responsive row">
+                <table id="actor-table" class="table table-bordered table-striped"
+                       data-toggle="table"
+                       data-url="{% url 'performance_rank_data' %}"
+                       data-side-pagination="server"
+                       data-pagination="true"
+                       data-page-size="50">
+                    <thead>
+                    <tr>
+                        <th data-field="name">演员名字</th>
+                        <th data-field="num_performances">演出场次</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            var $table = $('#actor-table');
+            var $filterForm = $('#filter-form');
+            var $teamFilter = $('#team-filter');
+
+            $table.bootstrapTable();
+
+            $teamFilter.change(function() {
+                $table.bootstrapTable('refresh', {query: $filterForm.serializeObject()});
+            });
+        });
+    </script>
+{% endblock %}

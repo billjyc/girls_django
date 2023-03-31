@@ -8,8 +8,9 @@ import logging
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.http import JsonResponse
 
 from django_exercise import utils
 from .models import *
@@ -323,3 +324,30 @@ ORDER BY uh.`performance_history_id`, u.id, uh.rank;
         'bs': bs,
     }
     return render(request, 'snh48/performance_history_detail.html', context)
+
+def performance_num_rank_index(request):
+    return render(request, 'snh48/performance_rank.html')
+
+def performance_num_rank(request):
+    page = request.GET.get('page', 1)
+    row = request.GET.get('rows', 100)
+    team_id = request.GET.get('team', None)
+
+    if team_id:
+        members = Memberinfo.objects.filter(team__id=team_id)
+    # 筛选逻辑
+    members = members.filter(Q(id__lt=20000)).annotate(num_performance=Count('member_performance_history')).order_by('-num_performance')
+    total = members.count()
+    paginator = Paginator(members, row)
+    try:
+        members = paginator.page(page)
+    except PageNotAnInteger:
+        members = paginator.page(1)
+    except EmptyPage:
+        members = paginator.page(paginator.num_pages)
+
+    context = {
+        "total": total,
+        'rows': members
+    }
+    return JsonResponse(context)
