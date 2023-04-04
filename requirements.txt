@@ -1,9 +1,10 @@
-django
+django<4.2
 requests
 xlwt
 beautifulsoup4
 django-cors-headers
 mysqlclient
+pymysql
 gevent
 gunicorn
 django-haystack
