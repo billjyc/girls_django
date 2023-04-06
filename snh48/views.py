@@ -10,10 +10,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
 from django.db.models import Q, Count, Window, F
 from django.db.models.functions.window import RowNumber
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import JsonResponse
 
 from django_exercise import utils
+from django_exercise.weibo_util import weibo_client
 from .models import *
 
 logger = logging.getLogger(__name__)
@@ -362,3 +363,28 @@ def performance_num_rank(request):
             for member in members]
     }
     return JsonResponse(context)
+
+
+def weibo_auth_request(request):
+    """
+    微博鉴权触发，会跳转到微博授权页面
+    """
+    authorize_url = weibo_client.get_authorize_url()
+    logger.info('get weibo authorize url: %s' % authorize_url)
+    return redirect(authorize_url)
+
+
+def get_weibo_api_code(request):
+    """
+    在微博授权页面填写信息后，会跳转到这个页面，在url的get参数中获取code
+    """
+    code = request.GET.get('code', '')
+    if not code:
+        return HttpResponse(status=508, content={'msg': 'code is empty, please retry!'})
+    logger.info('get weibo code: %s' % code)
+
+    result = weibo_client.request_access_token(code)
+    weibo_client.set_access_token(result.access_token, result.expires_in)
+
+    logger.info('get access token: %s, expire in: %s' % (result.access_token, result.expires_in))
+    return HttpResponse(status=200, content={'msg': 'Get weibo code success!', 'code': 0})

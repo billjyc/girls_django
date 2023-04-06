@@ -11,3 +11,5 @@ django-haystack
 whoosh
 jieba
 django-ckeditor
+celery
+django-celery-beat

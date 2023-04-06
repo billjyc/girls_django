@@ -23,5 +23,9 @@ urlpatterns = [
     path('compare', views.compare, name='compare'),
     path('get_members_by_team/<int:team_id>', views.get_member_by_team, name='get_member_by_team'),
     path('performance_rank/', views.performance_num_rank_index, name='performance_rank'),
-    path('performance_rank/data/', views.performance_num_rank, name='performance_rank_data')
+    path('performance_rank/data/', views.performance_num_rank, name='performance_rank_data'),
+
+    # weibo authorize
+    path('weibo/auth/request', views.weibo_auth_request, name='weibo_auth_request'),
+    path('weibo/get_code/', views.get_weibo_api_code, name='get_weibo_api_code'),
 ]

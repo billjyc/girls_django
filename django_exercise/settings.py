@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
     'gunicorn',
     'ckeditor',
     'ckeditor_uploader'
@@ -200,6 +201,13 @@ CKEDITOR_BROWSE_SHOW_DIRS = True
 
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'
+
+
+# 设置Celery使用的消息中间件
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# 设置时区
+CELERY_TIMEZONE = 'Asia/Shanghai'
 
 LOGGING = {
     'version': 1,

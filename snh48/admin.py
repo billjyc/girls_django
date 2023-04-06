@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from django_celery_beat.models import PeriodicTask
 from .models import *
 
 # Register your models here.
@@ -28,3 +29,16 @@ class UnitHistoryAdmin(admin.ModelAdmin):
 
     list_filter = ('member', 'unit')  # 过滤器
 
+
+# 自定义PeriodicTask管理类，显示更多字段
+class CustomPeriodicTaskAdmin(admin.ModelAdmin):
+    list_display = ('name', 'enabled', 'schedule', 'task', 'args', 'kwargs', 'last_run_at', 'total_run_count')
+    readonly_fields = ('last_run_at', 'total_run_count')
+    search_fields = ('name', 'task')
+
+
+# 取消默认的PeriodicTask注册
+admin.site.unregister(PeriodicTask)
+
+# 使用自定义的管理类重新注册PeriodicTask
+admin.site.register(PeriodicTask, CustomPeriodicTaskAdmin)
