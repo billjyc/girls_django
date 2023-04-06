@@ -8,7 +8,7 @@ import logging
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
-from django.db.models import Q, Count, Window, F
+from django.db.models import Q, Count, Window, F, OuterRef, Subquery, Max
 from django.db.models.functions.window import RowNumber
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import JsonResponse
@@ -294,8 +294,16 @@ ORDER BY `p_date` desc, u.id, uh.rank;
         unit_list = utils.namedtuplefetchall(cursor)
 
     # 获取微博粉丝数
-    weibo_fans_counts = WeiboDataHistory.objects.filter(member=member).order_by('update_time')
-    fans_data = [{'date': count.update_time, 'count': count.followers_count} for count in weibo_fans_counts]
+    # 只取每天最新的数据
+    weibo_fans_counts = WeiboDataHistory.objects.filter(member=member,
+                                                        update_time=Subquery(WeiboDataHistory.objects.filter(
+                                                            member=member,
+                                                            update_time=OuterRef('update_time')
+                                                        ).order_by('-update_time').values('update_time')[:1]
+                                                                    )).order_by('update_time')
+    fans_data = [{'date': count.update_time.strftime('%Y-%m-%d'),
+                  'count': count.followers_count}
+                 for count in weibo_fans_counts]
 
     context = {
         'member': member,
