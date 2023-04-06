@@ -6,3 +6,4 @@ logs/
 *.log
 venv/
 static/
+/celerybeat-schedule.db

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import datetime
 import json
 import logging
+import time
 
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -17,7 +18,7 @@ from django_exercise import utils
 from django_exercise.weibo_util import weibo_client
 from .models import *
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("django")
 
 
 # Create your views here.
@@ -277,12 +278,16 @@ def member_detail(request, member_id):
     :param member_id: 成员id
     :return:
     """
+    logger.info('获取成员详细信息: member_id: {}'.format(member_id))
+    time0 = time.time()
     member = get_object_or_404(Memberinfo, pk=member_id)
     member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by(
         '-performance_history__date')
     ability = MemberAbility.objects.filter(member__id=member_id)
+    logger.debug('查询成员公演历史/能力耗时: {}s'.format(time.time() - time0))
 
     # 获取unit表演阵容
+    time0 = time.time()
     with connections['snh48'].cursor() as cursor:
         cursor.execute("""
                 SELECT uh.performance_history_id, DATE(ph.date) AS p_date, p.name, ph.description, u.id as unit_id, u.name AS unit_name, uh.rank AS unit_rank
@@ -292,15 +297,20 @@ ORDER BY `p_date` desc, u.id, uh.rank;
 
             """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
+    logger.debug('查询unit历史耗时: {}s'.format(time.time() - time0))
 
     # 获取微博粉丝数
     # 只取每天最新的数据
-    weibo_fans_counts = WeiboDataHistory.objects.filter(member=member,
-                                                        update_time=Subquery(WeiboDataHistory.objects.filter(
-                                                            member=member,
-                                                            update_time=OuterRef('update_time')
-                                                        ).order_by('-update_time').values('update_time')[:1]
-                                                                    )).order_by('update_time')
+    time0 = time.time()
+    weibo_fans_counts = WeiboDataHistory.objects.filter(member_id=member_id)
+    logger.debug(weibo_fans_counts)
+    weibo_fans_counts = weibo_fans_counts.filter(
+        update_time=Subquery(WeiboDataHistory.objects.filter(
+            member_id=member_id,
+            update_time=OuterRef('update_time')
+        ).order_by('-update_time').values('update_time')[:1]
+                             )).order_by('update_time')
+    logger.debug('查询微博历史耗时: {}s'.format(time.time() - time0))
     fans_data = [{'date': count.update_time.strftime('%Y-%m-%d'),
                   'count': count.followers_count}
                  for count in weibo_fans_counts]
@@ -373,7 +383,8 @@ def performance_num_rank(request):
     context = {
         "total": total,
         'rows': [
-            {"rank": member.rank, "name": member.name, "team": member.team.name, "num_performances": member.num_performances}
+            {"rank": member.rank, "name": member.name, "team": member.team.name,
+             "num_performances": member.num_performances}
             for member in members]
     }
     return JsonResponse(context)

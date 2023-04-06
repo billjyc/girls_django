@@ -232,8 +232,7 @@ class BiliBiliStat(models.Model):
 
 
 class Weibo(models.Model):
-    # id = models.IntegerField(primary_key=True)
-    member = models.ForeignKey('Memberinfo', models.DO_NOTHING, db_column='id')
+    id = models.IntegerField(primary_key=True)
     weibo_id = models.BigIntegerField(blank=True, null=True)
     followers_count = models.BigIntegerField(blank=True, null=True)
     friends_count = models.BigIntegerField(blank=True, null=True)
@@ -249,8 +248,8 @@ class Weibo(models.Model):
 
 
 class WeiboDataHistory(models.Model):
-    # id = models.IntegerField(primary_key=True)
-    member = models.ForeignKey('Memberinfo', models.DO_NOTHING, db_column='id')
+    id = models.IntegerField(primary_key=True)
+    member_id = models.IntegerField()
     weibo_id = models.BigIntegerField(blank=True, null=True)
     followers_count = models.BigIntegerField(blank=True, null=True)
     friends_count = models.BigIntegerField(blank=True, null=True)

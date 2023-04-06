@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 from django_exercise import db_config as Config
+from django_exercise.cron_tasks.cron_tasks import CELERY_BEAT_SCHEDULE
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +30,8 @@ if os.getenv('ENV') == 'dev':
     DEBUG = True
 else:
     DEBUG = False
+
+DEBUG = True
 
 # 域名访问权限
 ALLOWED_HOSTS = ['*']
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_beat',
+    'django_celery_results',
     'gunicorn',
     'ckeditor',
     'ckeditor_uploader'
@@ -202,9 +206,26 @@ CKEDITOR_BROWSE_SHOW_DIRS = True
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'
 
+# 消息队列/缓存
+# 使用 Redis 作为缓存
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+CELERY_BEAT_SCHEDULE = CELERY_BEAT_SCHEDULE
 
 # 设置Celery使用的消息中间件
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 # 设置时区
 CELERY_TIMEZONE = 'Asia/Shanghai'
@@ -242,7 +263,7 @@ LOGGING = {
             'formatter': 'standard',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'standard'
         },

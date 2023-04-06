@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from django_celery_beat.models import PeriodicTask
+# from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 from .models import *
 
 # Register your models here.
@@ -13,6 +13,7 @@ admin.site.register(PerformanceHistory)
 admin.site.register(MemberPerformanceHistory)
 admin.site.register(MemberPerformanceHistoryTmp)
 admin.site.register(Unit)
+# admin.site.register(PeriodicTask)
 
 
 @admin.register(UnitHistory)
@@ -38,7 +39,7 @@ class CustomPeriodicTaskAdmin(admin.ModelAdmin):
 
 
 # 取消默认的PeriodicTask注册
-admin.site.unregister(PeriodicTask)
+# admin.site.unregister(PeriodicTask)
 
 # 使用自定义的管理类重新注册PeriodicTask
-admin.site.register(PeriodicTask, CustomPeriodicTaskAdmin)
+# admin.site.register(PeriodicTask, CustomPeriodicTaskAdmin)

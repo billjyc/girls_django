@@ -76,7 +76,7 @@
                                data-pagination="true"
                                data-page-list="[10, 20, 50, 100]"
                                data-mobile-responsive="true"
-                               data-page-size=100
+                               data-page-size=20
                                data-striped="true">
                             <thead>
                             <tr class="text-center">
@@ -111,7 +111,7 @@
                                data-pagination="true"
                                data-page-list="[10, 20, 50, 100]"
                                data-mobile-responsive="true"
-                               data-page-size=100
+                               data-page-size=20
                                data-striped="true">
                             <thead>
                             <tr class="text-center">
@@ -143,30 +143,76 @@
 
         </div>
     </div>
+    <div class="row" style="margin-top:30px">
+        <div class="col-8"></div>
+        <div class="col-2">
+            <div class="d-flex justify-content-end">
+                <select id="timeRange" class="form-control">
+                    <option value="all">所有时间</option>
+                    <option value="1m">最近一个月</option>
+                    <option value="3m">最近三个月</option>
+                    <option value="6m">最近半年</option>
+                    <option value="1y">最近一年</option>
+                </select>
+            </div>
+        </div>
+    <div class="col-2"></div>
+    </div>
     <div class="row justify-content-center" style="margin-top:10px">
-        <label for="timeRange">时间范围：</label>
-        <select id="timeRange">
-            <option value="all">所有时间</option>
-            <option value="1m">最近一个月</option>
-            <option value="3m">最近三个月</option>
-            <option value="6m">最近半年</option>
-            <option value="1y">最近一年</option>
-        </select>
         <div class="col-md-10 col-sm-12">
-            <div id="fansChart" style="width: 75%; height: 400px;"></div>
+            <div id="fansChart" style="height: 400px;"></div>
         </div>
     </div>
     {% if weibo_fans_data %}
         <script>
-            // ...
+            const fansData = {{ weibo_fans_data|safe }};
+            const chartDom = $('#fansChart')[0];
+            const myChart = echarts.init(chartDom);
+
+            // 创建数据集
+            const dates = fansData.map(d => d.date);
+            const counts = fansData.map(d => d.count);
+
+            // 配置图表选项
+            const option = {
+                title: {
+                    text: '微博粉丝数变化趋势',
+                    left: 'center', // 标题的水平对齐方式，可选值有 'left'、'center' 或 'right'
+                    top: 'top', // 标题的垂直对齐方式，可选值有 'top'、'middle' 或 'bottom'
+                    textStyle: {
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: '#333'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: dates
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 'dataMin', // 根据数据自动选择最小值
+                },
+                series: [{
+                    data: counts,
+                    type: 'line',
+                    smooth: true
+                }],
+                tooltip: {
+                    trigger: 'axis'
+                }
+            };
+
+            // 设置图表选项
+            myChart.setOption(option);
             const timeRangeSelect = $('#timeRange');
 
             // 获取日期范围
-            function getDateRange(range) {
+            function filterDataByDateRange(data, dateRange) {
                 const endDate = new Date();
                 const startDate = new Date(endDate);
 
-                switch (range) {
+                switch (dateRange) {
                     case '1m':
                         startDate.setMonth(startDate.getMonth() - 1);
                         break;
@@ -180,28 +226,23 @@
                         startDate.setFullYear(startDate.getFullYear() - 1);
                         break;
                     default:
-                        return null;
+                        return data;
                 }
 
-                return {startDate, endDate};
-            }
-
-            // 根据日期范围筛选数据
-            function filterDataByDateRange(data, range) {
-                if (!range) return data;
-
-                const {startDate, endDate} = getDateRange(range);
-                return data.filter(d => {
-                    const date = new Date(d.date);
-                    return date >= startDate && date <= endDate;
+                return data.filter(function (item) {
+                    const itemDate = new Date(item.date);
+                    return itemDate >= startDate && itemDate <= endDate;
                 });
             }
 
             // 更新图表
-            function updateChart(range) {
-                const filteredData = filterDataByDateRange(fansData, range);
-                const dates = filteredData.map(d => d.date);
-                const counts = filteredData.map(d => d.count);
+            function updateChart(data) {
+                const dates = data.map(function (item) {
+                    return item.date;
+                });
+                const counts = data.map(function (item) {
+                    return item.count;
+                });
 
                 option.xAxis.data = dates;
                 option.series[0].data = counts;
@@ -212,18 +253,19 @@
             // 为timeRange下拉菜单添加事件监听器
             timeRangeSelect.on('change', () => {
                 const range = timeRangeSelect.val();
-                updateChart(range);
+                const filteredData = filterDataByDateRange(fansData, range);
+                updateChart(filteredData);
             });
 
             // 初始化图表
-            updateChart('all');
+            updateChart(fansData);
 
         </script>
     {% endif %}
     {% if ability %}
         <script>
             let radar_chart = echarts.init(document.getElementById('ability-charts'));
-            let option = {
+            let option2 = {
                 /*
                 title: {
                     text: '个人实力'
@@ -283,7 +325,7 @@
                     }
                 ]
             };
-            radar_chart.setOption(option);
+            radar_chart.setOption(option2);
         </script>
     {% endif %}
 {% endblock %}

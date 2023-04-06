@@ -3,9 +3,9 @@
 # TEST数据库信息
 DB_HOST = "localhost"
 DB_PORT = 3306
-DB_DBNAME = "card_draw"
-DB_USER = "***"
-DB_PASSWORD = "***"
+DB_DBNAME = "snh48"
+DB_USER = "root"
+DB_PASSWORD = "Jyc@1993"
 
 # 数据库连接编码
 DB_CHARSET = "utf8"

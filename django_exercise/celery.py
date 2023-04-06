@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, unicode_literals
+import os
 from celery import Celery
 from django.conf import settings
 
 # 设置Django环境变量
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_exercise.settings')
 
 # 创建Celery实例并指定名称
 app = Celery('SNH48')
