@@ -292,10 +292,16 @@ ORDER BY `p_date` desc, u.id, uh.rank;
 
             """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
+
+    # 获取微博粉丝数
+    weibo_fans_counts = WeiboDataHistory.objects.filter(member=member).order_by('update_time')
+    fans_data = [{'date': count.update_time, 'count': count.followers_count} for count in weibo_fans_counts]
+
     context = {
         'member': member,
         'mph_list': member_performance_history_list,
-        'unit_list': unit_list
+        'unit_list': unit_list,
+        'weibo_fans_data': fans_data
     }
     if ability:
         context['ability'] = ability[0]
