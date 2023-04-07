@@ -31,7 +31,7 @@ if os.getenv('ENV') == 'dev':
 else:
     DEBUG = False
 
-DEBUG = True
+# DEBUG = True
 
 # 域名访问权限
 ALLOWED_HOSTS = ['*']
@@ -142,6 +142,8 @@ DATABASES = {
 
 DATABASE_ROUTERS = ['routers.snh48_router.MemberRouter',
                     'routers.modian_router.ModianRouter']
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 DATABASES_APPS_MAPPING = {
     'snh48': 'snh48',
@@ -287,7 +289,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['default', 'console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False
         },
         'django.request': {

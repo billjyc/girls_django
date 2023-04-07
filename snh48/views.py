@@ -288,13 +288,16 @@ def member_detail(request, member_id):
 
     # 获取unit表演阵容
     time0 = time.time()
+
     with connections['snh48'].cursor() as cursor:
         cursor.execute("""
-                SELECT uh.performance_history_id, DATE(ph.date) AS p_date, p.name, ph.description, u.id as unit_id, u.name AS unit_name, uh.rank AS unit_rank
-FROM unit u, unit_history uh, performance_history ph, performance p
-WHERE uh.member_id = %s AND uh.`unit_id` = u.id AND ph.id = uh.performance_history_id AND p.id = ph.performance_id
+SELECT uh.performance_history_id, DATE(ph.date) AS p_date, p.name, ph.description, u.id as unit_id, u.name AS unit_name, uh.rank AS unit_rank
+FROM unit_history uh
+JOIN unit u ON uh.`unit_id` = u.id
+JOIN performance_history ph ON ph.id = uh.performance_history_id
+JOIN performance p ON p.id = ph.performance_id
+WHERE uh.member_id = %s
 ORDER BY `p_date` desc, u.id, uh.rank;
-
             """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
     logger.debug('查询unit历史耗时: {}s'.format(time.time() - time0))
@@ -302,14 +305,14 @@ ORDER BY `p_date` desc, u.id, uh.rank;
     # 获取微博粉丝数
     # 只取每天最新的数据
     time0 = time.time()
-    weibo_fans_counts = WeiboDataHistory.objects.filter(member_id=member_id)
+    weibo_fans_counts = WeiboDataHistory.objects.filter(member_id=member_id).order_by('update_time')
     logger.debug(weibo_fans_counts)
-    weibo_fans_counts = weibo_fans_counts.filter(
-        update_time=Subquery(WeiboDataHistory.objects.filter(
-            member_id=member_id,
-            update_time=OuterRef('update_time')
-        ).order_by('-update_time').values('update_time')[:1]
-                             )).order_by('update_time')
+    # weibo_fans_counts = weibo_fans_counts.filter(
+    #     update_time=Subquery(WeiboDataHistory.objects.filter(
+    #         member_id=member_id,
+    #         update_time=OuterRef('update_time')
+    #     ).order_by('-update_time').values('update_time')[:1]
+    #                          )).order_by('update_time')
     logger.debug('查询微博历史耗时: {}s'.format(time.time() - time0))
     fans_data = [{'date': count.update_time.strftime('%Y-%m-%d'),
                   'count': count.followers_count}

@@ -61,6 +61,7 @@ class SeatsRecord(models.Model):
 
 
 class Card(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     url = models.CharField(max_length=500)
     level = models.IntegerField()
@@ -77,6 +78,7 @@ class Card(models.Model):
 
 
 class DrawRecord(models.Model):
+    id = models.AutoField(primary_key=True)
     supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='supporter_id')
     # card = models.ForeignKey('Card', models.DO_NOTHING, db_column='card_id')
     card_id = models.IntegerField(db_column='card_id')
@@ -89,6 +91,7 @@ class DrawRecord(models.Model):
 
 
 class DrawFuRecord(models.Model):
+    id = models.AutoField(primary_key=True)
     supporter = models.ForeignKey('Supporter', models.DO_NOTHING, db_column='modian_id')
     # card = models.ForeignKey('Card', models.DO_NOTHING, db_column='card_id')
     fu_idx = models.IntegerField(db_column='fu_idx')
