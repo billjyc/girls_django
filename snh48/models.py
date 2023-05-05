@@ -73,7 +73,7 @@ class Memberinfo(models.Model):
 class Performance(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name='公演名称')
-    team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
+    team = models.ForeignKey('Team', models.CASCADE, db_column='team', blank=True, null=True)
     debut_date = models.DateField(blank=True, null=True, verbose_name='首演日期')
     end_date = models.DateField(blank=True, null=True, verbose_name='千秋乐日期')
     link = models.CharField(max_length=200, blank=True, null=True, verbose_name='公演详情页链接')
@@ -100,8 +100,10 @@ class Performance(models.Model):
 
 class PerformanceHistory(models.Model):
     id = models.AutoField(primary_key=True)
-    performance = models.ForeignKey('Performance', models.DO_NOTHING, blank=True, null=True)
-    date = models.DateTimeField(blank=True, null=True, verbose_name='公演时间')
+    performance = models.ForeignKey('Performance', models.CASCADE, blank=True, null=True,
+                                    db_index=True)
+    date = models.DateTimeField(blank=True, null=True, verbose_name='公演时间',
+                                db_index=True)
     description = models.CharField(max_length=100, blank=True, null=True, verbose_name='备注')
     video_url = models.CharField(max_length=500, blank=True, null=True, verbose_name='视频链接')
 
@@ -175,7 +177,8 @@ class MemberAbility(models.Model):
 
 class Unit(models.Model):
     id = models.AutoField(primary_key=True)
-    performance = models.ForeignKey('Performance', models.DO_NOTHING, db_column='performance_id', blank=True, null=True)
+    performance = models.ForeignKey('Performance', models.DO_NOTHING, db_column='performance_id', db_index=True,
+                                    blank=True, null=True)
     name = models.CharField(max_length=50, blank=True, null=True, verbose_name='歌曲名称')
     num = models.IntegerField(verbose_name='歌曲人数')
 
@@ -195,8 +198,9 @@ class Unit(models.Model):
 
 class UnitHistory(models.Model):
     id = models.AutoField(primary_key=True)
-    unit = models.ForeignKey('Unit', models.DO_NOTHING, db_column='unit_id', blank=True, null=True)
-    performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING,
+    unit = models.ForeignKey('Unit', models.DO_NOTHING, db_column='unit_id', blank=True, null=True,
+                             db_index=True)
+    performance_history = models.ForeignKey('PerformanceHistory', models.DO_NOTHING, db_index=True,
                                             db_column='performance_history_id', blank=True, null=True)
     member = models.ForeignKey('MemberInfo', models.DO_NOTHING, db_column='member_id', blank=True, null=True)
     rank = models.IntegerField(verbose_name='站位序号')

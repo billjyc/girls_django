@@ -306,7 +306,7 @@ ORDER BY `p_date` desc, u.id, uh.rank;
     # 只取每天最新的数据
     time0 = time.time()
     weibo_fans_counts = WeiboDataHistory.objects.filter(member_id=member_id).order_by('update_time')
-    logger.debug(weibo_fans_counts)
+    logger.info(weibo_fans_counts)
     # weibo_fans_counts = weibo_fans_counts.filter(
     #     update_time=Subquery(WeiboDataHistory.objects.filter(
     #         member_id=member_id,
