@@ -6,7 +6,7 @@ WORKDIR /usr/app
 
 COPY ./ .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ENV ENV ${ENV}
 EXPOSE 8099
 
