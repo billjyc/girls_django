@@ -1,3 +1,4 @@
+#!/bin/bash
 ps -eux | grep gunicorn | grep -v grep | awk '{print $2}' | xargs kill -9
 ps -eux | grep celery | grep -v grep | awk '{print $2}' | xargs kill -9
 python3 manage.py collectstatic

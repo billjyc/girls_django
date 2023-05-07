@@ -1,6 +1,6 @@
 ## Docker打包方法
 * 登录docker hub：`docker login`
-* 打包：`docker build -t billjyc/girls_django:latest .`
+* 打包：`docker build -t billjyc/girls_django:latest . --platform linux/amd64`
 * 上传：`docker push billjyc/girls_django:latest`
 
 ## 启动
