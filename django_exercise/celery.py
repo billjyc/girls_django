@@ -9,7 +9,7 @@ from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_exercise.settings')
 
 # 创建Celery实例并指定名称
-app = Celery('SNH48')
+app = Celery('django_exercise')
 
 # 使用Django的设置文件配置Celery
 app.config_from_object('django.conf:settings', namespace='CELERY')

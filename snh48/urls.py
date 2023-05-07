@@ -27,5 +27,5 @@ urlpatterns = [
 
     # weibo authorize
     path('weibo/auth/request', views.weibo_auth_request, name='weibo_auth_request'),
-    path('weibo/get_code/', views.get_weibo_api_code, name='get_weibo_api_code'),
+    path('weibo/get_code/', views.get_weibo_api_code, name='get_weibo_api_code')
 ]

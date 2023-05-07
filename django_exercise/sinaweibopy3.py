@@ -5,6 +5,14 @@ import urllib.parse
 import json
 import logging
 import time
+import ssl
+
+import requests
+
+ssl._create_default_https_context = ssl._create_unverified_context
+
+
+logger = logging.getLogger(__name__)
 
 
 # general json object that can bind any fields but also act as a dict.
@@ -146,7 +154,7 @@ class APIClient(object):
 
     # get authorize url得到授权url
     def get_authorize_url(self):
-        return "https://api.weibo.com/oauth2/authorize?response_type=code&client_id=%s&redirect_uri=%s" % (
+        return "https://api.weibo.com/oauth2/authorize?response_type=code&client_id=%s&redirect_uri=%s&scope=all" % (
             self.client_id, self.redirect_uri)
 
     # post a request and then get a access_token
@@ -195,4 +203,22 @@ class APIClient(object):
                            access_token=self.access_token,
                            uid=uid,
                            )
+        logger.info(json.dumps(result))
         return result
+
+    def get_user_info_2(self, uid):
+        """
+        根据用户ID获取用户信息，直接调用浏览器API
+        """
+        url = 'https://www.weibo.com/ajax/profile/info?uid={}'.format(uid)
+        header = {
+            'cookie': 'SINAGLOBAL=882195298009.6049.1683430430872; _s_tentry=login.sina.com.cn; Apache=6955309291079.517.1683439276477; ULV=1683439276478:2:2:2:6955309291079.517.1683439276477:1683430430875; UOR=,,mail.qq.com; SCF=Ao-W_A9bMAHWpxFfaf4RkuC7Fmn8n8NtFeRQwyCqvVnX2z8JF49eti5cL-iVmhj1JlCLhExvt0gnw56fLbuOiEQ.; XSRF-TOKEN=Nd98qzneivTSOgYUSBfLV4nf; SUBP=0033WrSXqPxfM72wWs9jqgMF55529P9D9WF2ZMTv9Je7sp1lfzPTNfyk5JpVFJyyqc_LMoB7Shet; SUB=_2AkMTC-SOdcPxrAJQm_wXzG3lZI5H-jyg3o14An7uJhMyAxh87kgxqSVutBF-XL9vj0A6AiCzMuZ3gCn4Q0nFaUAe; WBPSESS=Dt2hbAUaXfkVprjyrAZT_GvEcjfKJgFyOf6R9Z2lGxXuq7sU1bjBj3oohsANbj7AHhJ_4xKqq9HGNWSKNcw6BSIuyNns7HwysGVCSftO-Vi2kxrI-7XdbkI8CRSuM6aijYhsAE4zTCEJWM4Z-HRXzQ=='
+        }
+        try:
+            r = requests.get(url, headers=header)
+            logger.info(r.text)
+            return r.json()
+        except Exception as e:
+            logger.error("update error when update uid: {}".format(uid))
+            logger.exception(e)
+
