@@ -13,6 +13,9 @@ from django.db.models import Q, Count, Window, F, OuterRef, Subquery, Max
 from django.db.models.functions.window import RowNumber
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from snh48.serializers import MemberSerializer, TeamSerializer
 
 from django_exercise import utils
 from django_exercise.weibo_util import weibo_client
@@ -72,6 +75,22 @@ def get_member_by_team(request, team_id):
     logger.debug(member_list)
     member_list_json = serializers.serialize("json", member_list)
     return HttpResponse(member_list_json)
+
+
+@api_view(['GET'])
+def get_member_by_team_id(request, team_id):
+    member_list = Memberinfo.objects.filter(is_valid=1).filter(team__id=team_id).order_by('id')
+    logger.debug(member_list)
+    # 将成员列表序列化为 JSON
+    serializer = MemberSerializer(member_list, many=True)
+    team_detail = get_object_or_404(Team, pk=team_id)
+    team_serializer = TeamSerializer(team_detail)
+    response_data = {
+        'member_list': serializer.data,
+        'team': team_serializer.data
+    }
+    # 返回 JSON 响应
+    return Response(response_data)
 
 
 def team_list(request):

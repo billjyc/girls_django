@@ -26,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fsr#s5ywx7!-0_q4s%mqc5$toghw#y$zny38a^3*5f$imf1w#3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.getenv('ENV') == 'dev':
-    DEBUG = True
-else:
+if os.getenv('ENV') == 'online':
     DEBUG = False
+else:
+    DEBUG = True
 
 # DEBUG = True
 
@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'django_celery_results',
     'gunicorn',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -211,10 +212,14 @@ DEFAULT_CHARSET = 'utf8'
 
 # 消息队列/缓存
 # 使用 Redis 作为缓存
+if os.getenv('ENV') == 'online':
+    REDIS_URL = "redis://172.17.0.1:6379"
+else:
+    REDIS_URL = "redis://127.0.0.1:6379"
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'LOCATION': '{}/1'.format(REDIS_URL),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
@@ -224,8 +229,8 @@ CACHES = {
 CELERY_BEAT_SCHEDULE = CELERY_BEAT_SCHEDULE
 
 # 设置Celery使用的消息中间件
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = '{}/0'.format(REDIS_URL)
+CELERY_RESULT_BACKEND = '{}/0'.format(REDIS_URL)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
