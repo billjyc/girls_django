@@ -10,6 +10,11 @@
 
 ## 本地数据库迁移
 * `python manage.py migrate`
+* 如果数据库切换，在DBeaver上操作会提示无权限，需要进命令行操作
+  * `mysql> create database abc;      # 创建数据库 `
+  * `mysql> use abc;                  # 使用已创建的数据库 `
+  * `mysql> set names utf8;           # 设置编码` 
+  * `mysql> source /home/abc/abc.sql  # 导入备份数据库`
 
 
 ## 静态文件修改

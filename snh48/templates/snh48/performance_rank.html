@@ -4,32 +4,47 @@
     {% load static %}
     <div class="row justify-content-center">
         <div class="col-8">
-            <h4>公演场次排名</h4>
-            <form id="filter-form" class="mb-3">
-                <label for="team-filter">按队伍筛选：</label>
-                <select id="team-filter" name="team" class="form-control" style="width: auto; display: inline;">
-                    <option value="">所有队伍</option>
-                    {% for team in teams %}
-                        <option value="{{ team.id }}">{{ team.name }}</option>
-                    {% endfor %}
-                </select>
-            </form>
-            <div class="table-responsive row">
-                <table id="actor-table" class="table table-bordered table-striped"
-                       data-toggle="table"
-                       data-url="{% url 'performance_rank_data' %}"
-                       data-side-pagination="server"
-                       data-pagination="true"
-                       data-page-size="50"
-                       data-row-style="rankRowStyle">
-                    <thead>
-                    <tr>
-                        <th data-field="rank">排名</th>
-                        <th data-field="name">演员名字</th>
-                        <th data-field="num_performances">演出场次</th>
-                    </tr>
-                    </thead>
-                </table>
+            <ul class="nav nav-tabs" id="rank-tab-list" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="performance-rank-tab" data-toggle="tab" href="#performance-rank" role="tab"
+                       aria-controls="performance-rank" aria-selected="true">公演场次排名</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="weibo-fans-rank-tab" data-toggle="tab" href="#weibo-fans-rank" role="tab"
+                       aria-controls="weibo-fans-rank" aria-selected="false">微博粉丝数排名</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="rank-tab-content">
+                <div class="tab-pane fade show active" id="performance-rank" role="tabpanel"
+                     aria-labelledby="performance-rank-tab">
+                    <label for="team-filter">按队伍筛选：</label>
+                    <select id="team-filter" name="team" class="form-control" style="width: auto; display: inline;">
+                        <option value="">所有队伍</option>
+                    </select>
+                    <label for="year-select">按年份筛选：</label>
+                    <select id="year-select" name="year" class="form-control" style="width: auto; display: inline;">
+                        <option value="">所有年份</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="search()">查询</button>
+                    <div class="table-responsive row">
+                        <table id="actor-table"></table>
+                    </div>
+                </div>
+                                <div class="tab-pane fade" id="weibo-fans-rank" role="tabpanel"
+                     aria-labelledby="weibo-fans-rank-tab">
+                                </div>
             </div>
         </div>
     </div>
@@ -61,15 +76,62 @@
             };
         }
 
+        function search() {
+            $('#actor-table').bootstrapTable('refresh');
+        }
+
         $(document).ready(function () {
-            var $table = $('#actor-table');
-            var $filterForm = $('#filter-form');
-            var $teamFilter = $('#team-filter');
+            const $table = $('#actor-table');
+            const $teamFilter = $('#team-filter');
+            const $yearFilter = $('#year-select');
+            const $searchButton = $('#search-button');
+            const performanceRankDataURL = "{% url 'snh48:performance_rank_data' %}";
 
-            $table.bootstrapTable();
+            $table.bootstrapTable({
+                url: performanceRankDataURL,  // 你的实际URL
+                method: 'get',
+                pagination: true,
+                cache: true,
+                showColumns: true,
+                pageNumber: 1,
+                sidePagination: 'server',
+                pageList: '[10, 25, 50, 100]',
+                pageSize: 50,
+                striped: true,
+                rowStyle: rankRowStyle,
+                columns: [
+                    {field: 'rank', title: '排名'},
+                    {
+                        field: 'name', title: '姓名', formatter: function (value, row) {
+                            return '<a href="' + row.detail_url + '" target="_blank">' + value + '</a>';
+                        }
+                    },
+                    {field: 'team', title: '队伍'},
+                    {field: 'num_performances', title: '公演数'}
+                ],
+                queryParams: function (params) {
+                    const team = $teamFilter.val();
+                    const year = $yearFilter.val();
+                    return {
+                        team: team,
+                        year: year,
+                        limit: params.limit,  // number of items to show
+                        offset: params.offset, // start position
+                    };
+                },
+            });
 
-            $teamFilter.change(function () {
-                $table.bootstrapTable('refresh', {query: $filterForm.serializeObject()});
+            $.ajax({
+                url: "/snh48/team/get_all_teams/",  // 使用你的实际URL
+                type: "GET",
+                success: function (data) {
+                    $.each(data.teams, function (i, team) {
+                        $('#team-filter').append($('<option>', {
+                            value: team.id,
+                            text: team.name
+                        }));
+                    });
+                }
             });
         });
     </script>

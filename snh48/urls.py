@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.team_list, name='team_list'),
     path('team/list/', views.team_list, name='team_list'),
     path('team/<int:team_id>', views.team_info, name='team_info'),
+    path('team/get_all_teams/', views.get_all_teams, name='get_all_teams'),
 
     path('member/index', views.index, name='index'),
     path('member/hiatus_list', views.hiatus_index, name='hiatus_list'),

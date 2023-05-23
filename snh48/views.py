@@ -16,6 +16,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from snh48.serializers import MemberSerializer, TeamSerializer
+from django.urls import reverse
 
 from django_exercise import utils
 from django_exercise.weibo_util import weibo_client
@@ -379,23 +380,30 @@ def performance_num_rank_index(request):
 
 
 def performance_num_rank(request):
-    page = request.GET.get('page', 1)
-    row = request.GET.get('rows', 100)
+    limit = int(request.GET.get('limit', 1))
+    offset = int(request.GET.get('offset', 50))
     team_id = request.GET.get('team', None)
+    year = request.GET.get('year', None)
 
+    members = Memberinfo.objects.all()
     if team_id:
         members = Memberinfo.objects.filter(team__id=team_id)
+    if year:
+        members = Memberinfo.objects.filter(memberperformancehistory__performance_history__date__year=year)
+
     # 筛选逻辑
     members = members.filter(Q(id__lt=20000)).annotate(
-        num_performances=Count('member_performance_history')).annotate(
+        num_performances=Count('memberperformancehistory')).annotate(
         rank=Window(
             expression=RowNumber(),
             order_by=F('num_performances').desc(),
         )
-    ).order_by('-num_performance')
+    ).order_by('-num_performances').order_by('rank')
     total = members.count()
-    paginator = Paginator(members, row)
+    paginator = Paginator(members, limit)
     try:
+        # 使用offset和limit计算当前是第几页
+        page = offset // limit + 1
         members = paginator.page(page)
     except PageNotAnInteger:
         members = paginator.page(1)
@@ -406,10 +414,16 @@ def performance_num_rank(request):
         "total": total,
         'rows': [
             {"rank": member.rank, "name": member.name, "team": member.team.name,
-             "num_performances": member.num_performances}
+             "num_performances": member.num_performances, "id": member.id,
+             "detail_url": reverse('snh48:member_detail', args=[member.id])}
             for member in members]
     }
     return JsonResponse(context)
+
+
+def get_all_teams(request):
+    teams = Team.objects.filter(id__lt=200, is_valid=1)
+    return JsonResponse({'teams': list(teams.values('id', 'name'))})
 
 
 def weibo_auth_request(request):
