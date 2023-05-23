@@ -212,7 +212,7 @@ class APIClient(object):
         """
         url = 'https://www.weibo.com/ajax/profile/info?uid={}'.format(uid)
         header = {
-            'cookie': 'SINAGLOBAL=882195298009.6049.1683430430872; _s_tentry=login.sina.com.cn; Apache=6955309291079.517.1683439276477; ULV=1683439276478:2:2:2:6955309291079.517.1683439276477:1683430430875; UOR=,,mail.qq.com; SCF=Ao-W_A9bMAHWpxFfaf4RkuC7Fmn8n8NtFeRQwyCqvVnX2z8JF49eti5cL-iVmhj1JlCLhExvt0gnw56fLbuOiEQ.; XSRF-TOKEN=Nd98qzneivTSOgYUSBfLV4nf; SUBP=0033WrSXqPxfM72wWs9jqgMF55529P9D9WF2ZMTv9Je7sp1lfzPTNfyk5JpVFJyyqc_LMoB7Shet; SUB=_2AkMTC-SOdcPxrAJQm_wXzG3lZI5H-jyg3o14An7uJhMyAxh87kgxqSVutBF-XL9vj0A6AiCzMuZ3gCn4Q0nFaUAe; WBPSESS=Dt2hbAUaXfkVprjyrAZT_GvEcjfKJgFyOf6R9Z2lGxXuq7sU1bjBj3oohsANbj7AHhJ_4xKqq9HGNWSKNcw6BSIuyNns7HwysGVCSftO-Vi2kxrI-7XdbkI8CRSuM6aijYhsAE4zTCEJWM4Z-HRXzQ=='
+            'cookie': 'XSRF-TOKEN=2qUUVvUfF29Ae1ntpsn45MLq; SUB=_2AkMTMNOyf8NxqwJRmP4Qy27jaIhxywzEieKlbCJpJRMxHRl-yT9yqmU-tRB6OLD9XXbEO1FeYrVGbMTF_I3Ovy5TBeV8; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W5VolhKpG9oWqgV1sebR1Vj; WBPSESS=kErNolfXeoisUDB3d9TFH8VPIs2WQz2dgnhE1hoswTf4H6YRAXV05Tn9115eS13zQlQqsYAJ5Vyoz-Mcp6zBMrD3b5DqODaURf74GjglGFERmbP1Adk2ExbkCQOkj9f1IAvIsOLQHk1W5xoA99j5zyybqfFrXbQxed7cQ7mg1_s='
         }
         try:
             r = requests.get(url, headers=header)
