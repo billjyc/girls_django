@@ -222,3 +222,8 @@ class APIClient(object):
             logger.error("update error when update uid: {}".format(uid))
             logger.exception(e)
 
+
+if __name__ == '__main__':
+    client = APIClient('', '')
+    client.get_user_info_2('7788386098')
+
