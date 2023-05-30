@@ -9,8 +9,8 @@ import time
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
-from django.db.models import Q, Count, Window, F
-from django.db.models.functions import ExtractYear
+from django.db.models import Q, Count, Window, F, Case, When, Value
+from django.db.models.functions import ExtractYear, Coalesce
 from django.db.models.functions.window import RowNumber
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
@@ -308,7 +308,8 @@ SELECT p.name as `performance_name`, ph.date as `date`, t.name as `team`, ph.des
 FROM member_performance_history mph
 JOIN performance_history ph ON mph.performance_history_id = ph.id
 JOIN performance p ON p.id = ph.performance_id
-JOIN team t ON t.id = p.team
+JOIN memberinfo mi ON mph.member_id = mi.id 
+JOIN team t ON t.id = mi.team 
 WHERE mph.member_id = %s
 ORDER BY ph.date desc
         """, [member_id])
@@ -335,8 +336,13 @@ ORDER BY ph.date desc
 
     # 获取按照队伍统计的公演场次数量
     performance_num_by_team_list = MemberPerformanceHistory.objects.filter(
-        member_id=member_id).values(team_id=F('performance_history__performance__team__id'),
-                                    team_name=F('performance_history__performance__team__name')).annotate(
+        member_id=member_id).values(team_id=Coalesce('performance_history__performance__team__id', 0),
+                                    team_name=Case(
+                                        When(performance_history__performance__team__name__isnull=False,
+                                             then=F('performance_history__performance__team__name')),
+                                        default=Value('联合公演'),
+                                        output_field=models.CharField()
+                                    )).annotate(
         count=Count('id')
     ).order_by('-count')
 
@@ -370,6 +376,7 @@ ORDER BY `p_date` desc, u.id, uh.rank;
         'performance_num_by_year_list': performance_num_by_year_list,
         'performance_num_by_team_list': performance_num_by_team_list,
         'mph_list': ret_list,
+        'total_performance_num': len(ret_list),
         'unit_list': unit_list,
         'weibo_fans_data': fans_data
     }

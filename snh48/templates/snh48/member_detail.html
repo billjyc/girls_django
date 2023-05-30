@@ -79,6 +79,7 @@
                 <div class="tab-pane fade show active" id="p-performance" role="tabpanel"
                      aria-labelledby="p-performance-tab">
                     {% if performance_num_by_year_list %}
+                        <h3>按年份统计</h3>
                         <table class="display table table-hover" data-toggle="table"
                                data-pagination="true"
                                data-page-list="[10, 20, 50, 100]"
@@ -98,10 +99,41 @@
                                     <td>{{ ph.count }}</td>
                                 </tr>
                             {% endfor %}
+                            <tr class="text-center">
+                                <td><b>总计</b></td>
+                                <td>{{ total_performance_num }}</td>
+                            </tr>
                             </tbody>
                         </table>
-                    {% else %}
-                        <p>No performance history available.</p>
+                    {% endif %}
+
+                {% if performance_num_by_team_list %}
+                        <h3>按队伍统计</h3>
+                        <table class="display table table-hover" data-toggle="table"
+                               data-pagination="true"
+                               data-page-list="[10, 20, 50, 100]"
+                               data-mobile-responsive="true"
+                               data-page-size=20
+                               data-striped="true">
+                            <thead>
+                            <tr class="text-center">
+                                <th>队伍</th>
+                                <th>公演场次</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ph in performance_num_by_team_list %}
+                                <tr class="text-center">
+                                    <td>{{ ph.team_name }}</td>
+                                    <td>{{ ph.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="text-center">
+                                <td><b>总计</b></td>
+                                <td>{{ total_performance_num }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     {% endif %}
                 </div>
 
