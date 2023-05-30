@@ -59,17 +59,53 @@
         <div class="col-md-10">
             <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="p-member-tab" data-toggle="pill" href="#p-member"
-                       role="tab" aria-controls="p-member" aria-selected="true">公演</a>
+                    <a class="nav-link active" id="p-performance-tab" data-toggle="pill" href="#p-performance"
+                       role="tab" aria-controls="p-performance" aria-selected="true">公演概况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="p-member-tab" data-toggle="pill" href="#p-member"
+                       role="tab" aria-controls="p-member" aria-selected="true">公演详情</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="p-unit-tab" data-toggle="pill" href="#p-unit"
                        role="tab" aria-controls="p-unit" aria-selected="false">Unit</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="p-weibo-tab" data-toggle="pill" href="#p-weibo"
+                       role="tab" aria-controls="p-weibo" aria-selected="false">微博</a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="p-performance" role="tabpanel"
+                     aria-labelledby="p-performance-tab">
+                    {% if performance_num_by_year_list %}
+                        <table class="display table table-hover" data-toggle="table"
+                               data-pagination="true"
+                               data-page-list="[10, 20, 50, 100]"
+                               data-mobile-responsive="true"
+                               data-page-size=20
+                               data-striped="true">
+                            <thead>
+                            <tr class="text-center">
+                                <th>年份</th>
+                                <th>公演场次</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ph in performance_num_by_year_list %}
+                                <tr class="text-center">
+                                    <td>{{ ph.year }}</td>
+                                    <td>{{ ph.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No performance history available.</p>
+                    {% endif %}
+                </div>
 
-                <div class="tab-pane fade show active" id="p-member" role="tabpanel"
+                <div class="tab-pane fade" id="p-member" role="tabpanel"
                      aria-labelledby="p-member-tab">
                     {% if mph_list %}
                         <table class="display table table-hover" data-toggle="table"
@@ -89,14 +125,10 @@
                             <tbody>
                             {% for ph in mph_list %}
                                 <tr class="text-center">
-                                    <td>{{ ph.performance_history.performance.name }}</td>
-                                    <td>
-                                        {% if ph.performance_history.performance.team %}
-                                            {{ ph.performance_history.performance.team }}
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ ph.performance_history.date }}</td>
-                                    <td>{{ ph.performance_history.description }}</td>
+                                    <td>{{ ph.performance }}</td>
+                                    <td>{{ ph.team }}</td>
+                                    <td>{{ ph.date }}</td>
+                                    <td>{{ ph.description }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -138,33 +170,56 @@
                         <p>暂无Unit曲的表演记录</p>
                     {% endif %}
                 </div>
-            </div>
+                <div class="tab-pane fade" id="p-weibo" role="tabpanel"
+                     aria-labelledby="p-weibo-tab">
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-2">
+                            <div class="d-flex justify-content-end">
+                                <select id="timeRange" class="form-control">
+                                    <option value="all">所有时间</option>
+                                    <option value="1m">最近一个月</option>
+                                    <option value="3m">最近三个月</option>
+                                    <option value="6m">最近半年</option>
+                                    <option value="1y">最近一年</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row justify-content-center" style="margin-top:10px">
+                        <div class="col-md-10 col-sm-12">
+                            <div id="fansChart" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
 
-
-        </div>
-    </div>
-    <div class="row" style="margin-top:30px">
-        <div class="col-8"></div>
-        <div class="col-2">
-            <div class="d-flex justify-content-end">
-                <select id="timeRange" class="form-control">
-                    <option value="all">所有时间</option>
-                    <option value="1m">最近一个月</option>
-                    <option value="3m">最近三个月</option>
-                    <option value="6m">最近半年</option>
-                    <option value="1y">最近一年</option>
-                </select>
             </div>
         </div>
-    <div class="col-2"></div>
     </div>
-    <div class="row justify-content-center" style="margin-top:10px">
-        <div class="col-md-10 col-sm-12">
-            <div id="fansChart" style="height: 400px;"></div>
-        </div>
     </div>
+
     {% if weibo_fans_data %}
         <script>
+            $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+                // 获取当前选项卡的目标面板的 ID
+                const targetPanelId = $(e.target).attr('href');
+
+                // 找到目标面板内的 ECharts 容器
+                const chartContainer = $(targetPanelId).find('#fansChart');
+
+                // 获取该容器的宽度和高度
+                const containerWidth = chartContainer.width();
+                const containerHeight = chartContainer.height();
+
+                // 通过 ECharts 实例的 resize() 方法重新渲染图表
+                const chartInstance = echarts.getInstanceByDom(chartContainer[0]);
+                chartInstance.resize({
+                    width: containerWidth,
+                    height: containerHeight
+                });
+            });
+
             const fansData = {{ weibo_fans_data|safe }};
             const chartDom = $('#fansChart')[0];
             const myChart = echarts.init(chartDom);

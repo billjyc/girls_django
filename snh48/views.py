@@ -9,17 +9,18 @@ import time
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
-from django.db.models import Q, Count, Window, F, OuterRef, Subquery, Max
+from django.db.models import Q, Count, Window, F
+from django.db.models.functions import ExtractYear
 from django.db.models.functions.window import RowNumber
-from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
+from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from snh48.serializers import MemberSerializer, TeamSerializer
-from django.urls import reverse
 
 from django_exercise import utils
 from django_exercise.weibo_util import weibo_client
+from snh48.serializers import MemberSerializer, TeamSerializer
 from .models import *
 
 logger = logging.getLogger("django")
@@ -301,10 +302,43 @@ def member_detail(request, member_id):
     logger.info('获取成员详细信息: member_id: {}'.format(member_id))
     time0 = time.time()
     member = get_object_or_404(Memberinfo, pk=member_id)
-    member_performance_history_list = MemberPerformanceHistory.objects.filter(member=member).order_by(
-        '-performance_history__date')
+    with connections['snh48'].cursor() as cursor:
+        cursor.execute("""
+SELECT p.name as `performance_name`, ph.date as `date`, t.name as `team`, ph.description as `description`
+FROM member_performance_history mph
+JOIN performance_history ph ON mph.performance_history_id = ph.id
+JOIN performance p ON p.id = ph.performance_id
+JOIN team t ON t.id = p.team
+WHERE mph.member_id = %s
+ORDER BY ph.date desc
+        """, [member_id])
+        member_performance_history_list = utils.namedtuplefetchall(cursor)
+    ret_list = []
+    for mph in member_performance_history_list:
+        ret_list.append({
+            "date": mph.date.strftime("%Y年%m月%d日 %H:%M"),
+            "team": mph.team if mph.team else '',
+            "performance": mph.performance_name,
+            "description": mph.description
+        })
+    logger.debug(ret_list)
+
     ability = MemberAbility.objects.filter(member__id=member_id)
     logger.debug('查询成员公演历史/能力耗时: {}s'.format(time.time() - time0))
+
+    # 获取按照年份统计的公演场次数量
+    performance_num_by_year_list = MemberPerformanceHistory.objects.filter(member_id=member_id).annotate(
+        year=ExtractYear('performance_history__date')
+    ).values('year').annotate(
+        count=Count('id')
+    ).order_by('-year')
+
+    # 获取按照队伍统计的公演场次数量
+    performance_num_by_team_list = MemberPerformanceHistory.objects.filter(
+        member_id=member_id).values(team_id=F('performance_history__performance__team__id'),
+                                    team_name=F('performance_history__performance__team__name')).annotate(
+        count=Count('id')
+    ).order_by('-count')
 
     # 获取unit表演阵容
     time0 = time.time()
@@ -326,13 +360,6 @@ ORDER BY `p_date` desc, u.id, uh.rank;
     # 只取每天最新的数据
     time0 = time.time()
     weibo_fans_counts = WeiboDataHistory.objects.filter(member_id=member_id).order_by('update_time')
-    logger.info(weibo_fans_counts)
-    # weibo_fans_counts = weibo_fans_counts.filter(
-    #     update_time=Subquery(WeiboDataHistory.objects.filter(
-    #         member_id=member_id,
-    #         update_time=OuterRef('update_time')
-    #     ).order_by('-update_time').values('update_time')[:1]
-    #                          )).order_by('update_time')
     logger.debug('查询微博历史耗时: {}s'.format(time.time() - time0))
     fans_data = [{'date': count.update_time.strftime('%Y-%m-%d'),
                   'count': count.followers_count}
@@ -340,7 +367,9 @@ ORDER BY `p_date` desc, u.id, uh.rank;
 
     context = {
         'member': member,
-        'mph_list': member_performance_history_list,
+        'performance_num_by_year_list': performance_num_by_year_list,
+        'performance_num_by_team_list': performance_num_by_team_list,
+        'mph_list': ret_list,
         'unit_list': unit_list,
         'weibo_fans_data': fans_data
     }
