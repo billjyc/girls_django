@@ -40,7 +40,7 @@ class Memberinfo(models.Model):
     nick_name = models.CharField(max_length=100, blank=True, null=True, verbose_name='昵称')
     height = models.IntegerField(blank=True, null=True, verbose_name='身高')
     blood_type = models.CharField(max_length=10, blank=True, null=True, verbose_name='血型')
-    team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True)
+    team = models.ForeignKey('Team', models.DO_NOTHING, db_column='team', blank=True, null=True, verbose_name='队伍')
     batch = models.CharField(max_length=100, blank=True, null=True, verbose_name='期数')
     birthday = models.DateField(blank=True, null=True, verbose_name='生日')
     english_name = models.CharField(max_length=50, blank=True, null=True, verbose_name='英文名')
@@ -134,6 +134,10 @@ class MemberPerformanceHistory(models.Model):
         verbose_name = '成员公演记录'
         verbose_name_plural = '成员公演记录'
 
+    def __str__(self):
+        return str(self.id) + str(self.member.name) + ' ' + str(self.performance_history.performance.name) + \
+            str(self.performance_history.date) + str(self.performance_history.description)
+
 
 class MemberPerformanceHistoryTmp(models.Model):
     id = models.AutoField(primary_key=True)
@@ -147,6 +151,10 @@ class MemberPerformanceHistoryTmp(models.Model):
         app_label = 'snh48'
         verbose_name = '成员公演记录-本年度'
         verbose_name_plural = '成员公演记录-本年度'
+
+    def __str__(self):
+        return str(self.id) + str(self.member.name) + ' ' + str(self.performance_history.performance.name) + \
+            str(self.performance_history.date) + str(self.performance_history.description)
 
 
 class MemberAbility(models.Model):
