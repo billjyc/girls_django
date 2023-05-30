@@ -308,8 +308,7 @@ SELECT p.name as `performance_name`, ph.date as `date`, t.name as `team`, ph.des
 FROM member_performance_history mph
 JOIN performance_history ph ON mph.performance_history_id = ph.id
 JOIN performance p ON p.id = ph.performance_id
-JOIN memberinfo mi ON mph.member_id = mi.id 
-JOIN team t ON t.id = mi.team 
+LEFT JOIN team t ON t.id = p.team 
 WHERE mph.member_id = %s
 ORDER BY ph.date desc
         """, [member_id])
