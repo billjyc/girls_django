@@ -72,6 +72,45 @@ def namedtuplefetchall(cursor):
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
 
+
+class TransferType:
+    DEBUT = 1  # 出道
+    TRANSFER = 2  # 移籍
+    DELEGATE = 3  # 降格
+    PROMOTE = 4  # 升格
+    CONCURRENT_START = 5  # 兼任开始
+    CONCURRENT_END = 6  # 兼任解除
+    RETIRE = 7  # 退团
+    COMEBACK = 8  # 回归
+    GRADUATE = 9  # 毕业
+
+
+def process_transfer_detail(transfer_detail, team_dict):
+    transfer_type = transfer_detail['type']
+    if transfer_detail["to_team"]:
+        to_team_name = team_dict[str(transfer_detail["to_team"])]
+    description = ""
+    if transfer_type == TransferType.DEBUT:
+        description += "出道, 加入{}".format(to_team_name)
+    elif transfer_type == TransferType.TRANSFER:
+        description += "移籍至{}".format(to_team_name)
+    elif transfer_type == TransferType.DELEGATE:
+        description += "降格至{}".format(to_team_name)
+    elif transfer_type == TransferType.PROMOTE:
+        description += "升格至{}".format(to_team_name)
+    elif transfer_type == TransferType.CONCURRENT_START:
+        description += "兼任{}".format(to_team_name)
+    elif transfer_type == TransferType.CONCURRENT_END:
+        description += "{}兼任解除".format(to_team_name)
+    elif transfer_type == TransferType.RETIRE:
+        description += "停止活动"
+    elif transfer_type == TransferType.COMEBACK:
+        description += "回归, 加入{}".format(to_team_name)
+    elif transfer_type == TransferType.GRADUATE:
+        description += "毕业"
+    return description
+
+
 if __name__ == '__main__':
     # strs = filter_tags("""
     # test<span class=\"url-icon\"><img src=\"//h5.sinaimg.cn/m/emoticon/icon/default/d_tu-65768ccc23.png\" style=\"width:1em;height:1em;\" alt=\"[吐]\"></span><span class=\"url-icon\"><img src=\"//h5.sinaimg.cn/m/emoticon/icon/default/d_haha-bdd6ceb619.png\" style=\"width:1em;height:1em;\" alt=\"[哈哈]\"></span><span class=\"url-icon\"><img src=\"//h5.sinaimg.cn/m/emoticon/icon/default/d_tu-65768ccc23.png\" style=\"width:1em;height:1em;\" alt=\"[吐]\"></span><span class=\"url-icon\"><img src=\"//h5.sinaimg.cn/m/emoticon/icon/others/l_xin-8e9a1a0346.png\" style=\"width:1em;height:1em;\" alt=\"[心]\"></span><br/><a class='k' href='https://m.weibo.cn/k/test?from=feed'>#test#</a>
@@ -82,7 +121,8 @@ if __name__ == '__main__':
         "pro_id": 10289,
         "page": 1,
     }
-    header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.7.12622.400'}
+    header = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.7.12622.400'}
     sign = make_signature(post_fields)
     post_fields['sign'] = sign
 

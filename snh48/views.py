@@ -7,6 +7,7 @@ import logging
 import time
 
 from django.core import serializers
+from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import connections
 from django.db.models import Q, Count, Window, F, Case, When, Value
@@ -24,6 +25,16 @@ from snh48.serializers import MemberSerializer, TeamSerializer
 from .models import *
 
 logger = logging.getLogger("django")
+
+
+def get_teams_data():
+    teams_data = cache.get('teams_data')
+    if not teams_data:
+        # 如果缓存中没有数据，则从数据库中读取
+        teams_data = Team.objects.values('id', 'group', 'name')
+        # 将数据存入缓存，设置过期时间为一天（86400秒）
+        cache.set('teams_data', teams_data, 86400)
+    return teams_data
 
 
 # Create your views here.
@@ -309,6 +320,18 @@ def member_detail(request, member_id):
     if member.final_member_id != int(member_id):
         redirect_url = f"/snh48/member/{member.final_member_id}"
         return redirect(redirect_url)
+
+    transfer = get_object_or_404(Transfer, member_id=member_id)
+    teams = get_teams_data()
+
+    team_dict = {}
+    for team_info in teams:
+        team_dict[str(team_info['id'])] = f'{team_info["group"]} {team_info["name"]}'
+
+    for transfer_detail in transfer.detail:
+        description = utils.process_transfer_detail(transfer_detail, team_dict)
+        transfer_detail['description'] = description
+
     with connections['snh48'].cursor() as cursor:
         cursor.execute("""
 SELECT p.name as `performance_name`, ph.date as `date`, t.name as `team`, ph.description as `description`
@@ -384,7 +407,8 @@ ORDER BY `p_date` desc, u.id, uh.rank;
         'mph_list': ret_list,
         'total_performance_num': len(ret_list),
         'unit_list': unit_list,
-        'weibo_fans_data': fans_data
+        'weibo_fans_data': fans_data,
+        "transfer_details": transfer.detail
     }
     if ability:
         context['ability'] = ability[0]

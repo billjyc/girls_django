@@ -14,6 +14,7 @@ from django.db import models
 
 class Team(models.Model):
     id = models.IntegerField(primary_key=True, verbose_name='队伍编号')
+    group = models.CharField(max_length=100, blank=True, null=True, verbose_name='团体名称')
     name = models.CharField(max_length=30, blank=True, null=True, verbose_name='队伍名称')
     found_date = models.DateField(blank=True, null=True, verbose_name='建队时间')
     is_valid = models.IntegerField(blank=False, null=False, default=1)
