@@ -55,6 +55,7 @@ class Memberinfo(models.Model):
     agency = models.CharField(max_length=50, verbose_name='日期')
     speciality = models.CharField(max_length=50, verbose_name='特长')
     pid = models.IntegerField(blank=True, null=True, verbose_name='期数编号')
+    final_member_id = models.IntegerField(blank=True, null=True, verbose_name='目前最新的成员编号')  # 可能会有移籍的成员，表示目前成员最新的ID
 
     class Meta:
         managed = False
@@ -281,3 +282,17 @@ class WeiboDataHistory(models.Model):
         app_label = 'snh48'
         verbose_name = '微博历史数据'
         verbose_name_plural = '微博历史数据'
+
+
+class Transfer(models.Model):
+    id = models.IntegerField(primary_key=True)
+    member_id = models.ForeignKey('Memberinfo', models.DO_NOTHING, db_column='member_id', db_index=True,blank=True, null=True)
+    detail = models.JSONField(verbose_name='变更详情')
+    update_time = models.DateTimeField(blank=True, null=True, default=models.DateTimeField(auto_now_add=True))
+
+    class Meta:
+        managed = False
+        db_table = 'transfer'
+        app_label = 'snh48'
+        verbose_name = '成员信息变更'
+        verbose_name_plural = '成员信息变更'

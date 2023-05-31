@@ -49,8 +49,12 @@ def hiatus_index(request):
     hiatus_list = Memberinfo.objects.filter(
         is_valid=0
     ).order_by('id')
+    result = []
+    for member in hiatus_list:
+        if member.final_member_id == member.id:
+            result.append(member)
     context = {
-        'hiatus': hiatus_list
+        'hiatus': result
     }
     return render(request, 'snh48/hiatus_index.html', context)
 
@@ -302,6 +306,9 @@ def member_detail(request, member_id):
     logger.info('获取成员详细信息: member_id: {}'.format(member_id))
     time0 = time.time()
     member = get_object_or_404(Memberinfo, pk=member_id)
+    if member.final_member_id != int(member_id):
+        redirect_url = f"/snh48/member/{member.final_member_id}"
+        return redirect(redirect_url)
     with connections['snh48'].cursor() as cursor:
         cursor.execute("""
 SELECT p.name as `performance_name`, ph.date as `date`, t.name as `team`, ph.description as `description`
@@ -419,12 +426,21 @@ def performance_num_rank(request):
     offset = int(request.GET.get('offset', 50))
     team_id = request.GET.get('team', None)
     year = request.GET.get('year', None)
+    is_valid = request.GET.get('is_valid', None)
 
     members = Memberinfo.objects.all()
+    if is_valid:
+        is_valid = int(is_valid)
+        # members = members.filter(is_valid=is_valid)
+        if is_valid == 1:
+            members = members.filter(is_valid=is_valid, team__id__lt=199)
+        elif is_valid == 0:
+            members = members.filter(Q(is_valid=is_valid) |
+                                     Q(team__id=199))
     if team_id:
-        members = Memberinfo.objects.filter(team__id=team_id)
+        members = members.filter(team__id=team_id)
     if year:
-        members = Memberinfo.objects.filter(memberperformancehistory__performance_history__date__year=year)
+        members = members.filter(memberperformancehistory__performance_history__date__year=year)
 
     # 筛选逻辑
     members = members.filter(Q(id__lt=20000)).annotate(

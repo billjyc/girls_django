@@ -18,6 +18,12 @@
             <div class="tab-content" id="rank-tab-content">
                 <div class="tab-pane fade show active" id="performance-rank" role="tabpanel"
                      aria-labelledby="performance-rank-tab">
+                    <label for="is-valid-select">是否在团：</label>
+                    <select id="is-valid-select" name="is-valid" class="form-control" style="width: auto; display: inline;">
+                        <option value="">不限</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
                     <label for="team-filter">按队伍筛选：</label>
                     <select id="team-filter" name="team" class="form-control" style="width: auto; display: inline;">
                         <option value="">所有队伍</option>
@@ -84,6 +90,7 @@
             const $table = $('#actor-table');
             const $teamFilter = $('#team-filter');
             const $yearFilter = $('#year-select');
+            const $isValidFilter = $('#is-valid-select');
             const $searchButton = $('#search-button');
             const performanceRankDataURL = "{% url 'snh48:performance_rank_data' %}";
 
@@ -112,9 +119,11 @@
                 queryParams: function (params) {
                     const team = $teamFilter.val();
                     const year = $yearFilter.val();
+                    const isValid = $isValidFilter.val();
                     return {
                         team: team,
                         year: year,
+                        is_valid: isValid,
                         limit: params.limit,  // number of items to show
                         offset: params.offset, // start position
                     };
