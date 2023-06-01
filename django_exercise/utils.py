@@ -83,15 +83,20 @@ class TransferType:
     RETIRE = 7  # 退团
     COMEBACK = 8  # 回归
     GRADUATE = 9  # 毕业
+    STAR_PALACE = 10  # 明星殿堂
 
 
 def process_transfer_detail(transfer_detail, team_dict):
     transfer_type = transfer_detail['type']
+    to_team_name = ''
     if transfer_detail["to_team"]:
         to_team_name = team_dict[str(transfer_detail["to_team"])]
     description = ""
     if transfer_type == TransferType.DEBUT:
-        description += "出道, 加入{}".format(to_team_name)
+        description += "出道, "
+        description += "加入{}".format(transfer_detail["batch"])
+        if to_team_name:
+            description += "& {}".format(to_team_name)
     elif transfer_type == TransferType.TRANSFER:
         description += "移籍至{}".format(to_team_name)
     elif transfer_type == TransferType.DELEGATE:
@@ -108,6 +113,8 @@ def process_transfer_detail(transfer_detail, team_dict):
         description += "回归, 加入{}".format(to_team_name)
     elif transfer_type == TransferType.GRADUATE:
         description += "毕业"
+    elif transfer_type == TransferType.STAR_PALACE:
+        description += "升入明星殿堂"
     return description
 
 

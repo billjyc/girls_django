@@ -321,16 +321,17 @@ def member_detail(request, member_id):
         redirect_url = f"/snh48/member/{member.final_member_id}"
         return redirect(redirect_url)
 
-    transfer = get_object_or_404(Transfer, member_id=member_id)
+    transfer = Transfer.objects.filter(member_id=member_id).first()
     teams = get_teams_data()
 
     team_dict = {}
     for team_info in teams:
-        team_dict[str(team_info['id'])] = f'{team_info["group"]} {team_info["name"]}'
+        team_dict[str(team_info['id'])] = f'{team_info["group"] if team_info["group"] else ""} {team_info["name"]}'
 
-    for transfer_detail in transfer.detail:
-        description = utils.process_transfer_detail(transfer_detail, team_dict)
-        transfer_detail['description'] = description
+    if transfer:
+        for transfer_detail in transfer.detail:
+            description = utils.process_transfer_detail(transfer_detail, team_dict)
+            transfer_detail['description'] = description
 
     with connections['snh48'].cursor() as cursor:
         cursor.execute("""
@@ -408,7 +409,7 @@ ORDER BY `p_date` desc, u.id, uh.rank;
         'total_performance_num': len(ret_list),
         'unit_list': unit_list,
         'weibo_fans_data': fans_data,
-        "transfer_details": transfer.detail
+        "transfer_details": transfer.detail if transfer else []
     }
     if ability:
         context['ability'] = ability[0]

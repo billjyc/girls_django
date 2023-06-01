@@ -1,4 +1,5 @@
 {% extends "snh48/base.html" %}
+{% load static %}
 {% block title %}
     {{ member.name }} {{ member.team.name }}
 {% endblock %}
@@ -6,20 +7,20 @@
 {% block content %}
     <style>
 
-    .swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+        {#background: #fff;#} display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 
     <div class="row justify-content-center">
@@ -74,16 +75,51 @@
     </div>
     {% if transfer_details %}
         <div class="row justify-content-center" style="margin-top:10px">
-            <div id="sliderContainer" class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    {% for detail in transfer_details %}
-                        <div class="swiper-slide">
-                            {{ detail.date }}<br/>
-                            {{ detail.description }}
-                        </div>
-                    {% endfor %}
+            <div class="col-md-10 col-sm-12">
+                <h3>成员经历</h3>
+            </div>
+        </div>
+        <div class="row justify-content-center" style="margin-top:10px;margin-bottom:10px">
+            <div class="col-md-10 col-sm-12">
+                <div id="sliderContainer" class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        {% for detail in transfer_details %}
+                            <div class="swiper-slide">
+                                <div class="content">
+                                    <p>
+                                        {% if detail.type == 1 %}
+                                            🆕
+                                        {% elif detail.type == 2 %}
+                                            ➡️
+                                        {% elif detail.type == 3 %}
+                                            ⬇️
+                                        {% elif detail.type == 4 %}
+                                            ⬆️
+                                        {% elif detail.type == 5 %}
+                                            🔀
+                                        {% elif detail.type == 6 %}
+                                            🔂
+                                        {% elif detail.type == 7 %}
+                                            🔚
+                                        {% elif detail.type == 8 %}
+                                            🔙
+                                        {% elif detail.type == 9 %}
+                                            🏅
+                                        {% elif detail.type == 10 %}
+                                            🏆
+                                        {% endif %}
+                                    </p>
+                                    <p>{{ detail.date }}</p>
+                                    <p>{{ detail.description }}</p>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
             </div>
         </div>
     {% endif %}
@@ -264,15 +300,18 @@
 
     {% if transfer_details %}
         <script>
-            var swiper = new Swiper('#swiperContainer', {
-                slidesPerView: 3,
-                spaceBetween: 30,
+            const swiper = new Swiper('#sliderContainer', {
+                slidesPerView: 4,
+                spaceBetween: 20,
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
                 },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
             });
-
         </script>
     {% endif %}
 
