@@ -28,6 +28,8 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.0/echarts.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/Swiper/9.2.4/swiper-bundle.min.js"></script>
 
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'snh48/css/style.css' %}" />
@@ -55,16 +57,21 @@
                   <a class="dropdown-item" href="{% url 'snh48:team_info' 102 %}">Team NII</a>
                     <a class="dropdown-item" href="{% url 'snh48:team_info' 103 %}">Team HII</a>
                     <a class="dropdown-item" href="{% url 'snh48:team_info' 104 %}">Team X</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 150 %}">SNH未入列</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 150 %}">SNH预备生</a>
                     <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'snh48:team_info' 211 %}">BEJ48</a>
                     <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'snh48:team_info' 301 %}">Team G</a>
                     <a class="dropdown-item" href="{% url 'snh48:team_info' 302 %}">Team NIII</a>
                     <a class="dropdown-item" href="{% url 'snh48:team_info' 303 %}">Team Z</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 305 %}">GNZ未入列</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 305 %}">GNZ预备生</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'snh48:team_info' 505 %}">CKG48</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 505 %}">CKG预备生</a>
+                    <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'snh48:team_info' 601 %}">Team CII</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 602 %}">Team GII</a>
+                    <a class="dropdown-item" href="{% url 'snh48:team_info' 610 %}">CGT预备生</a>
                 </div>
               </li>
                 <li class="nav-item dropdown">
@@ -104,7 +111,7 @@
 </body>
 <footer class="container-fluid footer">
     <div class="col-lg-12 col-sm-12 col-xs-12 copyright-content">
-        <p>2020-2022 billjyc © 版权所有  ICP证: <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2022005323号-1</a></p>
+        <p>2020-2023 billjyc © 版权所有  ICP证: <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2022005323号-1</a></p>
         <p>如果有数据上的问题，请联系我: <a href="mailto:793746995@qq.com">793746995@qq.com</a></p>
     </div>
 
