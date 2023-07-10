@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.urls import path
 
+from . import drf_views
 from . import views
 
 urlpatterns = [
@@ -23,7 +24,6 @@ urlpatterns = [
     path('member/ability/<int:member_id>', views.member_ability, name='member_ability'),
     path('compare', views.compare, name='compare'),
     path('get_members_by_team/<int:team_id>', views.get_member_by_team, name='get_member_by_team'),
-    path('get_members_by_team_id/<int:team_id>', views.get_member_by_team_id, name='get_member_by_team_id'),
     path('performance_rank/', views.performance_num_rank_index, name='performance_rank'),
     path('performance_rank/data/', views.performance_num_rank, name='performance_rank_data'),
 
@@ -31,5 +31,7 @@ urlpatterns = [
     path('weibo/auth/request', views.weibo_auth_request, name='weibo_auth_request'),
     path('weibo/get_code/', views.get_weibo_api_code, name='get_weibo_api_code'),
 
-    path('performance/get_performance_list', views.get_performance_list, name='get_performance_list')
+    # Django restful framework 接口
+    path('get_members_by_team_id/<int:team_id>', drf_views.get_member_by_team_id, name='get_member_by_team_id'),
+    path('performance/get_performance_list', drf_views.get_performance_list, name='get_performance_list')
 ]
