@@ -115,6 +115,7 @@ def get_member_profile(request, member_id):
 
     context = {
         'member': serializer.data,
+        'team_name': member.team.name,
         'performance_num_by_year_list': performance_num_by_year_list,
         'performance_num_by_team_list': performance_num_by_team_list,
         'mph_list': ret_list,
