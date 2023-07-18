@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework import serializers
-from .models import Memberinfo, Team, Performance, PerformanceHistory
+from .models import Memberinfo, Team, Performance, PerformanceHistory, MemberAbility
 
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Memberinfo
+        fields = '__all__'
+
+
+class MemberAbilitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MemberAbility
         fields = '__all__'
 
 
