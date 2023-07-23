@@ -13,8 +13,9 @@ from rest_framework.response import Response
 
 from django_exercise import utils
 from snh48.models import Performance, Team, PerformanceHistory, Memberinfo, Transfer, MemberAbility, \
-    MemberPerformanceHistory, WeiboDataHistory
-from snh48.serializers import PerformanceSerializer, MemberSerializer, TeamSerializer, MemberAbilitySerializer
+    MemberPerformanceHistory, WeiboDataHistory, PerformanceSongPerformances
+from snh48.serializers import PerformanceSerializer, MemberSerializer, TeamSerializer, MemberAbilitySerializer, \
+    PerformanceSongSerializer
 import logging
 
 from snh48.views import get_teams_data
@@ -203,6 +204,7 @@ def get_member_by_team_id(request, team_id):
     serializer = MemberSerializer(member_list, many=True)
     team_detail = get_object_or_404(Team, pk=team_id)
     team_serializer = TeamSerializer(team_detail)
+
     response_data = {
         'code': 0,
         'msg': 'ok',
@@ -212,4 +214,33 @@ def get_member_by_team_id(request, team_id):
         },
     }
     # 返回 JSON 响应
+    return Response(response_data)
+
+
+@api_view(['GET'])
+def get_stage_detail(request, performance_id):
+    if request.method != 'GET':
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    stage = get_object_or_404(Performance, pk=performance_id)
+    stage_serializer = PerformanceSerializer(stage)
+
+    song_list = stage.performancesongperformances_set.all()
+    song_list = [song.song for song in song_list]
+    serializer = PerformanceSongSerializer(song_list, many=True)
+
+    team_detail = Team.objects.get(id=stage.team_id)
+
+    nums = PerformanceHistory.objects.filter(performance__id=performance_id).count()
+    detail = stage_serializer.data
+    detail['nums'] = nums
+    detail['team_name'] = team_detail.name if team_detail else ""
+
+    response_data = {
+        'code': 0,
+        'msg': 'ok',
+        'result': {
+            'detail': detail,
+            'song_list': serializer.data,
+        }
+    }
     return Response(response_data)

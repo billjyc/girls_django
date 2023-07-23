@@ -297,3 +297,29 @@ class Transfer(models.Model):
         app_label = 'snh48'
         verbose_name = '成员信息变更'
         verbose_name_plural = '成员信息变更'
+
+
+class PerformanceSong(models.Model):
+    id = models.IntegerField(primary_key=True, auto_created=True)
+    name = models.CharField(max_length=100, blank=True, null=True, verbose_name='歌曲名称')
+    performances = models.ManyToManyField(Performance, through='PerformanceSongPerformances')
+
+    class Meta:
+        managed = False
+        db_table = 'performance_song'
+        app_label = 'snh48'
+        verbose_name = '公演歌曲'
+        verbose_name_plural = '公演歌曲'
+
+
+class PerformanceSongPerformances(models.Model):
+    id = models.IntegerField(primary_key=True, auto_created=True)
+    performance = models.ForeignKey(Performance, on_delete=models.CASCADE)
+    song = models.ForeignKey(PerformanceSong, on_delete=models.CASCADE)
+
+    class Meta:
+        managed = True
+        db_table = 'performance_song_performance'
+        app_label = 'snh48'
+        verbose_name = '公演&歌曲映射'
+        verbose_name_plural = '公演&歌曲映射'
