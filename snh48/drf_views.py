@@ -15,7 +15,7 @@ from django_exercise import utils
 from snh48.models import Performance, Team, PerformanceHistory, Memberinfo, Transfer, MemberAbility, \
     MemberPerformanceHistory, WeiboDataHistory, PerformanceSongPerformances
 from snh48.serializers import PerformanceSerializer, MemberSerializer, TeamSerializer, MemberAbilitySerializer, \
-    PerformanceSongSerializer
+    PerformanceSongSerializer, PerformanceHistorySerializer
 import logging
 
 from snh48.views import get_teams_data
@@ -224,10 +224,21 @@ def get_stage_detail(request, performance_id):
     stage = get_object_or_404(Performance, pk=performance_id)
     stage_serializer = PerformanceSerializer(stage)
 
-    song_list = stage.performancesongperformances_set.all()
-    song_list = [song.song for song in song_list]
-    serializer = PerformanceSongSerializer(song_list, many=True)
+    # 使用 prefetch_related 进行联合查询，同时获取 PerformanceSongPerformances 和关联的 PerformanceSong 数据
+    song_list = PerformanceSongPerformances.objects.filter(performance__id=performance_id).prefetch_related('song')
 
+    # 将 PerformanceSong 的数据手动合并到 PerformanceSongPerformances 字典对象中
+    song_data_list = []
+    for song in song_list:
+        song_data = {
+            'song_type': song.song_type,
+            'id': song.id,
+            'name': song.song.name,
+            'rank': song.rank
+        }
+        song_data_list.append(song_data)
+
+    serializer = PerformanceSongSerializer(song_data_list, many=True)
     team_detail = Team.objects.get(id=stage.team_id)
 
     nums = PerformanceHistory.objects.filter(performance__id=performance_id).count()
@@ -241,6 +252,23 @@ def get_stage_detail(request, performance_id):
         'result': {
             'detail': detail,
             'song_list': serializer.data,
+        }
+    }
+    return Response(response_data)
+
+
+@api_view(['GET'])
+def get_performance_history_list(request):
+    performance_id = request.GET.get('performance_id')
+
+    performance_history_list = PerformanceHistory.objects.filter(performance__id=performance_id).order_by('date')
+
+    serializer = PerformanceHistorySerializer(performance_history_list, many=True)
+    response_data = {
+        'code': 0,
+        'msg': 'ok',
+        'result': {
+            'ph_list': serializer.data
         }
     }
     return Response(response_data)

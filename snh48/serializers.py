@@ -25,14 +25,24 @@ class PerformanceSerializer(serializers.ModelSerializer):
         return PerformanceHistory.objects.filter(performance=obj).count()
 
 
+class PerformanceHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PerformanceHistory
+        fields = '__all__'
+
+
 class PerformanceSongSerializer(serializers.ModelSerializer):
+    song_type = serializers.IntegerField()
+    rank = serializers.IntegerField()
+
     class Meta:
         model = PerformanceSong
-        fields = '__all__'
+        fields = ['id', 'name', 'song_type', 'rank']
 
 
 class TeamSerializer(serializers.ModelSerializer):
     details = PerformanceSerializer(many=True, read_only=True, source='performance_set')
+
     class Meta:
         model = Team
         fields = '__all__'

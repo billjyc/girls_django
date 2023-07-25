@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/performance/get_performance_list', drf_views.get_performance_list, name='drf_get_performance_list'),
     path('api/member/<int:member_id>', drf_views.get_member_profile, name="drf_member_detail"),
     path('api/performance/<int:performance_id>', drf_views.get_stage_detail, name="drf_stage_detail"),
+    path('api/get_performance_history', drf_views.get_performance_history_list, name="drf_performance_history"),
 ]
