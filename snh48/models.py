@@ -108,7 +108,7 @@ class PerformanceHistory(models.Model):
                                 db_index=True)
     description = models.CharField(max_length=100, blank=True, null=True, verbose_name='备注')
     video_url = models.CharField(max_length=500, blank=True, null=True, verbose_name='视频链接')
-    p_type = models.IntegerField(null=False, default=1, verbose_name='公演类型')
+    p_type = models.JSONField(null=False, verbose_name='公演类型')
 
     class Meta:
         managed = False
