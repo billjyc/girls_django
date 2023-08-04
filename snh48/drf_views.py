@@ -102,6 +102,15 @@ def get_member_profile(request, member_id):
                 """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
     logger.debug('查询unit历史耗时: {}s'.format(time.time() - time0))
+    unit_ret_list = []
+    for unit in unit_list:
+        unit_ret_list.append({
+            "date": unit.p_date.strftime("%Y年%m月%d日"),
+            "rank": unit.unit_rank,
+            "performance": unit.name,
+            "unit_name": unit.unit_name
+        })
+    logger.debug(unit_ret_list)
 
     # 获取微博粉丝数
     # 只取每天最新的数据
@@ -121,7 +130,7 @@ def get_member_profile(request, member_id):
         'performance_num_by_team_list': performance_num_by_team_list,
         'mph_list': ret_list,
         'total_performance_num': len(ret_list),
-        'unit_list': unit_list,
+        'unit_list': unit_ret_list,
         'weibo_fans_data': fans_data,
         "transfer_details": transfer.detail if transfer else []
     }

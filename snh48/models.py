@@ -326,3 +326,19 @@ class PerformanceSongPerformances(models.Model):
         app_label = 'snh48'
         verbose_name = '公演&歌曲映射'
         verbose_name_plural = '公演&歌曲映射'
+
+
+class SenbatsuElection(models.Model):
+    id = models.IntegerField(primary_key=True, auto_created=True)
+    order = models.IntegerField()
+    hold_date = models.DateField()
+    slots = models.IntegerField()
+    theme = models.CharField(max_length=100)
+
+
+    class Meta:
+        managed = True
+        db_table = 'senbatsu_election'
+        app_label = 'snh48'
+        verbose_name = '青春盛典'
+        verbose_name_plural = '青春盛典'
