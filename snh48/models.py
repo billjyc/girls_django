@@ -330,11 +330,10 @@ class PerformanceSongPerformances(models.Model):
 
 class SenbatsuElection(models.Model):
     id = models.IntegerField(primary_key=True, auto_created=True)
-    order = models.IntegerField()
+    order = models.IntegerField(unique=True)
     hold_date = models.DateField()
-    slots = models.IntegerField()
+    slot = models.IntegerField()
     theme = models.CharField(max_length=100)
-
 
     class Meta:
         managed = True
@@ -342,3 +341,19 @@ class SenbatsuElection(models.Model):
         app_label = 'snh48'
         verbose_name = '青春盛典'
         verbose_name_plural = '青春盛典'
+
+
+class SenbatsuElectionDetail(models.Model):
+    id = models.IntegerField(primary_key=True, auto_created=True)
+    order = models.IntegerField()
+    result_type = models.IntegerField()
+    rank = models.IntegerField()
+    member = models.ForeignKey(Memberinfo, on_delete=models.DO_NOTHING)
+    votes = models.FloatField()
+
+    class Meta:
+        managed = True
+        db_table = 'senbatsu_election_detail'
+        app_label = 'snh48'
+        verbose_name = '青春盛典详情'
+        verbose_name_plural = '青春盛典详情'

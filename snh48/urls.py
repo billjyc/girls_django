@@ -37,4 +37,7 @@ urlpatterns = [
     path('api/member/<int:member_id>', drf_views.get_member_profile, name="drf_member_detail"),
     path('api/performance/<int:performance_id>', drf_views.get_stage_detail, name="drf_stage_detail"),
     path('api/get_performance_history', drf_views.get_performance_history_list, name="drf_performance_history"),
+    path('api/senbatsu_election/list', drf_views.get_senbatsu_election_list, name="drf_senbatsu_election_list"),
+    path('api/senbatsu_election/<int:election_order>', drf_views.get_senbatsu_election_detail, name="drf_senbatsu_election_detail"),
+
 ]

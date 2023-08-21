@@ -12,15 +12,19 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django_exercise import utils
-from snh48.models import Performance, Team, PerformanceHistory, Memberinfo, Transfer, MemberAbility, \
-    MemberPerformanceHistory, WeiboDataHistory, PerformanceSongPerformances
-from snh48.serializers import PerformanceSerializer, MemberSerializer, TeamSerializer, MemberAbilitySerializer, \
-    PerformanceSongSerializer, PerformanceHistorySerializer
+from snh48.models import *
+from snh48.serializers import *
 import logging
 
 from snh48.views import get_teams_data
 
 logger = logging.getLogger("django")
+
+
+class SenbatsuElectionStage:
+    FIRST_PRELIMINARY_RESULT = 'first_preliminary'  # 速报
+    SECOND_PRELIMINARY_RESULT = 'second_preliminary'  # 中报
+    FINAL_RESULT = 'final'  # 中报
 
 
 @api_view(['GET'])
@@ -281,3 +285,55 @@ def get_performance_history_list(request):
         }
     }
     return Response(response_data)
+
+
+@api_view(['GET'])
+def get_senbatsu_election_list(request):
+    if request.method != 'GET':
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    se_list = SenbatsuElection.objects.all().order_by('order')
+    serializer = SenbatsuElectionSerializer(se_list, many=True)
+    response_data = {
+        'code': 0,
+        'msg': 'ok',
+        'result': {
+            'se_list': serializer.data
+        }
+    }
+    return Response(response_data)
+
+
+@api_view(['GET'])
+def get_senbatsu_election_detail(request, election_order):
+    if request.method != 'GET':
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    se_info = SenbatsuElection.objects.get(order=int(election_order))
+    se_detail = SenbatsuElectionDetail.objects.filter(order=int(election_order))
+
+    info_serializer = SenbatsuElectionSerializer(se_info, many=False)
+    detail_serilizer = SenbatsuElectionDetailSerializer(se_detail, many=True)
+    # 处理详情
+    se_detail_result = {
+        SenbatsuElectionStage.FIRST_PRELIMINARY_RESULT: [],
+        SenbatsuElectionStage.SECOND_PRELIMINARY_RESULT: [],
+        SenbatsuElectionStage.FINAL_RESULT: []
+    }
+
+    for detail in detail_serilizer.data:
+        if detail['result_type'] == 1:
+            se_detail_result[SenbatsuElectionStage.FIRST_PRELIMINARY_RESULT].append(detail)
+        elif detail['result_type'] == 2:
+            se_detail_result[SenbatsuElectionStage.SECOND_PRELIMINARY_RESULT].append(detail)
+        else:
+            se_detail_result[SenbatsuElectionStage.FINAL_RESULT].append(detail)
+
+    response_data = {
+        'code': 0,
+        'msg': 'ok',
+        'result': {
+            'info': info_serializer.data,
+            'detail': se_detail_result
+        }
+    }
+    return Response(response_data)
+

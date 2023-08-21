@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework import serializers
-from .models import Memberinfo, Team, Performance, PerformanceHistory, MemberAbility, PerformanceSong
+from .models import Memberinfo, Team, Performance, PerformanceHistory, MemberAbility, PerformanceSong, SenbatsuElection, SenbatsuElectionDetail
 
 
 class MemberSerializer(serializers.ModelSerializer):
@@ -45,4 +45,17 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
+        fields = '__all__'
+
+
+class SenbatsuElectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SenbatsuElection
+        fields = '__all__'
+
+
+class SenbatsuElectionDetailSerializer(serializers.ModelSerializer):
+    member_info = MemberSerializer(source='member', read_only=True)  # 添加此字段
+    class Meta:
+        model = SenbatsuElectionDetail
         fields = '__all__'
