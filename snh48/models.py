@@ -349,6 +349,7 @@ class SenbatsuElectionDetail(models.Model):
     result_type = models.IntegerField()
     rank = models.IntegerField()
     member = models.ForeignKey(Memberinfo, on_delete=models.DO_NOTHING)
+    team = models.ForeignKey(Team, on_delete=models.DO_NOTHING)
     votes = models.FloatField()
 
     class Meta:

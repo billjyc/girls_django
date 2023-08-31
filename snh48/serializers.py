@@ -48,6 +48,12 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TeamSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'
+
+
 class SenbatsuElectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SenbatsuElection
@@ -56,6 +62,7 @@ class SenbatsuElectionSerializer(serializers.ModelSerializer):
 
 class SenbatsuElectionDetailSerializer(serializers.ModelSerializer):
     member_info = MemberSerializer(source='member', read_only=True)  # 添加此字段
+    team_info = TeamSerializer2(source='team', read_only=True)
     class Meta:
         model = SenbatsuElectionDetail
         fields = '__all__'
