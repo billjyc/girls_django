@@ -13,18 +13,33 @@ import time
 
 logger = logging.getLogger(__name__)
 
+def get_video_stat_new(bid):
+    url = "https://api.bilibili.com/x/web-interface/view?bvid=%s" % bid
+    header = {
+        'Host': 'api.bilibili.com',
+        'Origin': 'https://www.bilibili.com',
+        'Referer': 'https://www.bilibili.com/video/BV%s' % bid,
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
+    }
+    try:
+        r = requests.get(url, headers=header).json()
+        return r['data']['stat']
+    except Exception as e:
+        logger.error(e)
+    return None
+
 
 def get_video_stat(aid):
-    url = 'https://api.bilibili.com/x/web-interface/archive/stat?aid=%s' % aid
+    url = 'https://api.bilibili.com/x/web-interface/view?aid=%s' % aid
     header = {
         'Host': 'api.bilibili.com',
         'Origin': 'https://www.bilibili.com',
         'Referer': 'https://www.bilibili.com/video/av%s' % aid,
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
     }
     try:
         r = requests.get(url, headers=header).json()
-        return r['data']
+        return r['data']['stat']
     except Exception as e:
         logger.error(e)
     return None
@@ -64,6 +79,7 @@ def get_aid_from_link(link):
     if 'av' in strs[4]:
         return strs[4].split('av')[1]
     else:
+        # return strs[4].split('BV')[1]
         return get_aid_from_bid(strs[4].split('BV')[1])
 
 
@@ -82,7 +98,9 @@ try:
         print(aid)
         if not aid:
             continue
+
         datas = get_video_stat(aid)
+
         print(datas)
         cursor.execute("""
             select * from bilibili_stat where performance_history_id=%s
