@@ -70,7 +70,7 @@ def get_member_profile(request, member_id):
     logger.debug(ret_list)
 
     ability = MemberAbility.objects.filter(member__id=member_id)
-    logger.debug('查询成员公演历史/能力耗时: {}s'.format(time.time() - time0))
+    logger.info('查询成员公演历史/能力耗时: {}s'.format(time.time() - time0))
 
     # 获取按照年份统计的公演场次数量
     performance_num_by_year_list = MemberPerformanceHistory.objects.filter(member_id=member_id).annotate(
@@ -105,7 +105,7 @@ def get_member_profile(request, member_id):
     ORDER BY `p_date` desc, u.id, uh.rank;
                 """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
-    logger.debug('查询unit历史耗时: {}s'.format(time.time() - time0))
+    logger.info('查询unit历史耗时: {}s'.format(time.time() - time0))
     unit_ret_list = []
     for unit in unit_list:
         unit_ret_list.append({
