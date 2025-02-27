@@ -1,4 +1,4 @@
-django<4.2
+django>5.0
 djangorestframework
 requests
 xlwt
@@ -11,7 +11,8 @@ gunicorn
 django-haystack
 whoosh
 jieba
-django-ckeditor
+django-ckeditor-5
+pillow
 celery
 django-celery-beat
 django-celery-results

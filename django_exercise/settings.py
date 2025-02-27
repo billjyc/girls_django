@@ -15,9 +15,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from django_exercise import db_config as Config
 from django_exercise.cron_tasks.cron_tasks import CELERY_BEAT_SCHEDULE
+from pathlib import Path
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -51,8 +54,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'gunicorn',
-    'ckeditor',
-    'ckeditor_uploader',
+    'django_ckeditor_5',
+    # 'ckeditor_uploader',
     'rest_framework',
 ]
 
@@ -191,21 +194,41 @@ USE_TZ = False
 STATIC_URL = '/static/'
 # 收集整个项目的静态资源并存放在一个新的文件夹，然后由该文件夹与服务器之间构建映射关系
 # 线上部署时会用到，部署的时候执行python manage.py collectstatic，django会把所有App下的static文件都复制到STATIC_ROOT文件夹下
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 # 开发时会用到，首先到STATICFILES_DIRS里面寻找静态文件，其次再到各个app的static文件夹里面找
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'publicStatic'), ]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'publicStatic'), ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'publicStatic',  # 使用 Path 对象
+]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
-CKEDITOR_UPLOAD_PATH = 'images'
-CKEDITOR_CONFIGS = {
+CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': 'Full'
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link', 'bulletedList',
+            'numberedList', 'blockQuote', 'imageUpload', 'undo', 'redo'
+        ],
+        'language': 'zh-cn',  # 中文界面
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                        'imageStyle:alignRight', 'imageStyle:inline'],
+            'styles': ['full', 'side', 'alignLeft', 'alignRight']
+        }
     }
 }
-CKEDITOR_ALLOW_NOIMAGE_FILES = False
-CKEDITOR_BROWSE_SHOW_DIRS = True
+
+# CKEDITOR_UPLOAD_PATH = 'images'
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Full'
+#     }
+# }
+# CKEDITOR_ALLOW_NOIMAGE_FILES = False
+# CKEDITOR_BROWSE_SHOW_DIRS = True
 
 FILE_CHARSET = 'utf8'
 DEFAULT_CHARSET = 'utf8'
