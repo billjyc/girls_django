@@ -336,7 +336,7 @@ ORDER BY ph.date desc
     logger.debug(ret_list)
 
     ability = MemberAbility.objects.filter(member__id=member_id)
-    logger.debug('查询成员公演历史/能力耗时: {}s'.format(time.time() - time0))
+    logger.info('查询成员公演历史/能力耗时: {}s'.format(time.time() - time0))
 
     # 获取按照年份统计的公演场次数量
     performance_num_by_year_list = MemberPerformanceHistory.objects.filter(member_id=member_id).annotate(
@@ -371,13 +371,13 @@ WHERE uh.member_id = %s
 ORDER BY `p_date` desc, u.id, uh.rank;
             """, [member_id])
         unit_list = utils.namedtuplefetchall(cursor)
-    logger.debug('查询unit历史耗时: {}s'.format(time.time() - time0))
+    logger.info('查询unit历史耗时: {}s'.format(time.time() - time0))
 
     # 获取微博粉丝数
     # 只取每天最新的数据
     time0 = time.time()
     weibo_fans_counts = WeiboDataHistory.objects.filter(member_id=member_id).order_by('update_time')
-    logger.debug('查询微博历史耗时: {}s'.format(time.time() - time0))
+    logger.info('查询微博历史耗时: {}s'.format(time.time() - time0))
     fans_data = [{'date': count.update_time.strftime('%Y-%m-%d'),
                   'count': count.followers_count}
                  for count in weibo_fans_counts]
