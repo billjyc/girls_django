@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.11
 LABEL maintainer=793746995@qq.com
 
 ARG ENV=online
