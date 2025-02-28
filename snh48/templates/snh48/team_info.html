@@ -7,17 +7,15 @@
 {% load static %}
 <div class="row justify-content-center">
 <div class="col-8">
-<div class="row">
-    <div class="col-sm-12 team-info">
-        <div class="col-4 col-sm-3 float-left">
-            <img class="img-fluid" src="{% static 'snh48/images/team_icon/' %}{{ team_detail.icon }}"/>
-        </div>
-        <div class="col-8 col-sm-9 float-right">
-            <div><h2>{{ team_detail.name }}</h2></div>
-            <div>成立时间 {{ team_detail.found_date }}</div>
-        </div>
+    <div class="row team-info d-flex align-items-center mb-4">  <!-- 添加垂直居中 -->
+      <div class="col-md-3 col-4 pe-3">  <!-- 右侧间距 -->
+        <img class="img-fluid rounded" src="{% static 'snh48/images/team_icon/' %}{{ team_detail.icon }}"  alt="队标"/>
+      </div>
+      <div class="col-md-9 col-8">
+        <h2 class="mb-3">{{ team_detail.name }}</h2>
+        <div>成立时间 {{ team_detail.found_date }}</div>
+      </div>
     </div>
-</div>
 
 <div class="row">
     <div class="col-sm-12">
@@ -49,7 +47,9 @@
                                 <a href="{% url 'snh48:member_detail' member.id %}" target="_blank">
                                     <img class="img-fluid rounded-circle member-img" src="{{ member.image_link }}"/>
                                 </a>
-                                <a href="{% url 'snh48:member_detail' member.id %}" target="_blank">{{ member.name }}</a>
+                                <a href="{% url 'snh48:member_detail' member.id %}" target="_blank"
+                                   class="link-primary link-underline-light
+                                   link-underline-opacity-100-hover">{{ member.name }}</a>
                             </th>
                             <td>{{ member.english_name }}</td>
                             <td>{{ member.batch }}</td>

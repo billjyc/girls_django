@@ -27,7 +27,7 @@
         <div class="col-md-10 col-sm-12">
             <div class="row info-panel layout justify-content-center" id="info-card">
                 <div class="col-md-3 col-sm-8 info-card avatar justify-content-center">
-                    <img src="{{ member.image_link }}" class="img-responsive"
+                    <img src="{{ member.image_link }}" class="img-responsive" loading="lazy"
                          style="max-height: 260px;"/>
                     <h3>{{ member.name }}</h3>
                     <em>{{ member.english_name }}</em>
@@ -127,19 +127,19 @@
         <div class="col-md-10">
             <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="p-performance-tab" data-toggle="pill" href="#p-performance"
+                    <a class="nav-link active" id="p-performance-tab" data-bs-toggle="pill" href="#p-performance"
                        role="tab" aria-controls="p-performance" aria-selected="true">公演概况</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="p-member-tab" data-toggle="pill" href="#p-member"
+                    <a class="nav-link" id="p-member-tab" data-bs-toggle="pill" href="#p-member"
                        role="tab" aria-controls="p-member" aria-selected="true">公演详情</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="p-unit-tab" data-toggle="pill" href="#p-unit"
+                    <a class="nav-link" id="p-unit-tab" data-bs-toggle="pill" href="#p-unit"
                        role="tab" aria-controls="p-unit" aria-selected="false">Unit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="p-weibo-tab" data-toggle="pill" href="#p-weibo"
+                    <a class="nav-link" id="p-weibo-tab" data-bs-toggle="pill" href="#p-weibo"
                        role="tab" aria-controls="p-weibo" aria-selected="false">微博</a>
                 </li>
             </ul>
@@ -234,7 +234,7 @@
                             </tbody>
                         </table>
                     {% else %}
-                        <p>No performance history available.</p>
+                        <div class="alert alert-info">暂无公演记录，敬请期待</div>
                     {% endif %}
                 </div>
                 <div class="tab-pane fade" id="p-unit" role="tabpanel" aria-labelledby="p-unit-tab">
@@ -267,7 +267,7 @@
                             </tbody>
                         </table>
                     {% else %}
-                        <p>暂无Unit曲的表演记录</p>
+                        <div class="alert alert-info">暂无Unit曲的表演记录</div>
                     {% endif %}
                 </div>
                 <div class="tab-pane fade" id="p-weibo" role="tabpanel"
@@ -301,7 +301,11 @@
     {% if transfer_details %}
         <script>
             const swiper = new Swiper('#sliderContainer', {
-                slidesPerView: 4,
+                slidesPerView: window.innerWidth < 768 ? 2 : 4,
+                breakpoints: {
+                    640: { slidesPerView: 2 },
+                    1024: { slidesPerView: 4 }
+                },
                 spaceBetween: 20,
                 pagination: {
                     el: ".swiper-pagination",
@@ -317,7 +321,7 @@
 
     {% if weibo_fans_data %}
         <script>
-            $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+            $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
                 // 获取当前选项卡的目标面板的 ID
                 const targetPanelId = $(e.target).attr('href');
 
