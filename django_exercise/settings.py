@@ -55,9 +55,10 @@ INSTALLED_APPS = [
     'django_celery_results',
     'gunicorn',
     'django_ckeditor_5',
-    # 'ckeditor_uploader',
     'rest_framework',
 ]
+if os.getenv('ENV') != 'online':
+    INSTALLED_APPS += ['debug_toolbar']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -71,6 +72,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+if os.getenv('ENV') != 'online':
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+        *MIDDLEWARE,
+    ]
 
 ROOT_URLCONF = 'django_exercise.urls'
 
@@ -92,6 +98,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'django_exercise.wsgi.application'
+DEBUG_TOOLBAR_CONFIG = {
+  'SHOW_TOOLBAR_CALLBACK': lambda request: True
+}
+# 配置内部IP（默认只在本地开发环境生效）
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
 
 # 跨域增加忽略
 CORS_ALLOW_CREDENTIALS = True
