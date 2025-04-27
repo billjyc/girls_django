@@ -249,10 +249,11 @@ DEFAULT_CHARSET = 'utf8'
 
 # 消息队列/缓存
 # 使用 Redis 作为缓存
-if os.getenv('ENV') == 'online':
-    REDIS_URL = "redis://172.17.0.1:6379"
-else:
-    REDIS_URL = "redis://127.0.0.1:6379"
+REDIS_URL = "redis://127.0.0.1:6379"
+# if os.getenv('ENV') == 'online':
+#     REDIS_URL = "redis://172.17.0.1:6379"
+# else:
+#     REDIS_URL = "redis://127.0.0.1:6379"
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
