@@ -4,116 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.24.0/themes/bootstrap-table/bootstrap-table.min.css"
+          rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.24.0/themes/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"
+          rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+          rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css" rel="stylesheet">
 
-    <!-- Latest compiled and minified CSS -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'snh48/css/style.css' %}"/>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.24.0/bootstrap-table.min.js"></script>
-    <!-- Latest compiled and minified Locales -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.24.0/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-`   <!-- Optional JavaScript -->
     <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-select/1.13.18/js/i18n/defaults-zh_CN.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.6.0/echarts.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
-
-    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.js"></script>
-
-
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'snh48/css/style.css' %}" />
     <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-          <a class="navbar-brand" href="#">SNH48</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+<div class="container-fluid">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">SNH48</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  队伍
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'snh48:team_list' %}">全部</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'snh48:team_info' 101 %}">Team SII</a>
-                  <a class="dropdown-item" href="{% url 'snh48:team_info' 102 %}">Team NII</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 103 %}">Team HII</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 104 %}">Team X</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 150 %}">SNH预备生</a>
-                    <div class="dropdown-divider"></div>
-                     <a class="dropdown-item" href="{% url 'snh48:team_info' 201 %}">Team B</a>
-                     <a class="dropdown-item" href="{% url 'snh48:team_info' 202 %}">Team E</a>
-                    <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'snh48:team_info' 301 %}">Team G</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 302 %}">Team NIII</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 303 %}">Team Z</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 305 %}">GNZ预备生</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'snh48:team_info' 501 %}">Team C</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 502 %}">Team K</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 505 %}">CKG预备生</a>
-                    <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'snh48:team_info' 601 %}">Team CII</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 602 %}">Team GII</a>
-                    <a class="dropdown-item" href="{% url 'snh48:team_info' 610 %}">CGT预备生</a>
-                </div>
-              </li>
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'snh48:index' %}" id="memberDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  成员
-                </a>
-                <div class="dropdown-menu" aria-labelledby="memberDropdown">
-                  <a class="dropdown-item" href="{% url 'snh48:index' %}">在团成员</a>
-                  <a class="dropdown-item" href="{% url 'snh48:hiatus_list' %}">退团成员</a>
-                </div>
-              </li>
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="{% url 'snh48:index' %}">成员<span class="sr-only">(current)</span></a>-->
-<!--              </li>-->
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'snh48:performance_history_index' %}">公演</a>
-              </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'snh48:bilibili_stat_index' %}">B站数据</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'snh48:compare' %}">数据对比</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'snh48:performance_rank' %}">排名</a>
-                </li>
-            </ul>
-{#            <form class="form-inline my-2 my-lg-0">#}
-{#              <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">#}
-{#              <button class="btn btn-outline-info my-2 my-sm-0" type="submit">搜索</button>#}
-{#            </form>#}
-          </div>
-        </nav>
-        {% block content %}
-        {% endblock %}
-    </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            队伍
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'snh48:team_list' %}">全部</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 101 %}">Team SII</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 102 %}">Team NII</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 103 %}">Team HII</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 104 %}">Team X</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 150 %}">SNH预备生</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 201 %}">Team B</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 202 %}">Team E</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 301 %}">Team G</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 302 %}">Team NIII</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 303 %}">Team Z</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 305 %}">GNZ预备生</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 501 %}">Team C</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 502 %}">Team K</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 510 %}">CKG预备生</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 601 %}">Team CII</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 602 %}">Team GII</a>
+                            <a class="dropdown-item" href="{% url 'snh48:team_info' 610 %}">CGT预备生</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'snh48:index' %}" id="memberDropdown"
+                           role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            成员
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="memberDropdown">
+                            <a class="dropdown-item" href="{% url 'snh48:index' %}">在团成员</a>
+                            <a class="dropdown-item" href="{% url 'snh48:hiatus_list' %}">退团成员</a>
+                        </div>
+                    </li>
+                    <!--              <li class="nav-item">-->
+                    <!--                <a class="nav-link" href="{% url 'snh48:index' %}">成员<span class="sr-only">(current)</span></a>-->
+                    <!--              </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'snh48:performance_history_index' %}">公演</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'snh48:bilibili_stat_index' %}">B站数据</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'snh48:compare' %}">数据对比</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'snh48:performance_rank' %}">排名</a>
+                    </li>
+                </ul>
+                {#            <form class="form-inline my-2 my-lg-0">#}
+                {#              <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">#}
+                {#              <button class="btn btn-outline-info my-2 my-sm-0" type="submit">搜索</button>#}
+                {#            </form>#}
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.24.0/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.24.0/locale/bootstrap-table-zh-CN.min.js"></script>
 </body>
 <footer class="container-fluid footer">
     <div class="col-lg-12 col-sm-12 col-xs-12 copyright-content">
-        <p>2020-2025 billjyc © 版权所有  ICP证: <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备2022005323号-1</a></p>
+        <p>2020-2025 billjyc © 版权所有 ICP证: <a href="https://beian.miit.gov.cn/"
+                                                  target="_blank">沪ICP备2022005323号-1</a></p>
         <p>如果有数据上的问题，请联系我: <a href="mailto:793746995@qq.com">793746995@qq.com</a></p>
     </div>
 
