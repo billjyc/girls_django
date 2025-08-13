@@ -212,7 +212,8 @@ class APIClient(object):
         """
         url = 'https://www.weibo.com/ajax/profile/info?uid={}'.format(uid)
         header = {
-            'cookie': 'XSRF-TOKEN=2qUUVvUfF29Ae1ntpsn45MLq; SUB=_2AkMTMNOyf8NxqwJRmP4Qy27jaIhxywzEieKlbCJpJRMxHRl-yT9yqmU-tRB6OLD9XXbEO1FeYrVGbMTF_I3Ovy5TBeV8; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9W5VolhKpG9oWqgV1sebR1Vj; WBPSESS=kErNolfXeoisUDB3d9TFH8VPIs2WQz2dgnhE1hoswTf4H6YRAXV05Tn9115eS13zQlQqsYAJ5Vyoz-Mcp6zBMrD3b5DqODaURf74GjglGFERmbP1Adk2ExbkCQOkj9f1IAvIsOLQHk1W5xoA99j5zyybqfFrXbQxed7cQ7mg1_s='
+            'cookie': 'XSRF-TOKEN=MAgxvYZNHpWZjtyLt7AvIJ5i; SUB=_2AkMfwOzif8NxqwFRmvoRy2ngaohyzAzEieKpnB05JRMxHRl-yT9yqnIStRB6NEDCD48gujPKpPba2rvbNvgPJhp3Ayyy; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9WhYmmll_O0A1os1HBvAoKhF; WBPSESS=aEftxDBVPukTPk6-ZoWBoPHvXIerDYQYs3UQWDRuJjPUBI_kFC40u9akpDAyQvtTu4XWuCEPZeKmk45h-TDyrhKZGsa51_7APGtEV0pj9TpW8ykG7Lm7V7z3DMhaxqgCjHwkElfwXWB5g_e6xfpeFeqlIDazWOhwltAi6reynKM='
+            'Referer' f'https://weibo.com/u/{uid}'
         }
         try:
             r = requests.get(url, headers=header)
