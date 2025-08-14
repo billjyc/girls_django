@@ -213,7 +213,8 @@ class APIClient(object):
         url = 'https://www.weibo.com/ajax/profile/info?uid={}'.format(uid)
         header = {
             'cookie': 'XSRF-TOKEN=MAgxvYZNHpWZjtyLt7AvIJ5i; SUB=_2AkMfwOzif8NxqwFRmvoRy2ngaohyzAzEieKpnB05JRMxHRl-yT9yqnIStRB6NEDCD48gujPKpPba2rvbNvgPJhp3Ayyy; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9WhYmmll_O0A1os1HBvAoKhF; WBPSESS=aEftxDBVPukTPk6-ZoWBoPHvXIerDYQYs3UQWDRuJjPUBI_kFC40u9akpDAyQvtTu4XWuCEPZeKmk45h-TDyrhKZGsa51_7APGtEV0pj9TpW8ykG7Lm7V7z3DMhaxqgCjHwkElfwXWB5g_e6xfpeFeqlIDazWOhwltAi6reynKM='
-            'Referer' f'https://weibo.com/u/{uid}'
+            'Referer' f'https://weibo.com/u/{uid}',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'
         }
         try:
             r = requests.get(url, headers=header)
