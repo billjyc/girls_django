@@ -212,9 +212,9 @@ class APIClient(object):
         """
         url = 'https://www.weibo.com/ajax/profile/info?uid={}'.format(uid)
         header = {
-            'cookie': 'XSRF-TOKEN=MAgxvYZNHpWZjtyLt7AvIJ5i; SUB=_2AkMfwOzif8NxqwFRmvoRy2ngaohyzAzEieKpnB05JRMxHRl-yT9yqnIStRB6NEDCD48gujPKpPba2rvbNvgPJhp3Ayyy; SUBP=0033WrSXqPxfM72-Ws9jqgMF55529P9D9WhYmmll_O0A1os1HBvAoKhF; WBPSESS=aEftxDBVPukTPk6-ZoWBoPHvXIerDYQYs3UQWDRuJjPUBI_kFC40u9akpDAyQvtTu4XWuCEPZeKmk45h-TDyrhKZGsa51_7APGtEV0pj9TpW8ykG7Lm7V7z3DMhaxqgCjHwkElfwXWB5g_e6xfpeFeqlIDazWOhwltAi6reynKM='
+            'cookie': 'SCF=AmEF1z3LwqwpNc0XS_LHzn-6cuk7D7yP_6LWgHB_NSMBvH2yW-SjlC8lkX0pfRKtUHsltVw6ymcceZLIPEUsqTk.; ALF=1757430025; SUB=_2A25FnMRZDeRhGeBL6lMT9SjJwjyIHXVm0FmRrDV8PUJbkNAbLXCmkW1NR1gXgHCBvbM6OH_Wmg2zwmjGelS4hQQx; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTN0RGf5w6G_Ii1cP4kXx45JpX5KMhUgL.FoqfeK2ESKqf1K52dJLoI0YLxK.L1KMLB-zLxK-LBKnL1-eLxKML1-2L1hBLxKMLB.eLB.2LxK-LB.-LBoMLxK-LBo5L12qLxK-LBo2L12zt; XSRF-TOKEN=Ti5wchs2amCKRRbvM7iF8SlT; WBPSESS=bQVH4fokrSdgcfO3_-frrQW0TnScmbM2W6mAQUJAvalXPCrc34zbY26mOQ1Kg1MshwZ43d4DeQ8fpRYYSZssyqrOezwuSjFwW4nAx5KrNdnztfCNjdJZF7YejT8qbK92'
             'Referer' f'https://weibo.com/u/{uid}',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0'
         }
         try:
             r = requests.get(url, headers=header)
