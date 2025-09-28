@@ -2,7 +2,9 @@ import logging
 import time
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 
 logger = logging.getLogger(__name__)
 
@@ -19,15 +21,23 @@ class WeiboBrowserManager:
 
         try:
             # 配置无头浏览器选项[2,3](@ref)
-            chrome_options = Options()
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument(f"user-agent={self.user_agent}")
-            chrome_options.add_argument("--window-size=1920,1080")
+            firefox_options = Options()
+            firefox_options.add_argument("--headless")  # 无头模式
+            firefox_options.add_argument("--width=1920")  # 设置宽度
+            firefox_options.add_argument("--height=1080")  # 设置高度
+            gecko_driver_path = "/snap/bin/geckodriver"
+            firefox_service = Service(executable_path=gecko_driver_path)
+
+            # chrome_options = Options()
+            # chrome_options.add_argument("--headless")
+            # chrome_options.add_argument("--no-sandbox")
+            # chrome_options.add_argument("--disable-dev-shm-usage")
+            # chrome_options.add_argument(f"user-agent={self.user_agent}")
+            # chrome_options.add_argument("--window-size=1920,1080")
 
             # 启动浏览器[1,4](@ref)
-            self.driver = webdriver.Chrome(options=chrome_options)
+            # self.driver = webdriver.Chrome(options=chrome_options)
+            self.driver = webdriver.Firefox(service=firefox_service, options=firefox_options)
 
             # 访问微博主页获取基础Cookie
             self.driver.get("https://weibo.com")
