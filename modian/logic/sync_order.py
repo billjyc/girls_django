@@ -4,8 +4,8 @@ from modian.logic.weixin_handler import *
 from modian.logic.taoba_handler import *
 import uuid
 import logging
-from django_exercise.mysql_util import mysql_util2 as mysql_util
-from django_exercise import utils
+from utils.mysql_util import mysql_util2 as mysql_util
+from utils import utils
 
 logger = logging.getLogger(__name__)
 

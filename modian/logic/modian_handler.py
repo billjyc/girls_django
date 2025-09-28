@@ -2,14 +2,12 @@
 """
 摩点API文档地址：https://www.showdoc.cc/1702718?page_id=15700669
 """
-import sys
 
 import requests
 
-import time
 import hashlib
 import urllib.parse
-from django_exercise import utils
+from utils import utils
 
 
 class ModianEntity:

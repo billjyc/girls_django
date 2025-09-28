@@ -7,7 +7,7 @@
 import requests
 import logging
 import pymysql
-from django_exercise import utils
+from utils import utils
 from django_exercise import db_config as Config
 import time
 
@@ -22,7 +22,7 @@ def get_video_stat_new(bid):
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
     }
     try:
-        r = requests.get(url, headers=header).json()
+        r = requests.get(url, headers=header, verify=False).json()
         return r['data']['stat']
     except Exception as e:
         logger.error(e)
@@ -38,7 +38,7 @@ def get_video_stat(aid):
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
     }
     try:
-        r = requests.get(url, headers=header).json()
+        r = requests.get(url, headers=header, verify=False).json()
         return r['data']['stat']
     except Exception as e:
         logger.error(e)
@@ -60,13 +60,13 @@ def get_aid_from_bid(bid):
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
     }
     try:
-        r = requests.get(url, headers=header).json()
+        r = requests.get(url, headers=header, verify=False).json()
         if r['code'] == 0:
             cid = r['data'][0]['cid']
 
             logger.info('2.获取aid')
             url2 = 'https://api.bilibili.com/x/web-interface/view?cid=%s&bvid=BV%s' % (cid, bid)
-            r2 = requests.get(url2, headers=header).json()
+            r2 = requests.get(url2, headers=header, verify=False).json()
             if r2['code'] == 0:
                 return r2['data']['aid']
     except Exception as e:

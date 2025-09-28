@@ -9,6 +9,8 @@ import ssl
 
 import requests
 
+from utils.browser_manager import browser_manager
+
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
@@ -210,14 +212,17 @@ class APIClient(object):
         """
         根据用户ID获取用户信息，直接调用浏览器API
         """
+        browser_manager.init_browser()
+
         url = 'https://www.weibo.com/ajax/profile/info?uid={}'.format(uid)
         header = {
-            'cookie': 'SCF=AmEF1z3LwqwpNc0XS_LHzn-6cuk7D7yP_6LWgHB_NSMBvH2yW-SjlC8lkX0pfRKtUHsltVw6ymcceZLIPEUsqTk.; ALF=1757430025; SUB=_2A25FnMRZDeRhGeBL6lMT9SjJwjyIHXVm0FmRrDV8PUJbkNAbLXCmkW1NR1gXgHCBvbM6OH_Wmg2zwmjGelS4hQQx; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTN0RGf5w6G_Ii1cP4kXx45JpX5KMhUgL.FoqfeK2ESKqf1K52dJLoI0YLxK.L1KMLB-zLxK-LBKnL1-eLxKML1-2L1hBLxKMLB.eLB.2LxK-LB.-LBoMLxK-LBo5L12qLxK-LBo2L12zt; XSRF-TOKEN=Ti5wchs2amCKRRbvM7iF8SlT; WBPSESS=bQVH4fokrSdgcfO3_-frrQW0TnScmbM2W6mAQUJAvalXPCrc34zbY26mOQ1Kg1MshwZ43d4DeQ8fpRYYSZssyqrOezwuSjFwW4nAx5KrNdnztfCNjdJZF7YejT8qbK92',
+            'cookie': browser_manager.cookies,
             'Referer': f'https://weibo.com/u/{uid}',
-            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:141.0) Gecko/20100101 Firefox/141.0'
+            'User-Agent': browser_manager.user_agent
         }
         try:
-            r = requests.get(url, headers=header)
+            session = requests.Session()
+            r = session.get(url, headers=header, verify=False)
             logger.info(r.text)
             return r.json()
         except Exception as e:

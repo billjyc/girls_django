@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse
 
 from django.shortcuts import render
 
-from .logic.modian_handler import ModianHandler
 from .logic.card_draw_handler import CardDrawHandler
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import *
-from .logic.birthday_form import BirthdayForm
 import logging
 from django.http import HttpResponse
 import json
-from django_exercise import utils
+from utils import utils
 from django.core import serializers
-from django.db.models import Count
 from django.db import connections
 
 

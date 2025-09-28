@@ -2,7 +2,7 @@
 import logging
 import time
 
-from django_exercise.mysql_util import mysql_util2 as mysql_util
+from utils.mysql_util import mysql_util2 as mysql_util
 
 MINUS_AMOUNT = 99.9
 FXF_PRO_ID = 18966

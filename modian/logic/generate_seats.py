@@ -7,7 +7,7 @@ import logging
 
 import xlwt
 
-from django_exercise.mysql_util import mysql_util2 as mysql_util
+from utils.mysql_util import mysql_util2 as mysql_util
 
 logger = logging.getLogger(__name__)
 

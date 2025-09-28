@@ -1,8 +1,5 @@
-from modian.models import *
-
-from django.db import connection, connections
-from django_exercise import utils
-import json
+from django.db import connections
+from utils import utils
 
 
 class CardDrawLine:

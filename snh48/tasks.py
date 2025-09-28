@@ -6,8 +6,8 @@ from datetime import datetime
 
 from celery import shared_task
 
-from django_exercise.weibo_util import weibo_client
-from .models import Weibo, WeiboDataHistory, Memberinfo
+from utils.weibo_util import weibo_client
+from snh48.models import Weibo, WeiboDataHistory
 
 logger = logging.getLogger(__name__)
 
@@ -45,3 +45,5 @@ def update_weibo_followers_count():
         except Exception as e:
             continue
 
+if __name__ == '__main__':
+    update_weibo_followers_count()

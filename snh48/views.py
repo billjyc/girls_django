@@ -17,8 +17,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.urls import reverse
 
-from django_exercise import utils
-from django_exercise.weibo_util import weibo_client
+from utils import utils
+from utils.weibo_util import weibo_client
 from .models import *
 
 logger = logging.getLogger("django")

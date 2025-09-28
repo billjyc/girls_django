@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import time
 
-from django.db import connections, models
+from django.db import connections
 from django.db.models import Count, Case, When, Value, F
 from django.db.models.functions import ExtractYear, Coalesce
 from django.shortcuts import get_object_or_404, redirect
@@ -11,7 +11,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from django_exercise import utils
+from utils import utils
 from snh48.models import *
 from snh48.serializers import *
 import logging

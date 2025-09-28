@@ -3,7 +3,7 @@
 从snh48club.com处获取参加公演成员的信息
 """
 import logging
-from django_exercise.mysql_util import mysql_util
+from utils.mysql_util import mysql_util
 from bs4 import BeautifulSoup
 import requests
 
