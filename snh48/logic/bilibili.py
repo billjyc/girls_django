@@ -100,6 +100,8 @@ try:
             continue
 
         datas = get_video_stat(aid)
+        if not datas:
+            continue
 
         print(datas)
         cursor.execute("""
