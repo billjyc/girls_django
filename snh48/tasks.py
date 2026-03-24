@@ -10,7 +10,7 @@ from utils.browser_manager import browser_manager
 from utils.weibo_util import weibo_client
 from snh48.models import Weibo, WeiboDataHistory
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("django")
 
 
 @shared_task

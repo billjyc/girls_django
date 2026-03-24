@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("django")
 
 class WeiboBrowserManager:
     def __init__(self):
