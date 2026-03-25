@@ -254,8 +254,10 @@ class BiliBiliStat(models.Model):
 
 
 class Weibo(models.Model):
-    id = models.IntegerField(primary_key=True)
+    row_id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(null=True)
     weibo_id = models.BigIntegerField(blank=True, null=True)
+    weibo_name = models.CharField(max_length=100, blank=True, null=True)
     followers_count = models.BigIntegerField(blank=True, null=True)
     friends_count = models.BigIntegerField(blank=True, null=True)
     statuses_count = models.BigIntegerField(blank=True, null=True)
