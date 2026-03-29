@@ -262,6 +262,9 @@ class Weibo(models.Model):
     friends_count = models.BigIntegerField(blank=True, null=True)
     statuses_count = models.BigIntegerField(blank=True, null=True)
     update_time = models.DateTimeField(blank=True, null=True)
+    reposts_count = models.BigIntegerField(default=0, null=False)
+    comments_count = models.BigIntegerField(default=0, null=False)
+    likes_count = models.BigIntegerField(default=0, null=False)
 
     class Meta:
         managed = False
@@ -279,6 +282,9 @@ class WeiboDataHistory(models.Model):
     friends_count = models.BigIntegerField(blank=True, null=True)
     statuses_count = models.BigIntegerField(blank=True, null=True)
     update_time = models.DateTimeField(blank=True, null=True)
+    reposts_count = models.BigIntegerField(default=0, null=False)
+    comments_count = models.BigIntegerField(default=0, null=False)
+    likes_count = models.BigIntegerField(default=0, null=False)
 
     class Meta:
         managed = False

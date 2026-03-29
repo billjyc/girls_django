@@ -34,6 +34,9 @@ def update_weibo_followers_count():
                 user.friends_count = data['data']['user']['friends_count']
                 user.statuses_count = data['data']['user']['statuses_count']
                 user.weibo_name = data['data']['user']['screen_name']
+                user.comments_count = int(data['data']['user']['status_total_counter']['comment_cnt'].replace(',', ''))
+                user.likes_count = int(data['data']['user']['status_total_counter']['like_cnt'].replace(',', ''))
+                user.reposts_count = int(data['data']['user']['status_total_counter']['reposts_cnt'].replace(',', ''))
                 logger.info(f"weibo name: {user.weibo_name}")
                 user.update_time = current_datetime_str
                 user.save()
@@ -45,6 +48,9 @@ def update_weibo_followers_count():
                 weibo_data_history.followers_count = data['data']['user']['followers_count']
                 weibo_data_history.friends_count = data['data']['user']['friends_count']
                 weibo_data_history.statuses_count = data['data']['user']['statuses_count']
+                weibo_data_history.comments_count = int(data['data']['user']['status_total_counter']['comment_cnt'].replace(',', ''))
+                weibo_data_history.likes_count = int(data['data']['user']['status_total_counter']['like_cnt'].replace(',', ''))
+                weibo_data_history.reposts_count = int(data['data']['user']['status_total_counter']['reposts_cnt'].replace(',', ''))
                 weibo_data_history.update_time = current_datetime_str
                 weibo_data_history.save()
             except Exception as e:
