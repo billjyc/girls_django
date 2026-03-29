@@ -10,7 +10,7 @@ from utils.browser_manager import browser_manager
 from utils.weibo_util import weibo_client
 from snh48.models import Weibo, WeiboDataHistory
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("django")
 
 
 @shared_task
@@ -28,10 +28,13 @@ def update_weibo_followers_count():
                 current_datetime_str = now.strftime("%Y-%m-%d %H:%M:%S")
                 data = weibo_client.get_user_info_2(user.weibo_id)
                 logger.info("update weibo fans count, user id: {}, weibo_id: {}, data: {}".format(user.id, user.weibo_id, json.dumps(data)))
+
                 # 更新数据库中的粉丝数
                 user.followers_count = data['data']['user']['followers_count']
                 user.friends_count = data['data']['user']['friends_count']
                 user.statuses_count = data['data']['user']['statuses_count']
+                user.weibo_name = data['data']['user']['screen_name']
+                logger.info(f"weibo name: {user.weibo_name}")
                 user.update_time = current_datetime_str
                 user.save()
 

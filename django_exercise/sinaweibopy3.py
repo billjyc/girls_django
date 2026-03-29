@@ -14,7 +14,7 @@ from utils.browser_manager import browser_manager
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("django")
 
 
 # general json object that can bind any fields but also act as a dict.
