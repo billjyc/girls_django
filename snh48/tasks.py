@@ -36,7 +36,7 @@ def update_weibo_followers_count():
                 user.weibo_name = data['data']['user']['screen_name']
                 user.comments_count = int(data['data']['user']['status_total_counter']['comment_cnt'].replace(',', ''))
                 user.likes_count = int(data['data']['user']['status_total_counter']['like_cnt'].replace(',', ''))
-                user.reposts_count = int(data['data']['user']['status_total_counter']['reposts_cnt'].replace(',', ''))
+                user.reposts_count = int(data['data']['user']['status_total_counter']['repost_cnt'].replace(',', ''))
                 logger.info(f"weibo name: {user.weibo_name}")
                 user.update_time = current_datetime_str
                 user.save()
@@ -54,6 +54,7 @@ def update_weibo_followers_count():
                 weibo_data_history.update_time = current_datetime_str
                 weibo_data_history.save()
             except Exception as e:
+                logger.exception(e)
                 continue
     finally:
         browser_manager.close()

@@ -348,3 +348,6 @@ LOGGING = {
         },
     }
 }
+
+WEIBO_BROWSER_TYPE = 'firefox'
+WEIBO_BROWSER_HEADLESS = True
